@@ -167,18 +167,30 @@ private final class ObservedApplication {
         // screen #1   0,-1280 ------------------
         //
 
-        let screens = NSScreen.screens.sorted { a, b in a.frame.maxY > b.frame.maxY }
-        var totalHeight: CGFloat = 0
+        let screens = NSScreen.screens
+        if screens.isEmpty {
+            return CGRect.zero
+        }
 
-        for screen in screens {
-            if totalHeight <= axRect.origin.y, axRect.origin.y < totalHeight + screen.frame.height {
+        for (index, screen) in screens.enumerated() {
+            var screenAXPosition = CGPoint(x: screen.frame.minX, y: 0)
+            if index > 0 {
+                if screen.frame.minY < 0 {
+                    screenAXPosition.y = screens[0].frame.height + screen.frame.maxY
+                } else {
+                    screenAXPosition.y = screens[0].frame.height - screen.frame.maxY
+                }
+            }
+
+            let screenAXRect = CGRect(origin: screenAXPosition, size: screen.frame.size)
+            // print("screenAXRect \(index) \(screenAXRect) \(screen.frame)")
+
+            if screenAXRect.contains(axRect.origin) {
                 return CGRect(x: axRect.origin.x,
-                              y: screen.frame.origin.y + screen.frame.height - axRect.height - (axRect.origin.y - totalHeight),
+                              y: screen.frame.maxY - axRect.height - (axRect.minY - screenAXPosition.y),
                               width: axRect.width,
                               height: axRect.height)
             }
-
-            totalHeight += screen.frame.height
         }
 
         return axRect

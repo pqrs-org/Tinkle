@@ -40,9 +40,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.contentView = view
 
             focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
-                self.window.setFrame(frame, display: true)
-                self.window.makeKeyAndOrderFront(self)
-                renderer?.restart()
+                if frame.width > 0 {
+                    self.window.setFrame(frame, display: true)
+                    self.window.makeKeyAndOrderFront(self)
+                    renderer?.restart()
+                } else {
+                    self.window.orderOut(self.window)
+                }
         })
         }
     }
