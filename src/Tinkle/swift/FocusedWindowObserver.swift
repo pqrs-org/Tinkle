@@ -172,18 +172,11 @@ private final class ObservedApplication {
             return CGRect.zero
         }
 
-        for (index, screen) in screens.enumerated() {
-            var screenAXPosition = CGPoint(x: screen.frame.minX, y: 0)
-            if index > 0 {
-                if screen.frame.minY < 0 {
-                    screenAXPosition.y = screens[0].frame.height + screen.frame.maxY
-                } else {
-                    screenAXPosition.y = screens[0].frame.height - screen.frame.maxY
-                }
-            }
-
+        for screen in screens {
+            let screenAXPosition = CGPoint(x: screen.frame.minX,
+                                           y: screens[0].frame.height - screen.frame.maxY)
             let screenAXRect = CGRect(origin: screenAXPosition, size: screen.frame.size)
-            // print("screenAXRect \(index) \(screenAXRect) \(screen.frame)")
+            // print("screenAXRect \(screenAXRect) \(screen.frame)")
 
             if screenAXRect.contains(axRect.origin) {
                 return CGRect(x: axRect.origin.x,
