@@ -31,8 +31,9 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     public func draw(in view: MTKView) {
         var time = Float(Date().timeIntervalSince(startDate))
 
-        if time > 1.0 {
+        if time > 0.5 {
             view.isPaused = true
+            self.callback()
         }
 
         if let drawable = view.currentDrawable,

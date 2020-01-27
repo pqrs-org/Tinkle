@@ -34,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.backgroundColor = NSColor.clear
             window.hasShadow = false
             window.ignoresMouseEvents = true
-            window.collectionBehavior = [.stationary, .ignoresCycle]
+            window.collectionBehavior = [.transient, .ignoresCycle]
             window.isOpaque = false
             window.level = .statusBar
             window.contentView = view
