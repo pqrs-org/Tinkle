@@ -3,9 +3,13 @@ VERSION = `head -n 1 version`
 all:
 	@echo 'Type `make package`'
 
+update-info-plist:
+	bash scripts/update-info-plist.sh
+
 package:
+	$(MAKE) -C update-info-plist
 	$(MAKE) -C src
-	
+
 	rm -rf Tinkle-$(VERSION)
 	mkdir -p Tinkle-$(VERSION)
 	rsync -a src/build/Release/Tinkle.app Tinkle-$(VERSION)
