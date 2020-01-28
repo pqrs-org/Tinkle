@@ -16,7 +16,7 @@ macOS Catalina (10.15) or later.
 
 Tinkle requires accessibility features in order to detect the focused window changes.
 
-<img src="docs/accessibility-access.png" style="width: 350px" alt="accessibility access" />
+![accessibility access](docs/accessibility-access.png | width=350))
 
 ## Using a pre-built binary
 
