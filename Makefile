@@ -7,7 +7,7 @@ update-info-plist:
 	bash scripts/update-info-plist.sh
 
 package:
-	$(MAKE) -C update-info-plist
+	$(MAKE) update-info-plist
 	$(MAKE) -C src
 
 	rm -rf Tinkle-$(VERSION)
