@@ -12,7 +12,7 @@ It helps finding the focused window when you switched it by keyboard shortcuts.
 
 macOS Catalina (10.15) or later.
 
-## Requirements
+### Required privilege
 
 Tinkle requires accessibility features in order to detect the focused window changes.
 
