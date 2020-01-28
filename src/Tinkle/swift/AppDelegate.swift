@@ -47,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     self.renderer.pause()
                     self.window.setFrame(frame, display: true)
                     self.window.makeKeyAndOrderFront(self)
-                    self.renderer.restart()
+                    self.renderer.setEffect(MetalViewRenderer.Effect.shockwave)
                 } else {
                     self.hide()
                 }
@@ -73,8 +73,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // If the window is removed from the screen list, macOS kill the app after 6 minutes into launch.
         // So, we have to display a small window to avoid it.
 
-        renderer.pause()
         window.setFrame(CGRect(x: 0, y: 0, width: 16, height: 16), display: true)
         window.orderBack(window)
+        renderer.setEffect(MetalViewRenderer.Effect.nop)
     }
 }

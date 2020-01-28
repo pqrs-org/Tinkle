@@ -4,12 +4,19 @@ import MetalKit
 public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     public typealias Callback = () -> Void
 
+    public enum Effect {
+        case nop
+        case shockwave
+    }
+
     private weak var view: MTKView!
     private let callback: Callback
     private let commandQueue: MTLCommandQueue!
     private let device: MTLDevice!
+    private let nopCps: MTLComputePipelineState!
     private let shockwaveCps: MTLComputePipelineState!
     private var startDate: Date = Date()
+    private var effect: Effect = .nop
     private var color: vector_float3 = vector_float3(0.3, 0.2, 1.0) // rgb
 
     public init?(mtkView: MTKView, callback: @escaping Callback) {
@@ -18,6 +25,9 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         device = MTLCreateSystemDefaultDevice()!
         commandQueue = device.makeCommandQueue()
         let library = device.makeDefaultLibrary()!
+
+        let nopFunction = library.makeFunction(name: "nopEffect")!
+        nopCps = try! device.makeComputePipelineState(function: nopFunction)
 
         let shockwaveFunction = library.makeFunction(name: "shockwaveEffect")!
         shockwaveCps = try! device.makeComputePipelineState(function: shockwaveFunction)
@@ -33,12 +43,18 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         var time = Float(Date().timeIntervalSince(startDate))
 
         if time > 0.5 {
-            view.isPaused = true
+            effect = .nop
             callback()
             return
         }
 
-        let cps: MTLComputePipelineState = shockwaveCps
+        var cps: MTLComputePipelineState = nopCps
+        switch effect {
+        case .nop:
+            cps = nopCps
+        case .shockwave:
+            cps = shockwaveCps
+        }
 
         if let drawable = view.currentDrawable,
             let commandBuffer = commandQueue.makeCommandBuffer(),
@@ -74,6 +90,11 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
 
     func setColor(_ c: vector_float3) {
         color = c
+        restart()
+    }
+
+    func setEffect(_ e: Effect) {
+        effect = e
         restart()
     }
 }
