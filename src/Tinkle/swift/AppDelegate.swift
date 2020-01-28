@@ -6,6 +6,8 @@ import SwiftUI
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow!
+    var mtkView: MTKView!
+    var renderer: MetalViewRenderer!
     var observers: [pid_t: Observer] = [:]
     var focusedWindowObserver: FocusedWindowObserver!
     var preferencesView: PreferencesView?
@@ -13,16 +15,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_: Notification) {
         if !UIElement.isProcessTrusted(withPrompt: true) {
             print("user approval is required")
-            showPreferences()
+            return
 
         } else {
-            let view = MTKView()
-            view.framebufferOnly = false
-            view.layer?.isOpaque = false
-            let renderer = MetalViewRenderer(mtkView: view) {
-                self.window.orderOut(self.window)
+            mtkView = MTKView()
+            mtkView.framebufferOnly = false
+            mtkView.layer?.isOpaque = false
+
+            renderer = MetalViewRenderer(mtkView: mtkView) {
+                self.hide()
             }
-            view.delegate = renderer
+            mtkView.delegate = renderer
 
             window = NSWindow(
                 contentRect: NSRect(x: 0, y: 0, width: 200, height: 100),
@@ -37,15 +40,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.collectionBehavior = [.transient, .ignoresCycle]
             window.isOpaque = false
             window.level = .statusBar
-            window.contentView = view
+            window.contentView = mtkView
 
             focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
                 if frame.width > 0 {
+                    self.renderer.pause()
                     self.window.setFrame(frame, display: true)
                     self.window.makeKeyAndOrderFront(self)
-                    renderer?.restart()
+                    self.renderer.restart()
                 } else {
-                    self.window.orderOut(self.window)
+                    self.hide()
                 }
         })
         }
@@ -63,5 +67,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             preferencesView = PreferencesView()
         }
+    }
+
+    func hide() {
+        // If the window is removed from the screen list, macOS kill the app after 6 minutes into launch.
+        // So, we have to display a small window to avoid it.
+
+        renderer.pause()
+        window.setFrame(CGRect(x: 0, y: 0, width: 16, height: 16), display: true)
+        window.orderBack(window)
     }
 }

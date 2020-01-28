@@ -108,7 +108,9 @@ private final class ObservedApplication {
                                                   event: AXNotification,
                                                   _: [String: AnyObject]?) in
             if event == .focusedWindowChanged {
-                self.emit()
+                DispatchQueue.main.async {
+                    self.emit()
+                }
             }
         }
 

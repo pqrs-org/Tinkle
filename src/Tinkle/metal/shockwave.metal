@@ -2,18 +2,18 @@
 using namespace metal;
 
 namespace {
-float3 circle(float2 uv, float r, float blur, float3 color)
-{
-    float d = length(uv);
-    float c = smoothstep(r, r - blur, d);
-    return float3(color * c);
-}
+    float3 circle(float2 uv, float r, float blur, float3 color)
+    {
+        float d = length(uv);
+        float c = smoothstep(r, r - blur, d);
+        return float3(color * c);
+    }
 }
 
-kernel void focusedWindowChangedEffect(texture2d<float, access::write> o[[texture(0)]],
-                                       constant float &time[[buffer(0)]],
-                                       constant float3 &color[[buffer(1)]],
-                                       ushort2 gid[[thread_position_in_grid]])
+kernel void shockwaveEffect(texture2d<float, access::write> o[[texture(0)]],
+                            constant float &time[[buffer(0)]],
+                            constant float3 &color[[buffer(1)]],
+                            ushort2 gid[[thread_position_in_grid]])
 {
     float width = o.get_width();
     float height = o.get_height();

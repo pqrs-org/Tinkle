@@ -8,7 +8,7 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     private let callback: Callback
     private let commandQueue: MTLCommandQueue!
     private let device: MTLDevice!
-    private let cps: MTLComputePipelineState!
+    private let shockwaveCps: MTLComputePipelineState!
     private var startDate: Date = Date()
     private var color: vector_float3 = vector_float3(0.3, 0.2, 1.0) // rgb
 
@@ -18,8 +18,9 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         device = MTLCreateSystemDefaultDevice()!
         commandQueue = device.makeCommandQueue()
         let library = device.makeDefaultLibrary()!
-        let function = library.makeFunction(name: "focusedWindowChangedEffect")!
-        cps = try! device.makeComputePipelineState(function: function)
+
+        let shockwaveFunction = library.makeFunction(name: "shockwaveEffect")!
+        shockwaveCps = try! device.makeComputePipelineState(function: shockwaveFunction)
 
         super.init()
         view.delegate = self
@@ -33,8 +34,11 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
 
         if time > 0.5 {
             view.isPaused = true
-            self.callback()
+            callback()
+            return
         }
+
+        let cps: MTLComputePipelineState = shockwaveCps
 
         if let drawable = view.currentDrawable,
             let commandBuffer = commandQueue.makeCommandBuffer(),
@@ -57,6 +61,10 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
             commandBuffer.present(drawable)
             commandBuffer.commit()
         }
+    }
+
+    func pause() {
+        view.isPaused = true
     }
 
     func restart() {
