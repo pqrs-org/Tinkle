@@ -8,6 +8,8 @@ It helps finding the focused window when you switched it by keyboard shortcuts.
 
 ![Tinkle](docs/Tinkle.gif)
 
+---
+
 ## Supported systems
 
 macOS Catalina (10.15) or later.
@@ -17,6 +19,8 @@ macOS Catalina (10.15) or later.
 Tinkle requires accessibility features in order to detect the focused window changes.
 
 <img src="docs/accessibility-access.png" width="350" alt="accessibility access" />
+
+---
 
 ## Using a pre-built binary
 
