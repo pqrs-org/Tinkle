@@ -12,6 +12,12 @@ It helps finding the focused window when you switched it by keyboard shortcuts.
 
 macOS Catalina (10.15) or later.
 
+## Requirements
+
+Tinkle requires accessibility features in order to detect the focused window changes.
+
+<img src="docs/accessibility-access.png" style="width: 350px" alt="accessibility access" />
+
 ## Using a pre-built binary
 
 Use `dist/Tinkle-xxx.dmg`
