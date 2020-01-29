@@ -42,9 +42,14 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     public func draw(in view: MTKView) {
         var time = Float(Date().timeIntervalSince(startDate))
 
-        if time > 0.5, effect != .nop {
-            effect = .nop
-            callback()
+        if time > 0.5 {
+            if effect == .nop {
+                view.isPaused = true
+            } else {
+                callback()
+                setEffect(.nop)
+                return
+            }
         }
 
         var cps: MTLComputePipelineState = nopCps
@@ -80,6 +85,7 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
 
     func restart() {
         startDate = Date()
+        view.isPaused = false
     }
 
     func setColor(_ c: vector_float3) {
