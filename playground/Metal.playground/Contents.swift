@@ -8,12 +8,12 @@ let source = """
 using namespace metal;
 
 namespace {
-    float3 circle(float2 uv, float r, float blur, float3 color)
-    {
-        float d = length(uv);
-        float c = smoothstep(r, r - blur, d);
-        return float3(color * c);
-    }
+float line(float2 start, float2 end, float2 uv)
+{
+    float2 line = end - start;
+    float frac = dot(uv - start, line) / dot(line, line);
+    return distance(start + line * clamp(frac, 0.0, 1.0), uv);
+}
 }
 
 kernel void effect(texture2d<float, access::write> o[[texture(0)]],
@@ -24,19 +24,24 @@ kernel void effect(texture2d<float, access::write> o[[texture(0)]],
     float width = o.get_width();
     float height = o.get_height();
 
-    float2 p = float2(gid) / float2(width, height);
-    p -= 0.5;
-    p.x *= min(width / height, 1.0);
-    p.y *= min(height / width, 1.0);
+    float2 uv = float2(gid) / float2(width, height);
+    uv -= 0.5;
 
-    float speed = 4.0;
-    float r = time * speed + 0.6;
-    float ir = clamp(1.0 - speed * time, 0.9, 1.0);
+    float box = 1.0;
+    // top
+    box = min(box, line(float2(-0.48, 0.48), float2(0.48, 0.48), uv));
+    // bottom
+    box = min(box, line(float2(-0.48, -0.48), float2(0.48, -0.48), uv));
+    // left
+    box = min(box, line(float2(-0.48, -0.48), float2(-0.48, 0.48), uv));
+    // right
+    box = min(box, line(float2(0.48, -0.48), float2(0.48, 0.48), uv));
 
-    float3 c = circle(p, r, 0.4, color);
-    c -= circle(p, r, ir, color);
+    float shade = 0.01 * (1.0 - time * 2.0) / max(0.0001, box - 0.0002);
+    
+    float3 c = color * shade;
 
-    float alpha = min(max(max(c[0], c[1]), c[2]), 0.5);
+    float alpha = min(max(max(c[0], c[1]), c[2]), 0.5 - time * 2.0);
 
     o.write(float4(c, alpha), gid);
 }
