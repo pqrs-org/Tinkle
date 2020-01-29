@@ -7,6 +7,7 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     public enum Effect {
         case nop
         case shockwave
+        case neon
     }
 
     private weak var view: MTKView!
@@ -15,6 +16,7 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     private let device: MTLDevice!
     private let nopCps: MTLComputePipelineState!
     private let shockwaveCps: MTLComputePipelineState!
+    private let neonCps: MTLComputePipelineState!
     private var startDate: Date = Date()
     private var effect: Effect = .nop
     private var color: vector_float3 = vector_float3(0.3, 0.2, 1.0) // rgb
@@ -31,6 +33,9 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
 
         let shockwaveFunction = library.makeFunction(name: "shockwaveEffect")!
         shockwaveCps = try! device.makeComputePipelineState(function: shockwaveFunction)
+
+        let neonFunction = library.makeFunction(name: "neonEffect")!
+        neonCps = try! device.makeComputePipelineState(function: neonFunction)
 
         super.init()
         view.delegate = self
@@ -58,6 +63,8 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
             cps = nopCps
         case .shockwave:
             cps = shockwaveCps
+        case .neon:
+            cps = neonCps
         }
 
         if let drawable = view.currentDrawable,
