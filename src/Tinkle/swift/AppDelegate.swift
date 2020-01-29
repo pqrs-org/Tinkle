@@ -44,7 +44,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
                 if frame.width > 0 {
-                    self.renderer.pause()
                     self.window.setFrame(frame, display: true)
                     self.window.makeKeyAndOrderFront(self)
                     self.renderer.setEffect(MetalViewRenderer.Effect.shockwave)
