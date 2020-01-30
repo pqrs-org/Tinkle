@@ -44,9 +44,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
                 if frame.width > 0 {
+                    let userSettings = UserSettings()
+
                     self.window.setFrame(frame, display: true)
                     self.window.makeKeyAndOrderFront(self)
-                    self.renderer.setEffect(MetalViewRenderer.Effect.shockwave)
+                    self.renderer.setEffect(userSettings.effect)
+                    self.renderer.restart()
                 } else {
                     self.hide()
                 }
@@ -74,6 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         window.setFrame(CGRect(x: 0, y: 0, width: 16, height: 16), display: true)
         window.orderBack(window)
-        renderer.setEffect(MetalViewRenderer.Effect.nop)
+        renderer.setEffect("nop")
+        renderer.restart()
     }
 }

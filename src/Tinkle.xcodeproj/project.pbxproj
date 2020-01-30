@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34037A0823E33B3900824CEE /* UserDefaults-propertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */; };
+		34037A0A23E33C4800824CEE /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34037A0923E33C4800824CEE /* UserSettings.swift */; };
 		340A10E423E0741A00668F56 /* nop.metal in Sources */ = {isa = PBXBuildFile; fileRef = 340A10E323E0741A00668F56 /* nop.metal */; };
 		3460A00623E1D49A0066543A /* neon.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3460A00523E1D49A0066543A /* neon.metal */; };
 		3468C2A823DDAB3C00CB8901 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults-propertyWrapper.swift"; sourceTree = "<group>"; };
+		34037A0923E33C4800824CEE /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		340A10E323E0741A00668F56 /* nop.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = nop.metal; sourceTree = "<group>"; };
 		3460A00523E1D49A0066543A /* neon.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = neon.metal; sourceTree = "<group>"; };
 		3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 				34D87BE823DB69A800B02712 /* FocusedWindowObserver.swift */,
 				34933B3123D85E7D00C8067E /* MetalViewRenderer.swift */,
 				3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */,
+				34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */,
+				34037A0923E33C4800824CEE /* UserSettings.swift */,
 			);
 			path = swift;
 			sourceTree = "<group>";
@@ -187,6 +193,8 @@
 				34D87BE923DB69A800B02712 /* FocusedWindowObserver.swift in Sources */,
 				34933B1D23D85DF700C8067E /* AppDelegate.swift in Sources */,
 				34933B3323D85E7D00C8067E /* MetalViewRenderer.swift in Sources */,
+				34037A0823E33B3900824CEE /* UserDefaults-propertyWrapper.swift in Sources */,
+				34037A0A23E33C4800824CEE /* UserSettings.swift in Sources */,
 				340A10E423E0741A00668F56 /* nop.metal in Sources */,
 				34933B3623D85EB700C8067E /* shockwave.metal in Sources */,
 				3468C2A823DDAB3C00CB8901 /* PreferencesView.swift in Sources */,
@@ -326,11 +334,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tinkle/Tinkle.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Tinkle/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = G43BCU2T37;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Tinkle/Info.plist;
@@ -351,11 +359,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tinkle/Tinkle.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Tinkle/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = G43BCU2T37;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Tinkle/Info.plist;

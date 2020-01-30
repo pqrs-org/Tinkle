@@ -52,7 +52,10 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
                 view.isPaused = true
             } else {
                 callback()
-                setEffect(.nop)
+
+                effect = .nop
+                restart()
+
                 return
             }
         }
@@ -100,8 +103,14 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         restart()
     }
 
-    func setEffect(_ e: Effect) {
-        effect = e
-        restart()
+    func setEffect(_ effectName: String) {
+        switch effectName {
+        case "neon":
+            effect = .neon
+        case "shockwave":
+            effect = .shockwave
+        default:
+            effect = .nop
+        }
     }
 }
