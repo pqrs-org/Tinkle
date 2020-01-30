@@ -7,15 +7,6 @@ let source = """
 #include <metal_stdlib>
 using namespace metal;
 
-namespace {
-float line(float2 start, float2 end, float2 uv)
-{
-    float2 line = end - start;
-    float frac = dot(uv - start, line) / dot(line, line);
-    return distance(start + line * clamp(frac, 0.0, 1.0), uv);
-}
-}
-
 kernel void effect(texture2d<float, access::write> o[[texture(0)]],
                    constant float &time[[buffer(0)]],
                    constant float3 &color[[buffer(1)]],
@@ -28,16 +19,11 @@ kernel void effect(texture2d<float, access::write> o[[texture(0)]],
     uv -= 0.5;
 
     float box = 1.0;
-    // top
-    box = min(box, line(float2(-0.48, 0.48), float2(0.48, 0.48), uv));
-    // bottom
-    box = min(box, line(float2(-0.48, -0.48), float2(0.48, -0.48), uv));
-    // left
-    box = min(box, line(float2(-0.48, -0.48), float2(-0.48, 0.48), uv));
-    // right
-    box = min(box, line(float2(0.48, -0.48), float2(0.48, 0.48), uv));
+    box = min(box, smoothstep(1.0, 0.0, abs(uv[0]) * 2));
+    box = min(box, smoothstep(1.0, 0.0, abs(uv[1]) * 2));
 
-    float shade = 0.01 * (1.0 - time * 2.0) / max(0.0001, box - 0.0002);
+    float shade = 0.005 * max(0.0, 1.0 - time * 5.0) / max(0.0005, box - 0.001);
+//    float shade = box;
     
     float3 c = color * shade;
 
@@ -128,7 +114,7 @@ struct ContentView: View {
             
             RepresentedMTKView(view: view).frame(
                 minWidth: 200,
-                minHeight: 200
+                minHeight: 400
             )
 
             Divider()
