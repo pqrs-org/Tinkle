@@ -72,8 +72,8 @@ public class MetalViewRenderer: NSObject, MTKViewDelegate {
     public func draw(in view: MTKView) {
         var time = Float(Date().timeIntervalSince(startDate))
         
-        if time > 1.0 {
-            view.isPaused = true
+        if time > 0.5 {
+            startDate = Date();
         }
         
         if let drawable = view.currentDrawable,
@@ -99,14 +99,8 @@ public class MetalViewRenderer: NSObject, MTKViewDelegate {
         }
     }
     
-    func restart() {
-        startDate = Date()
-        view.isPaused = false
-    }
-    
     func setColor(_ c: vector_float3) {
         color = c
-        restart()
     }
 }
 
@@ -158,14 +152,6 @@ struct ContentView: View {
                         Text("Blue")
                     }
                 }
-            }
-            
-            Divider()
-
-            Button(action:{
-                delegate?.restart()
-            }) {
-                Text("Restart")
             }
         }
     }
