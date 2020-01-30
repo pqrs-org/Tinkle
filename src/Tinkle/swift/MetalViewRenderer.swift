@@ -103,7 +103,7 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         restart()
     }
 
-    func setEffect(_ effectName: String) {
+    func setEffect(_ effectName: String?) {
         switch effectName {
         case "neon":
             effect = .neon
