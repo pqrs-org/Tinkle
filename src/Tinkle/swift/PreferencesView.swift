@@ -13,7 +13,6 @@ struct PreferencesView: View {
 
     struct EffectPicker: View {
         @Binding var selectedEffectRawValue: String
-        @State private var selectedIndex: Int = 0
 
         let effects: [EffectEntry] = [
             EffectEntry(name: "Shock wave (red)", value: .shockwaveRed),
@@ -35,8 +34,7 @@ struct PreferencesView: View {
                     return 0
                 },
                 set: {
-                    self.selectedIndex = $0
-                    self.selectedEffectRawValue = self.effects[self.selectedIndex].value.rawValue
+                    self.selectedEffectRawValue = self.effects[$0].value.rawValue
                 }
             )
 
