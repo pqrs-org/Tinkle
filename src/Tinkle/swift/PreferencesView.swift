@@ -13,6 +13,7 @@ struct PreferencesView: View {
 
     struct EffectPicker: View {
         @Binding var selectedEffectRawValue: String
+        @State private var selectedIndex: Int = -1
 
         let effects: [EffectEntry] = [
             EffectEntry(name: "Shock wave (red)", value: .shockwaveRed),
@@ -26,14 +27,19 @@ struct PreferencesView: View {
         var body: some View {
             let binding = Binding<Int>(
                 get: {
-                    for (index, e) in self.effects.enumerated() {
-                        if e.value.rawValue == self.selectedEffectRawValue {
-                            return index
+                    if self.selectedIndex < 0 {
+                        for (index, e) in self.effects.enumerated() {
+                            if e.value.rawValue == self.selectedEffectRawValue {
+                                return index
+                            }
                         }
+                        return 0
+                    } else {
+                        return self.selectedIndex
                     }
-                    return 0
                 },
                 set: {
+                    self.selectedIndex = $0
                     self.selectedEffectRawValue = self.effects[$0].value.rawValue
                 }
             )
