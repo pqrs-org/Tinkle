@@ -1,9 +1,6 @@
 import Foundation
 
 final class UserSettings: ObservableObject {
-    @UserDefault("effect", defaultValue: "shockwave")
+    @UserDefault("effect", defaultValue: Effect.shockwaveBlue.rawValue)
     var effect: String
-
-    @UserDefault("color", defaultValue: "blue")
-    var color: String
 }

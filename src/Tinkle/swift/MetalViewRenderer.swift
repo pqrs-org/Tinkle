@@ -4,7 +4,7 @@ import MetalKit
 public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     public typealias Callback = () -> Void
 
-    public enum Effect {
+    public enum Shader {
         case nop
         case shockwave
         case neon
@@ -18,8 +18,8 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     private let shockwaveCps: MTLComputePipelineState!
     private let neonCps: MTLComputePipelineState!
     private var startDate: Date = Date()
-    private var effect: Effect = .nop
-    private var color: vector_float3 = vector_float3(0.3, 0.2, 1.0) // rgb
+    private var shader: Shader = .nop
+    private var color: vector_float3 = vector_float3(0.0, 0.0, 0.0)
 
     public init?(mtkView: MTKView, callback: @escaping Callback) {
         view = mtkView
@@ -48,12 +48,12 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         var time = Float(Date().timeIntervalSince(startDate))
 
         if time > 0.5 {
-            if effect == .nop {
+            if shader == .nop {
                 view.isPaused = true
             } else {
                 callback()
 
-                effect = .nop
+                shader = .nop
                 restart()
 
                 return
@@ -61,7 +61,7 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         }
 
         var cps: MTLComputePipelineState = nopCps
-        switch effect {
+        switch shader {
         case .nop:
             cps = nopCps
         case .shockwave:
@@ -103,14 +103,32 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         restart()
     }
 
-    func setEffect(_ effectName: String?) {
-        switch effectName {
-        case "neon":
-            effect = .neon
-        case "shockwave":
-            effect = .shockwave
-        default:
-            effect = .nop
+    func setEffect(_ e: Effect?) {
+        if e != nil {
+            switch e! {
+            case .shockwaveRed,
+                 .shockwaveGreen,
+                 .shockwaveBlue:
+                shader = .shockwave
+            case .neonRed,
+                 .neonGreen,
+                 .neonBlue:
+                shader = .neon
+            }
+
+            switch e! {
+            case .shockwaveRed,
+                 .neonRed:
+                color = vector_float3(1.0, 0.3, 0.2)
+            case .shockwaveGreen,
+                 .neonGreen:
+                color = vector_float3(0.2, 1.0, 0.2)
+            case .shockwaveBlue,
+                 .neonBlue:
+                color = vector_float3(0.3, 0.2, 1.0)
+            }
+        } else {
+            shader = .nop
         }
     }
 }

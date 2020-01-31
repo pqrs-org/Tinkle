@@ -49,7 +49,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 if frame.width > 0 {
                     self.window?.setFrame(frame, display: true)
                     self.window?.makeKeyAndOrderFront(self)
-                    self.renderer?.setEffect(self.userSettings?.effect)
+                    if self.userSettings != nil {
+                        self.renderer?.setEffect(Effect(rawValue: self.userSettings!.effect))
+                    }
                     self.renderer?.restart()
                 } else {
                     self.hide()
@@ -78,7 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // So, we have to display a small window to avoid it.
 
         window?.setFrame(CGRect(x: 0, y: 0, width: 16, height: 16), display: true)
-        renderer?.setEffect("nop")
+        renderer?.setEffect(nil)
         renderer?.restart()
     }
 }
