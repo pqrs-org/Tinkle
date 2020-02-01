@@ -13,6 +13,7 @@
 		3460A00623E1D49A0066543A /* neon.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3460A00523E1D49A0066543A /* neon.metal */; };
 		3468C2A823DDAB3C00CB8901 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */; };
 		348624F023E4958D006F2891 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348624EF23E4958D006F2891 /* Effect.swift */; };
+		348624F423E5AE02006F2891 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 348624F323E5AE02006F2891 /* app.icns */; };
 		34933B1D23D85DF700C8067E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34933B1C23D85DF700C8067E /* AppDelegate.swift */; };
 		34933B2123D85DF700C8067E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34933B2023D85DF700C8067E /* Assets.xcassets */; };
 		34933B2423D85DF700C8067E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34933B2323D85DF700C8067E /* Preview Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		3460A00523E1D49A0066543A /* neon.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = neon.metal; sourceTree = "<group>"; };
 		3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		348624EF23E4958D006F2891 /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
+		348624F323E5AE02006F2891 /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = app.icns; sourceTree = "<group>"; };
 		34933B1923D85DF700C8067E /* Tinkle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tinkle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34933B1C23D85DF700C8067E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34933B2023D85DF700C8067E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				34933B2F23D85E2700C8067E /* metal */,
 				34933B2023D85DF700C8067E /* Assets.xcassets */,
 				34933B2523D85DF700C8067E /* Main.storyboard */,
+				348624F323E5AE02006F2891 /* app.icns */,
 				34933B2823D85DF700C8067E /* Info.plist */,
 				34933B2923D85DF700C8067E /* Tinkle.entitlements */,
 				34933B2223D85DF700C8067E /* Preview Content */,
@@ -181,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34933B2723D85DF700C8067E /* Main.storyboard in Resources */,
+				348624F423E5AE02006F2891 /* app.icns in Resources */,
 				34933B2423D85DF700C8067E /* Preview Assets.xcassets in Resources */,
 				34933B2123D85DF700C8067E /* Assets.xcassets in Resources */,
 			);
