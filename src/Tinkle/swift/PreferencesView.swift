@@ -52,20 +52,38 @@ struct PreferencesView: View {
         }
     }
 
+    let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+
     var body: some View {
-        VStack {
-            Text(userApproved)
+        VStack(alignment: .leading) {
+            HStack {
+                Image(decorative: "logo").resizable().frame(width: 64.0, height: 64.0)
+                Text("Tinkle version " + self.version)
+
+                Spacer()
+
+                Button(action: { NSApplication.shared.terminate(self) }) {
+                    Image(decorative: "ic_cancel_18pt")
+                        .resizable()
+                        .frame(width: 16.0, height: 16.0)
+                    Text("Quit Tinkle")
+                }
+            }
+
+            Text(self.userApproved)
 
             Spacer()
 
             Form {
                 Section {
-                    EffectPicker(selectedEffectRawValue: $userSettings.effect)
+                    EffectPicker(selectedEffectRawValue: self.$userSettings.effect)
+                        .frame(width: 300.0)
                 }
             }
 
             Spacer()
-        }.padding(.init(top: 20, leading: 20, bottom: 20, trailing: 20))
+        }
+        .padding(.init(top: 20, leading: 20, bottom: 20, trailing: 20))
     }
 
     init() {
@@ -103,4 +121,10 @@ struct PreferencesView: View {
 struct EffectEntry {
     let name: String
     let value: Effect
+}
+
+struct PreferencesView_Previews: PreviewProvider {
+    static var previews: some View {
+        PreferencesView().frame(width: 400.0, height: 300.0)
+    }
 }
