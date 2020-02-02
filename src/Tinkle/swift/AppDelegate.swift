@@ -56,7 +56,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 } else {
                     self.hide()
                 }
-        })
+            })
         }
     }
 
