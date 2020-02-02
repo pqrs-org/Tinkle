@@ -48,14 +48,14 @@ struct PreferencesView: View {
                 ForEach(0 ..< effects.count) {
                     Text(self.effects[$0].name)
                 }
-            }
+            }.frame(width: 300.0)
         }
     }
 
     let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 20.0) {
             HStack {
                 Image(decorative: "logo").resizable().frame(width: 64.0, height: 64.0)
                 Text("Tinkle version " + self.version)
@@ -72,25 +72,51 @@ struct PreferencesView: View {
 
             Text(self.userApproved)
 
-            Spacer()
+            GroupBox(label: Text("Configuration")) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        EffectPicker(selectedEffectRawValue: self.$userSettings.effect)
+                        Spacer()
+                    }
+                }
+            }
 
-            Form {
-                Section {
-                    EffectPicker(selectedEffectRawValue: self.$userSettings.effect)
-                        .frame(width: 300.0)
+            GroupBox(label: Text("Web sites")) {
+                HStack(spacing: 20.0) {
+                    Button(action: {
+                        if let url = URL(string: "https://tinkle.pqrs.org") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }) {
+                        Image(decorative: "ic_home_18pt")
+                            .resizable()
+                            .frame(width: 16.0, height: 16.0)
+                        Text("Open official website")
+                    }
+                    Button(action: {
+                        if let url = URL(string: "https://github.com/pqrs-org/Tinkle") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }) {
+                        Image(decorative: "ic_code_18pt")
+                            .resizable()
+                            .frame(width: 16.0, height: 16.0)
+                        Text("Open GitHub (source code)")
+                    }
+                    Spacer()
                 }
             }
 
             Spacer()
         }
-        .padding(.init(top: 20, leading: 20, bottom: 20, trailing: 20))
+        .padding(20.0)
     }
 
     init() {
         userSettings = UserSettings()
 
         window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
+            contentRect: NSRect(x: 0, y: 0, width: 600, height: 300),
             styleMask: [
                 .titled,
                 .closable,
