@@ -10,6 +10,8 @@
 		34037A0823E33B3900824CEE /* UserDefaults-propertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */; };
 		34037A0A23E33C4800824CEE /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34037A0923E33C4800824CEE /* UserSettings.swift */; };
 		340A10E423E0741A00668F56 /* nop.metal in Sources */ = {isa = PBXBuildFile; fileRef = 340A10E323E0741A00668F56 /* nop.metal */; };
+		34558F9C23E86B0D00CBE9CA /* OpenAtLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34558F9B23E86B0D00CBE9CA /* OpenAtLogin.swift */; };
+		34558FA523E86D5600CBE9CA /* OpenAtLoginObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 34558FA323E86D5600CBE9CA /* OpenAtLoginObjc.m */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations"; }; };
 		3460A00623E1D49A0066543A /* neon.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3460A00523E1D49A0066543A /* neon.metal */; };
 		3468C2A823DDAB3C00CB8901 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */; };
 		348624F023E4958D006F2891 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348624EF23E4958D006F2891 /* Effect.swift */; };
@@ -28,6 +30,10 @@
 		34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults-propertyWrapper.swift"; sourceTree = "<group>"; };
 		34037A0923E33C4800824CEE /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		340A10E323E0741A00668F56 /* nop.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = nop.metal; sourceTree = "<group>"; };
+		34558F9B23E86B0D00CBE9CA /* OpenAtLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAtLogin.swift; sourceTree = "<group>"; };
+		34558FA223E86D5600CBE9CA /* Tinkle-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tinkle-Bridging-Header.h"; sourceTree = "<group>"; };
+		34558FA323E86D5600CBE9CA /* OpenAtLoginObjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenAtLoginObjc.m; sourceTree = "<group>"; };
+		34558FA423E86D5600CBE9CA /* OpenAtLoginObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenAtLoginObjc.h; sourceTree = "<group>"; };
 		3460A00523E1D49A0066543A /* neon.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = neon.metal; sourceTree = "<group>"; };
 		3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		348624EF23E4958D006F2891 /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
@@ -56,6 +62,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		34558F9E23E86D1A00CBE9CA /* objc */ = {
+			isa = PBXGroup;
+			children = (
+				34558FA423E86D5600CBE9CA /* OpenAtLoginObjc.h */,
+				34558FA323E86D5600CBE9CA /* OpenAtLoginObjc.m */,
+				34558FA223E86D5600CBE9CA /* Tinkle-Bridging-Header.h */,
+			);
+			path = objc;
+			sourceTree = "<group>";
+		};
 		34933B1023D85DF700C8067E = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +91,7 @@
 		34933B1B23D85DF700C8067E /* Tinkle */ = {
 			isa = PBXGroup;
 			children = (
+				34558F9E23E86D1A00CBE9CA /* objc */,
 				34933B3023D85E4100C8067E /* swift */,
 				34933B2F23D85E2700C8067E /* metal */,
 				34933B2023D85DF700C8067E /* Assets.xcassets */,
@@ -112,6 +129,7 @@
 				348624EF23E4958D006F2891 /* Effect.swift */,
 				34D87BE823DB69A800B02712 /* FocusedWindowObserver.swift */,
 				34933B3123D85E7D00C8067E /* MetalViewRenderer.swift */,
+				34558F9B23E86B0D00CBE9CA /* OpenAtLogin.swift */,
 				3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */,
 				34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */,
 				34037A0923E33C4800824CEE /* UserSettings.swift */,
@@ -154,6 +172,7 @@
 				TargetAttributes = {
 					34933B1823D85DF700C8067E = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
@@ -199,8 +218,10 @@
 			files = (
 				348624F023E4958D006F2891 /* Effect.swift in Sources */,
 				34D87BE923DB69A800B02712 /* FocusedWindowObserver.swift in Sources */,
+				34558FA523E86D5600CBE9CA /* OpenAtLoginObjc.m in Sources */,
 				34933B1D23D85DF700C8067E /* AppDelegate.swift in Sources */,
 				34933B3323D85E7D00C8067E /* MetalViewRenderer.swift in Sources */,
+				34558F9C23E86B0D00CBE9CA /* OpenAtLogin.swift in Sources */,
 				34037A0823E33B3900824CEE /* UserDefaults-propertyWrapper.swift in Sources */,
 				34037A0A23E33C4800824CEE /* UserSettings.swift in Sources */,
 				340A10E423E0741A00668F56 /* nop.metal in Sources */,
@@ -341,6 +362,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tinkle/Tinkle.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -358,6 +380,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.pqrs.Tinkle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tinkle/objc/Tinkle-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -366,6 +390,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tinkle/Tinkle.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -383,6 +408,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.pqrs.Tinkle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tinkle/objc/Tinkle-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

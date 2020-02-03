@@ -33,10 +33,11 @@ struct PreferencesView: View {
                                 return index
                             }
                         }
+
                         return 0
-                    } else {
-                        return self.selectedIndex
                     }
+
+                    return self.selectedIndex
                 },
                 set: {
                     self.selectedIndex = $0
@@ -49,6 +50,26 @@ struct PreferencesView: View {
                     Text(self.effects[$0].name)
                 }
             }.frame(width: 300.0)
+        }
+    }
+
+    struct OpenAtLoginToggle: View {
+        @State private var enabled: Bool = OpenAtLogin.enabled
+
+        var body: some View {
+            let binding = Binding<Bool>(
+                get: {
+                    self.enabled
+                },
+                set: {
+                    self.enabled = $0
+                    OpenAtLogin.enabled = $0
+                }
+            )
+
+            return Toggle(isOn: binding) {
+                Text("Open at login")
+            }
         }
     }
 
@@ -76,6 +97,10 @@ struct PreferencesView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         EffectPicker(selectedEffectRawValue: self.$userSettings.effect)
+                        Spacer()
+                    }
+                    HStack {
+                        OpenAtLoginToggle()
                         Spacer()
                     }
                 }
