@@ -74,12 +74,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func hide() {
-        // If MTKView.delegate is enabled and the window is removed from the screen list,
-        // macOS kill the app after 6 minutes into launch.
-        // So, we have to display a small window to avoid it.
-
-        window?.setFrame(CGRect(x: 0, y: 0, width: 16, height: 16), display: true)
-        renderer?.setEffect(nil)
-        renderer?.restart()
+        if window != nil {
+            window!.orderOut(window!)
+        }
     }
 }
