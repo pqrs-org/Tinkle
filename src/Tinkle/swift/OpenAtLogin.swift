@@ -3,9 +3,8 @@ import Foundation
 public struct OpenAtLogin {
     public static var enabled: Bool {
         get {
-            guard let url = URL(string: Bundle.main.bundlePath) else {
-                return false
-            }
+            let bundlePath = Bundle.main.bundlePath
+            let url = URL(fileURLWithPath: bundlePath)
             return OpenAtLoginObjc.enabled(url)
         }
         set {
@@ -20,9 +19,7 @@ public struct OpenAtLogin {
                 return
             }
 
-            guard let url = URL(string: Bundle.main.bundlePath) else {
-                return
-            }
+            let url = URL(fileURLWithPath: bundlePath)
 
             if newValue {
                 OpenAtLoginObjc.enable(url)
