@@ -17,47 +17,46 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if !UIElement.isProcessTrusted(withPrompt: true) {
             print("user approval is required")
             return
+        }
 
-        } else {
-            userSettings = UserSettings()
+        userSettings = UserSettings()
 
-            mtkView = MTKView()
-            mtkView!.framebufferOnly = false
-            mtkView!.layer?.isOpaque = false
+        mtkView = MTKView()
+        mtkView!.framebufferOnly = false
+        mtkView!.layer?.isOpaque = false
 
-            renderer = MetalViewRenderer(mtkView: mtkView!) {
+        renderer = MetalViewRenderer(mtkView: mtkView!) {
+            self.hide()
+        }
+        mtkView!.delegate = renderer!
+
+        window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 200, height: 100),
+            styleMask: [.borderless,
+                        .fullSizeContentView],
+            backing: .buffered,
+            defer: false
+        )
+        window!.backgroundColor = NSColor.clear
+        window!.hasShadow = false
+        window!.ignoresMouseEvents = true
+        window!.collectionBehavior = [.transient, .ignoresCycle]
+        window!.isOpaque = false
+        window!.level = .statusBar
+        window!.contentView = mtkView
+
+        focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
+            if frame.width > 0 {
+                self.window?.setFrame(frame, display: true)
+                self.window?.makeKeyAndOrderFront(self)
+                if self.userSettings != nil {
+                    self.renderer?.setEffect(Effect(rawValue: self.userSettings!.effect))
+                }
+                self.renderer?.restart()
+            } else {
                 self.hide()
             }
-            mtkView!.delegate = renderer!
-
-            window = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 200, height: 100),
-                styleMask: [.borderless,
-                            .fullSizeContentView],
-                backing: .buffered,
-                defer: false
-            )
-            window!.backgroundColor = NSColor.clear
-            window!.hasShadow = false
-            window!.ignoresMouseEvents = true
-            window!.collectionBehavior = [.transient, .ignoresCycle]
-            window!.isOpaque = false
-            window!.level = .statusBar
-            window!.contentView = mtkView
-
-            focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
-                if frame.width > 0 {
-                    self.window?.setFrame(frame, display: true)
-                    self.window?.makeKeyAndOrderFront(self)
-                    if self.userSettings != nil {
-                        self.renderer?.setEffect(Effect(rawValue: self.userSettings!.effect))
-                    }
-                    self.renderer?.restart()
-                } else {
-                    self.hide()
-                }
-            })
-        }
+        })
     }
 
     func applicationShouldHandleReopen(_: NSApplication,
