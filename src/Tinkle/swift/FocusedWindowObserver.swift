@@ -5,7 +5,6 @@ public final class FocusedWindowObserver {
     public typealias Callback = (_ frame: CGRect) -> Void
 
     private var observedApplications: [pid_t: ObservedApplication] = [:]
-    private var activeApplicationProcessIdentifier: pid_t = 0
 
     init(callback: @escaping Callback) {
         let sharedWorkspace = NSWorkspace.shared
@@ -27,46 +26,24 @@ public final class FocusedWindowObserver {
             let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey] as! NSRunningApplication
 
             //
-            // Update activeApplicationProcessIdentifier
+            // Update observedApplications
             //
 
-            self.activeApplicationProcessIdentifier = runningApplication.processIdentifier
+            do {
+                if self.observedApplications.index(forKey: runningApplication.processIdentifier) == nil {
+                    // ObservedApplication constructor might throw an exception if the application is just launched.
+                    // We append observedApplication only when ObservedApplication is created without error
+                    // in order to retry ObservedApplication creation at next didActivateApplicationNotification.
 
-            //
-            // Update applicationObservers
-            //
+                    let observedApplication = try ObservedApplication(runningApplication: runningApplication,
+                                                                      callback: callback)
+                    self.observedApplications[runningApplication.processIdentifier] = observedApplication
+                    print("ObservedApplication is created for \(runningApplication.processIdentifier)")
+                }
 
-            if self.observedApplications.index(forKey: runningApplication.processIdentifier) == nil {
-                let observedApplication = ObservedApplication(runningApplication: runningApplication,
-                                                              callback: callback)
-                self.observedApplications[runningApplication.processIdentifier] = observedApplication
-                print("ObservedApplication is created for \(runningApplication.processIdentifier)")
-            }
-
-            self.observedApplications[runningApplication.processIdentifier]!.emit()
-        }
-
-        //
-        // NSWorkspace.didDeactivateApplicationNotification
-        //
-
-        notificationCenter.addObserver(
-            forName: NSWorkspace.didDeactivateApplicationNotification,
-            object: sharedWorkspace,
-            queue: OperationQueue.main
-        ) { note in
-            guard let userInfo = note.userInfo else {
-                print("Missing notification info on NSWorkspace.didActivateApplicationNotification")
-                return
-            }
-            let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey] as! NSRunningApplication
-
-            //
-            // Update activeApplicationProcessIdentifier
-            //
-
-            if self.activeApplicationProcessIdentifier == runningApplication.processIdentifier {
-                self.activeApplicationProcessIdentifier = 0
+                self.observedApplications[runningApplication.processIdentifier]!.emit()
+            } catch {
+                print("ObservedApplication error: \(error)")
             }
         }
 
@@ -86,7 +63,7 @@ public final class FocusedWindowObserver {
             let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey] as! NSRunningApplication
 
             //
-            // Update applicationObservers
+            // Update observedApplications
             //
 
             self.observedApplications.removeValue(forKey: runningApplication.processIdentifier)
@@ -99,7 +76,7 @@ private final class ObservedApplication {
     private var observer: Observer?
     private let callback: FocusedWindowObserver.Callback
 
-    init(runningApplication: NSRunningApplication, callback: @escaping FocusedWindowObserver.Callback) {
+    init(runningApplication: NSRunningApplication, callback: @escaping FocusedWindowObserver.Callback) throws {
         self.callback = callback
 
         application = Application(runningApplication)
@@ -114,11 +91,7 @@ private final class ObservedApplication {
             }
         }
 
-        do {
-            try observer?.addNotification(.focusedWindowChanged, forElement: application!)
-        } catch {
-            print("Observer.addNotification error: \(error)")
-        }
+        try observer?.addNotification(.focusedWindowChanged, forElement: application!)
     }
 
     func emit() {
