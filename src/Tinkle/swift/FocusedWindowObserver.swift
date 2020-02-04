@@ -4,9 +4,12 @@ import AXSwift
 public final class FocusedWindowObserver {
     public typealias Callback = (_ frame: CGRect) -> Void
 
+    private let callback: Callback
     private var observedApplications: [pid_t: ObservedApplication] = [:]
 
     init(callback: @escaping Callback) {
+        self.callback = callback
+
         let sharedWorkspace = NSWorkspace.shared
         let notificationCenter = sharedWorkspace.notificationCenter
 
@@ -25,26 +28,31 @@ public final class FocusedWindowObserver {
             }
             let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey] as! NSRunningApplication
 
-            //
-            // Update observedApplications
-            //
+            self.addObservedApplication(runningApplication)
+        }
 
-            do {
-                if self.observedApplications.index(forKey: runningApplication.processIdentifier) == nil {
-                    // ObservedApplication constructor might throw an exception if the application is just launched.
-                    // We append observedApplication only when ObservedApplication is created without error
-                    // in order to retry ObservedApplication creation at next didActivateApplicationNotification.
+        //
+        // NSWorkspace.didLaunchApplicationNotification
+        //
 
-                    let observedApplication = try ObservedApplication(runningApplication: runningApplication,
-                                                                      callback: callback)
-                    self.observedApplications[runningApplication.processIdentifier] = observedApplication
-                    print("ObservedApplication is created for \(runningApplication.processIdentifier)")
-                }
+        // We have to observe didLaunchApplicationNotification even didActivateApplicationNotification is observed.
+        // Application.createObserver will be failed at application is just launched since
+        // the didActivateApplicationNotification is posted before Application.createObserver is ready.
+        // The didLaunchApplicationNotification is posted at properly timing,
+        // so we can observe the application with it.
 
-                self.observedApplications[runningApplication.processIdentifier]!.emit()
-            } catch {
-                print("ObservedApplication error: \(error)")
+        notificationCenter.addObserver(
+            forName: NSWorkspace.didLaunchApplicationNotification,
+            object: sharedWorkspace,
+            queue: OperationQueue.main
+        ) { note in
+            guard let userInfo = note.userInfo else {
+                print("Missing notification info on NSWorkspace.didLaunchApplicationNotification")
+                return
             }
+            let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey] as! NSRunningApplication
+
+            self.addObservedApplication(runningApplication)
         }
 
         //
@@ -67,6 +75,26 @@ public final class FocusedWindowObserver {
             //
 
             self.observedApplications.removeValue(forKey: runningApplication.processIdentifier)
+        }
+    }
+
+    private func addObservedApplication(_ runningApplication: NSRunningApplication) {
+        do {
+            if observedApplications.index(forKey: runningApplication.processIdentifier) == nil {
+                // ObservedApplication constructor might throw an exception if the application is just launched.
+                // Thus, we append observedApplication only when ObservedApplication is created without error
+                // in order to retry ObservedApplication creation at next didActivateApplicationNotification or
+                // didLaunchApplicationNotification.
+
+                let observedApplication = try ObservedApplication(runningApplication: runningApplication,
+                                                                  callback: callback)
+                observedApplications[runningApplication.processIdentifier] = observedApplication
+                print("ObservedApplication is created for \(runningApplication.processIdentifier)")
+            }
+
+            observedApplications[runningApplication.processIdentifier]!.emit()
+        } catch {
+            print("ObservedApplication error: \(error)")
         }
     }
 }
