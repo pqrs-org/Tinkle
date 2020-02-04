@@ -2,7 +2,7 @@
 
 @implementation OpenAtLoginObjc
 
-+ (LSSharedFileListItemRef)getLSSharedFileListItemRef:(LSSharedFileListRef)loginItems appURL:(NSURL*)appURL {
++ (LSSharedFileListItemRef)copyLSSharedFileListItemRef:(LSSharedFileListRef)loginItems appURL:(NSURL*)appURL {
   if (!loginItems) return NULL;
 
   LSSharedFileListItemRef retval = NULL;
@@ -39,20 +39,27 @@
 }
 
 + (BOOL)enabled:(NSURL*)appURL {
-  LSSharedFileListItemRef item = NULL;
+  BOOL result = NO;
 
   LSSharedFileListRef loginItems = [self createLoginItems];
   if (loginItems) {
-    item = [self getLSSharedFileListItemRef:loginItems appURL:appURL];
+    LSSharedFileListItemRef item = [self copyLSSharedFileListItemRef:loginItems appURL:appURL];
+    if (item) {
+      result = YES;
+
+      CFRelease(item);
+    }
 
     CFRelease(loginItems);
   }
 
-  return item != NULL;
+  return result;
 }
 
 + (void)enable:(NSURL*)appURL {
-  [self disable:appURL];
+  if ([self enabled:appURL]) {
+    return;
+  }
 
   LSSharedFileListRef loginItems = [self createLoginItems];
   if (loginItems) {
@@ -68,9 +75,11 @@
 + (void)disable:(NSURL*)appURL {
   LSSharedFileListRef loginItems = [self createLoginItems];
   if (loginItems) {
-    LSSharedFileListItemRef item = [self getLSSharedFileListItemRef:loginItems appURL:appURL];
+    LSSharedFileListItemRef item = [self copyLSSharedFileListItemRef:loginItems appURL:appURL];
     if (item) {
       LSSharedFileListItemRemove(loginItems, item);
+
+      CFRelease(item);
     }
 
     CFRelease(loginItems);
