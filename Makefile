@@ -13,7 +13,7 @@ package:
 	rm -rf Tinkle-$(VERSION)
 	mkdir -p Tinkle-$(VERSION)
 	rsync -a src/build/Release/Tinkle.app Tinkle-$(VERSION)
-	bash scripts/codesign.sh Tinkle-$(VERSION)
+	-bash scripts/codesign.sh Tinkle-$(VERSION)
 	hdiutil create -nospotlight Tinkle-$(VERSION).dmg -srcfolder Tinkle-$(VERSION) -fs 'Journaled HFS+'
 	rm -rf Tinkle-$(VERSION)
 
