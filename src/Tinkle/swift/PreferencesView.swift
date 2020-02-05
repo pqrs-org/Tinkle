@@ -74,9 +74,16 @@ struct PreferencesView: View {
     }
 
     let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
-
+    
+    struct GUISize {
+        static let groupBoxPadding = EdgeInsets(top: 5.0,
+                                                leading: 10.5,
+                                                bottom: 5.0,
+                                                trailing: 10.5)
+    }
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 20.0) {
+        VStack(alignment: .leading, spacing: 25.0) {
             HStack {
                 Image(decorative: "logo").resizable().frame(width: 64.0, height: 64.0)
                 Text("Tinkle version " + self.version)
@@ -94,7 +101,7 @@ struct PreferencesView: View {
             Text(self.userApproved)
 
             GroupBox(label: Text("Configuration")) {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 10.0) {
                     HStack {
                         EffectPicker(selectedEffectRawValue: self.$userSettings.effect)
                         Spacer()
@@ -103,7 +110,7 @@ struct PreferencesView: View {
                         OpenAtLoginToggle()
                         Spacer()
                     }
-                }
+                }.padding(GUISize.groupBoxPadding)
             }
 
             GroupBox(label: Text("Web sites")) {
@@ -129,7 +136,7 @@ struct PreferencesView: View {
                         Text("Open GitHub (source code)")
                     }
                     Spacer()
-                }
+                }.padding(GUISize.groupBoxPadding)
             }
 
             Spacer()
@@ -176,6 +183,6 @@ struct EffectEntry {
 
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferencesView().frame(width: 400.0, height: 300.0)
+        PreferencesView()        
     }
 }
