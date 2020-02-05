@@ -24,7 +24,24 @@
 		34933B3623D85EB700C8067E /* shockwave.metal in Sources */ = {isa = PBXBuildFile; fileRef = 34933B3523D85EB700C8067E /* shockwave.metal */; };
 		34933B3923D85EE300C8067E /* AXSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 34933B3823D85EE300C8067E /* AXSwift */; };
 		34D87BE923DB69A800B02712 /* FocusedWindowObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D87BE823DB69A800B02712 /* FocusedWindowObserver.swift */; };
+		34E8852223EA96C40057ED80 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34E8851F23EA961E0057ED80 /* Sparkle.framework */; };
+		34E8852323EA96C40057ED80 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34E8851F23EA961E0057ED80 /* Sparkle.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		34E8852623EA97E00057ED80 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E8852523EA97E00057ED80 /* Updater.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		34E8852423EA96C40057ED80 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				34E8852323EA96C40057ED80 /* Sparkle.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults-propertyWrapper.swift"; sourceTree = "<group>"; };
@@ -48,6 +65,8 @@
 		34933B3123D85E7D00C8067E /* MetalViewRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalViewRenderer.swift; sourceTree = "<group>"; };
 		34933B3523D85EB700C8067E /* shockwave.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = shockwave.metal; sourceTree = "<group>"; };
 		34D87BE823DB69A800B02712 /* FocusedWindowObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusedWindowObserver.swift; sourceTree = "<group>"; };
+		34E8851F23EA961E0057ED80 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Tinkle/vendor/Sparkle/Sparkle.framework; sourceTree = "<group>"; };
+		34E8852523EA97E00057ED80 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34933B3923D85EE300C8067E /* AXSwift in Frameworks */,
+				34E8852223EA96C40057ED80 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +97,7 @@
 			children = (
 				34933B1B23D85DF700C8067E /* Tinkle */,
 				34933B1A23D85DF700C8067E /* Products */,
+				34E8851E23EA961E0057ED80 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,10 +152,19 @@
 				34933B3123D85E7D00C8067E /* MetalViewRenderer.swift */,
 				34558F9B23E86B0D00CBE9CA /* OpenAtLogin.swift */,
 				3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */,
+				34E8852523EA97E00057ED80 /* Updater.swift */,
 				34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */,
 				34037A0923E33C4800824CEE /* UserSettings.swift */,
 			);
 			path = swift;
+			sourceTree = "<group>";
+		};
+		34E8851E23EA961E0057ED80 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				34E8851F23EA961E0057ED80 /* Sparkle.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +177,7 @@
 				34933B1523D85DF700C8067E /* Sources */,
 				34933B1623D85DF700C8067E /* Frameworks */,
 				34933B1723D85DF700C8067E /* Resources */,
+				34E8852423EA96C40057ED80 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -227,6 +258,7 @@
 				340A10E423E0741A00668F56 /* nop.metal in Sources */,
 				34933B3623D85EB700C8067E /* shockwave.metal in Sources */,
 				3468C2A823DDAB3C00CB8901 /* PreferencesView.swift in Sources */,
+				34E8852623EA97E00057ED80 /* Updater.swift in Sources */,
 				3460A00623E1D49A0066543A /* neon.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,6 +403,10 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Tinkle/vendor/Sparkle",
+				);
 				INFOPLIST_FILE = Tinkle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -399,6 +435,10 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Tinkle/vendor/Sparkle",
+				);
 				INFOPLIST_FILE = Tinkle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -14,6 +14,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var userSettings: UserSettings?
 
     func applicationDidFinishLaunching(_: Notification) {
+        Updater.checkForUpdatesInBackground()
+        
         if !UIElement.isProcessTrusted(withPrompt: true) {
             print("user approval is required")
             return
