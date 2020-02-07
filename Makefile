@@ -8,7 +8,7 @@ update-info-plist:
 
 package:
 	$(MAKE) update-info-plist
-	$(MAKE) -C src
+	$(MAKE) -C src clean all
 
 	rm -rf Tinkle-$(VERSION)
 	mkdir -p Tinkle-$(VERSION)
