@@ -25,7 +25,7 @@
 		34933B3923D85EE300C8067E /* AXSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 34933B3823D85EE300C8067E /* AXSwift */; };
 		34D87BE923DB69A800B02712 /* FocusedWindowObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D87BE823DB69A800B02712 /* FocusedWindowObserver.swift */; };
 		34E8852223EA96C40057ED80 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34E8851F23EA961E0057ED80 /* Sparkle.framework */; };
-		34E8852323EA96C40057ED80 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34E8851F23EA961E0057ED80 /* Sparkle.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		34E8852323EA96C40057ED80 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34E8851F23EA961E0057ED80 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		34E8852623EA97E00057ED80 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E8852523EA97E00057ED80 /* Updater.swift */; };
 /* End PBXBuildFile section */
 

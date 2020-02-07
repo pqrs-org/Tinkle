@@ -74,14 +74,14 @@ struct PreferencesView: View {
     }
 
     let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
-    
+
     struct GUISize {
         static let groupBoxPadding = EdgeInsets(top: 5.0,
                                                 leading: 10.5,
                                                 bottom: 5.0,
                                                 trailing: 10.5)
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 25.0) {
             HStack {
@@ -109,6 +109,30 @@ struct PreferencesView: View {
                     HStack {
                         OpenAtLoginToggle()
                         Spacer()
+                    }
+                }.padding(GUISize.groupBoxPadding)
+            }
+
+            GroupBox(label: Text("Updates")) {
+                HStack {
+                    Button(action: {
+                        Updater.checkForUpdatesStableOnly()
+                    }) {
+                        Image(decorative: "ic_star_18pt")
+                            .resizable()
+                            .frame(width: 16.0, height: 16.0)
+                        Text("Check for updates")
+                    }
+
+                    Spacer()
+
+                    Button(action: {
+                        Updater.checkForUpdatesWithBetaVersion()
+                    }) {
+                        Image(decorative: "ic_star_18pt")
+                            .resizable()
+                            .frame(width: 16.0, height: 16.0)
+                        Text("Check for beta updates")
                     }
                 }.padding(GUISize.groupBoxPadding)
             }
@@ -183,6 +207,6 @@ struct EffectEntry {
 
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferencesView()        
+        PreferencesView()
     }
 }
