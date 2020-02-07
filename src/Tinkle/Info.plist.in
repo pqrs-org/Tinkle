@@ -34,5 +34,11 @@
 	<false/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>SUPublicEDKey</key>
+	<string>WdJ29ySfnKxiloyN7d2q/Q9NRijT1kC7q1b87fRcW8c=</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://tinkle.pqrs.org/files/appcast.xml</string>
 </dict>
 </plist>
