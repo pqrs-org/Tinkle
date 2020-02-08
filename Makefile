@@ -17,20 +17,16 @@ package:
 	hdiutil create -nospotlight Tinkle-$(VERSION).dmg -srcfolder Tinkle-$(VERSION) -fs 'Journaled HFS+'
 	rm -rf Tinkle-$(VERSION)
 
-	rm -rf dist
-	mkdir -p dist
-	mv Tinkle-*.dmg dist
-
 clean:
 	$(MAKE) -C src clean
 
 notarize:
 	xcrun altool --notarize-app \
 		-t osx \
-		-f dist/Tinkle-*.dmg \
+		-f Tinkle-$(VERSION).dmg \
 		--primary-bundle-id 'org.pqrs.Tinkle' \
 		-u 'tekezo@pqrs.org' \
 		-p '@keychain:pqrs.org-notarize-app'
 
 staple:
-	xcrun stapler staple dist/Tinkle-*.dmg
+	xcrun stapler staple Tinkle-$(VERSION).dmg
