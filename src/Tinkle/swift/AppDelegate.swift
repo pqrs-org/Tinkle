@@ -14,6 +14,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var userSettings: UserSettings?
 
     func applicationDidFinishLaunching(_: Notification) {
+        NSApplication.shared.disableRelaunchOnLogin()
+
         Updater.checkForUpdatesInBackground()
 
         if !UIElement.isProcessTrusted(withPrompt: true) {
