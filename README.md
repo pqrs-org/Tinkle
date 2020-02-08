@@ -8,7 +8,9 @@ It helps finding the focused window when you switched it by keyboard shortcuts.
 
 ![Tinkle](docs/Tinkle.gif)
 
----
+## Download
+
+You can download from <https://tinkle.pqrs.org/>.
 
 ## Supported systems
 
@@ -22,16 +24,31 @@ Tinkle requires accessibility features in order to detect the focused window cha
 
 ---
 
-## Using a pre-built binary
+## For developers
 
-Use `dist/Tinkle-xxx.dmg`
+### How to build
 
-## Building from source code
+System requirements to build Tinkle:
+
+-   macOS 10.15+
+-   Xcode 11+
+-   Command Line Tools for Xcode
+-   [create-dmg](https://github.com/sindresorhus/create-dmg)
+
+#### Step 1: Getting source code
+
+Clone the source from github.
+
+```shell
+git clone --depth 1 https://github.com/pqrs-org/Tinkle.git
+```
+
+#### Step 2: Building a dmg
 
 Execute make command on the terminal.
 
 ```shell
-make -C src
+make package
 ```
 
-`src/build/Release/Tinkle.app` is a built file.
+`Tinkle-*.dmg` will be generated.
