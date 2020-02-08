@@ -7,9 +7,34 @@ struct PreferencesView: View {
     @State var preferencesWindowDelegate = PreferencesWindowDelegate()
     @ObservedObject var userSettings = UserSettings()
 
-    let userApproved: String = UIElement.isProcessTrusted() ?
-        "Accessibility features are approved." :
-        "User approval for using accessibility features is required."
+    struct GUISize {
+        static let buttonIconWidth: CGFloat = 16.0
+        static let buttonIconHeight: CGFloat = 16.0
+        static let groupBoxPadding = EdgeInsets(top: 5.0,
+                                                leading: 10.5,
+                                                bottom: 5.0,
+                                                trailing: 10.5)
+    }
+
+    struct RestartButton: View {
+        var body: some View {
+            Button(action: {
+                do {
+                    let process = Process()
+                    process.executableURL = Bundle.main.executableURL
+                    try process.run()
+                    NSApplication.shared.terminate(self)
+                } catch {
+                    print("Process.run error: \(error)")
+                }
+            }) {
+                Image(decorative: "ic_refresh_18pt")
+                    .resizable()
+                    .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
+                Text("Restart Tinkle")
+            }
+        }
+    }
 
     struct EffectPicker: View {
         @Binding var selectedEffectRawValue: String
@@ -75,13 +100,6 @@ struct PreferencesView: View {
 
     let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
 
-    struct GUISize {
-        static let groupBoxPadding = EdgeInsets(top: 5.0,
-                                                leading: 10.5,
-                                                bottom: 5.0,
-                                                trailing: 10.5)
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 25.0) {
             HStack {
@@ -90,80 +108,95 @@ struct PreferencesView: View {
 
                 Spacer()
 
-                Button(action: { NSApplication.shared.terminate(self) }) {
-                    Image(decorative: "ic_cancel_18pt")
-                        .resizable()
-                        .frame(width: 16.0, height: 16.0)
-                    Text("Quit Tinkle")
+                VStack(alignment: .trailing) {
+                    Button(action: { NSApplication.shared.terminate(self) }) {
+                        Image(decorative: "ic_cancel_18pt")
+                            .resizable()
+                            .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
+                        Text("Quit Tinkle")
+                    }
+                    RestartButton()
                 }
             }
 
-            Text(self.userApproved)
+            if !UIElement.isProcessTrusted() {
+                GroupBox(label: Text("User approval is required")) {
+                    VStack(alignment: .leading) {
+                        Text("User approval for using accessibility features is required.")
+                        Text("Tinkle uses the feature to detect the focused window changes.")
 
-            GroupBox(label: Text("Configuration")) {
-                VStack(alignment: .leading, spacing: 10.0) {
-                    HStack {
-                        EffectPicker(selectedEffectRawValue: self.$userSettings.effect)
-                        Spacer()
-                    }
-                    HStack {
-                        OpenAtLoginToggle()
-                        Spacer()
-                    }
-                }.padding(GUISize.groupBoxPadding)
-            }
+                        Spacer(minLength: 20.0)
 
-            GroupBox(label: Text("Updates")) {
-                HStack {
-                    Button(action: {
-                        Updater.checkForUpdatesStableOnly()
-                    }) {
-                        Image(decorative: "ic_star_18pt")
-                            .resizable()
-                            .frame(width: 16.0, height: 16.0)
-                        Text("Check for updates")
-                    }
-
-                    Spacer()
-
-                    Button(action: {
-                        Updater.checkForUpdatesWithBetaVersion()
-                    }) {
-                        Image(decorative: "ic_star_18pt")
-                            .resizable()
-                            .frame(width: 16.0, height: 16.0)
-                        Text("Check for beta updates")
-                    }
-                }.padding(GUISize.groupBoxPadding)
-            }
-
-            GroupBox(label: Text("Web sites")) {
-                HStack(spacing: 20.0) {
-                    Button(action: {
-                        if let url = URL(string: "https://tinkle.pqrs.org") {
-                            NSWorkspace.shared.open(url)
+                        Text("Open System Preferences > Security & Privacy, then turn on Tinkle.")
+                        Button(action: { NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy")!) }) {
+                            Text("Open System Preferences")
                         }
-                    }) {
-                        Image(decorative: "ic_home_18pt")
-                            .resizable()
-                            .frame(width: 16.0, height: 16.0)
-                        Text("Open official website")
-                    }
-                    Button(action: {
-                        if let url = URL(string: "https://github.com/pqrs-org/Tinkle") {
-                            NSWorkspace.shared.open(url)
-                        }
-                    }) {
-                        Image(decorative: "ic_code_18pt")
-                            .resizable()
-                            .frame(width: 16.0, height: 16.0)
-                        Text("Open GitHub (source code)")
-                    }
-                    Spacer()
-                }.padding(GUISize.groupBoxPadding)
-            }
 
-            Spacer()
+                        Spacer(minLength: 20.0)
+
+                        Text("Restart Tinkle after you approve the feature.")
+                        RestartButton()
+
+                        HStack {
+                            Image("accessibility")
+                                .resizable()
+                                .frame(width: 445.0, height: 382.0)
+                            Spacer()
+                        }
+                    }.padding(GUISize.groupBoxPadding)
+                }
+            } else {
+                GroupBox(label: Text("Configuration")) {
+                    VStack(alignment: .leading, spacing: 10.0) {
+                        HStack {
+                            EffectPicker(selectedEffectRawValue: self.$userSettings.effect)
+                            Spacer()
+                        }
+                        HStack {
+                            OpenAtLoginToggle()
+                            Spacer()
+                        }
+                    }.padding(GUISize.groupBoxPadding)
+                }
+
+                GroupBox(label: Text("Updates")) {
+                    HStack {
+                        Button(action: { Updater.checkForUpdatesStableOnly() }) {
+                            Image(decorative: "ic_star_18pt")
+                                .resizable()
+                                .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
+                            Text("Check for updates")
+                        }
+
+                        Spacer()
+
+                        Button(action: { Updater.checkForUpdatesWithBetaVersion() }) {
+                            Image(decorative: "ic_star_18pt")
+                                .resizable()
+                                .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
+                            Text("Check for beta updates")
+                        }
+                    }.padding(GUISize.groupBoxPadding)
+                }
+
+                GroupBox(label: Text("Web sites")) {
+                    HStack(spacing: 20.0) {
+                        Button(action: { NSWorkspace.shared.open(URL(string: "https://tinkle.pqrs.org")!) }) {
+                            Image(decorative: "ic_home_18pt")
+                                .resizable()
+                                .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
+                            Text("Open official website")
+                        }
+                        Button(action: { NSWorkspace.shared.open(URL(string: "https://github.com/pqrs-org/Tinkle")!) }) {
+                            Image(decorative: "ic_code_18pt")
+                                .resizable()
+                                .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
+                            Text("Open GitHub (source code)")
+                        }
+                        Spacer()
+                    }.padding(GUISize.groupBoxPadding)
+                }
+            }
         }
         .padding(20.0)
     }
