@@ -52,3 +52,9 @@ make package
 ```
 
 `Tinkle-*.dmg` will be generated.
+
+### Playgrounds
+
+Tinkle users Metal shader to make effects.
+
+`playground/Metal.playground` helps you if you want to add your own effect.
