@@ -1,4 +1,5 @@
 VERSION = `head -n 1 version`
+DMG_IDENTITY = 'Developer ID Application: Fumihiko Takayama (G43BCU2T37)'
 
 all:
 	@echo 'Type `make package`'
@@ -10,12 +11,14 @@ package:
 	$(MAKE) update-info-plist
 	$(MAKE) -C src clean all
 
-	rm -rf Tinkle-$(VERSION)
-	mkdir -p Tinkle-$(VERSION)
-	rsync -a src/build/Release/Tinkle.app Tinkle-$(VERSION)
-	-bash scripts/codesign.sh Tinkle-$(VERSION)
-	hdiutil create -nospotlight Tinkle-$(VERSION).dmg -srcfolder Tinkle-$(VERSION) -fs 'Journaled HFS+'
-	rm -rf Tinkle-$(VERSION)
+	rm -f Tinkle-$(VERSION).dmg
+	rm -rf tmp
+	mkdir -p tmp
+	rsync -a src/build/Release/Tinkle.app tmp
+	-bash scripts/codesign.sh tmp
+	create-dmg --overwrite --identity=$(DMG_IDENTITY) tmp/Tinkle.app
+	rm -rf tmp
+	mv "Tinkle $(VERSION).dmg" Tinkle-$(VERSION).dmg
 
 clean:
 	$(MAKE) -C src clean
