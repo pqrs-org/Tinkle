@@ -1,6 +1,6 @@
 import Foundation
 
-public struct OpenAtLogin {
+struct OpenAtLogin {
     public static var enabled: Bool {
         get {
             let bundlePath = Bundle.main.bundlePath

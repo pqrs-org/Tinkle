@@ -1,7 +1,7 @@
 import Foundation
 import Sparkle
 
-public struct Updater {
+struct Updater {
     static func checkForUpdatesInBackground() {
         let url = feedURL(false)
         print("checkForUpdates \(url)")
