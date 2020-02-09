@@ -10,6 +10,7 @@
 		34037A0823E33B3900824CEE /* UserDefaults-propertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */; };
 		34037A0A23E33C4800824CEE /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34037A0923E33C4800824CEE /* UserSettings.swift */; };
 		340A10E423E0741A00668F56 /* nop.metal in Sources */ = {isa = PBXBuildFile; fileRef = 340A10E323E0741A00668F56 /* nop.metal */; };
+		340ED1C423EFFFC900713F39 /* Relauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340ED1C323EFFFC900713F39 /* Relauncher.swift */; };
 		34558F9C23E86B0D00CBE9CA /* OpenAtLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34558F9B23E86B0D00CBE9CA /* OpenAtLogin.swift */; };
 		34558FA523E86D5600CBE9CA /* OpenAtLoginObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 34558FA323E86D5600CBE9CA /* OpenAtLoginObjc.m */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations"; }; };
 		3460A00623E1D49A0066543A /* neon.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3460A00523E1D49A0066543A /* neon.metal */; };
@@ -47,6 +48,7 @@
 		34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults-propertyWrapper.swift"; sourceTree = "<group>"; };
 		34037A0923E33C4800824CEE /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		340A10E323E0741A00668F56 /* nop.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = nop.metal; sourceTree = "<group>"; };
+		340ED1C323EFFFC900713F39 /* Relauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Relauncher.swift; sourceTree = "<group>"; };
 		34558F9B23E86B0D00CBE9CA /* OpenAtLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAtLogin.swift; sourceTree = "<group>"; };
 		34558FA223E86D5600CBE9CA /* Tinkle-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tinkle-Bridging-Header.h"; sourceTree = "<group>"; };
 		34558FA323E86D5600CBE9CA /* OpenAtLoginObjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenAtLoginObjc.m; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				34933B3123D85E7D00C8067E /* MetalViewRenderer.swift */,
 				34558F9B23E86B0D00CBE9CA /* OpenAtLogin.swift */,
 				3468C2A723DDAB3C00CB8901 /* PreferencesView.swift */,
+				340ED1C323EFFFC900713F39 /* Relauncher.swift */,
 				34E8852523EA97E00057ED80 /* Updater.swift */,
 				34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */,
 				34037A0923E33C4800824CEE /* UserSettings.swift */,
@@ -253,6 +256,7 @@
 				34933B1D23D85DF700C8067E /* AppDelegate.swift in Sources */,
 				34933B3323D85E7D00C8067E /* MetalViewRenderer.swift in Sources */,
 				34558F9C23E86B0D00CBE9CA /* OpenAtLogin.swift in Sources */,
+				340ED1C423EFFFC900713F39 /* Relauncher.swift in Sources */,
 				34037A0823E33B3900824CEE /* UserDefaults-propertyWrapper.swift in Sources */,
 				34037A0A23E33C4800824CEE /* UserSettings.swift in Sources */,
 				340A10E423E0741A00668F56 /* nop.metal in Sources */,
