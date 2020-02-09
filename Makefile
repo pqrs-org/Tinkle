@@ -21,6 +21,7 @@ package:
 	mv "Tinkle $(VERSION).dmg" Tinkle-$(VERSION).dmg
 
 clean:
+	rm -f *.dmg
 	$(MAKE) -C src clean
 
 notarize:
