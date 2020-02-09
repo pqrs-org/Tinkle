@@ -18,16 +18,8 @@ struct PreferencesView: View {
 
     struct RestartButton: View {
         var body: some View {
-            Button(action: {
-                do {
-                    let process = Process()
-                    process.executableURL = Bundle.main.executableURL
-                    try process.run()
-                    NSApplication.shared.terminate(self)
-                } catch {
-                    print("Process.run error: \(error)")
-                }
-            }) {
+            Button(action: { Relauncher.relaunch() })
+            {
                 Image(decorative: "ic_refresh_18pt")
                     .resizable()
                     .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
@@ -109,7 +101,8 @@ struct PreferencesView: View {
                 Spacer()
 
                 VStack(alignment: .trailing) {
-                    Button(action: { NSApplication.shared.terminate(self) }) {
+                    Button(action: { NSApplication.shared.terminate(self) })
+                    {
                         Image(decorative: "ic_cancel_18pt")
                             .resizable()
                             .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
@@ -128,7 +121,8 @@ struct PreferencesView: View {
                         Spacer(minLength: 20.0)
 
                         Text("Open System Preferences > Security & Privacy, then turn on Tinkle.")
-                        Button(action: { NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy")!) }) {
+                        Button(action: { NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy")!) })
+                        {
                             Text("Open System Preferences")
                         }
 
@@ -161,7 +155,8 @@ struct PreferencesView: View {
 
                 GroupBox(label: Text("Updates")) {
                     HStack {
-                        Button(action: { Updater.checkForUpdatesStableOnly() }) {
+                        Button(action: { Updater.checkForUpdatesStableOnly() })
+                        {
                             Image(decorative: "ic_star_18pt")
                                 .resizable()
                                 .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
@@ -170,7 +165,8 @@ struct PreferencesView: View {
 
                         Spacer()
 
-                        Button(action: { Updater.checkForUpdatesWithBetaVersion() }) {
+                        Button(action: { Updater.checkForUpdatesWithBetaVersion() })
+                        {
                             Image(decorative: "ic_star_18pt")
                                 .resizable()
                                 .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
@@ -181,13 +177,15 @@ struct PreferencesView: View {
 
                 GroupBox(label: Text("Web sites")) {
                     HStack(spacing: 20.0) {
-                        Button(action: { NSWorkspace.shared.open(URL(string: "https://tinkle.pqrs.org")!) }) {
+                        Button(action: { NSWorkspace.shared.open(URL(string: "https://tinkle.pqrs.org")!) })
+                        {
                             Image(decorative: "ic_home_18pt")
                                 .resizable()
                                 .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
                             Text("Open official website")
                         }
-                        Button(action: { NSWorkspace.shared.open(URL(string: "https://github.com/pqrs-org/Tinkle")!) }) {
+                        Button(action: { NSWorkspace.shared.open(URL(string: "https://github.com/pqrs-org/Tinkle")!) })
+                        {
                             Image(decorative: "ic_code_18pt")
                                 .resizable()
                                 .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
