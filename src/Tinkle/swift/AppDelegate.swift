@@ -11,19 +11,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var observers: [pid_t: Observer] = [:]
     var focusedWindowObserver: FocusedWindowObserver?
     var preferencesView: PreferencesView?
-    var userSettings: UserSettings?
+    var userSettings: UserSettings!
+    var axStatusChecker: AXStatusChecker!
 
     func applicationDidFinishLaunching(_: Notification) {
         NSApplication.shared.disableRelaunchOnLogin()
 
         Updater.checkForUpdatesInBackground()
 
+        userSettings = UserSettings()
+        axStatusChecker = AXStatusChecker()
+
         if !UIElement.isProcessTrusted(withPrompt: true) {
             print("user approval is required")
             return
         }
-
-        userSettings = UserSettings()
 
         mtkView = MTKView()
         mtkView!.framebufferOnly = false
