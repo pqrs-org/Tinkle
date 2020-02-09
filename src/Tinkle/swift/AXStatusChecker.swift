@@ -19,5 +19,7 @@ class AXStatusChecker {
                 }
             }
         }
+
+        timer!.fire()
     }
 }
