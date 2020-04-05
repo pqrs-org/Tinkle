@@ -151,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				34933B1C23D85DF700C8067E /* AppDelegate.swift */,
+				346E6C0C23F0028E003C8CF1 /* AXStatusChecker.swift */,
 				348624EF23E4958D006F2891 /* Effect.swift */,
 				34D87BE823DB69A800B02712 /* FocusedWindowObserver.swift */,
 				34933B3123D85E7D00C8067E /* MetalViewRenderer.swift */,
@@ -160,7 +161,6 @@
 				34E8852523EA97E00057ED80 /* Updater.swift */,
 				34037A0723E33B3900824CEE /* UserDefaults-propertyWrapper.swift */,
 				34037A0923E33C4800824CEE /* UserSettings.swift */,
-				346E6C0C23F0028E003C8CF1 /* AXStatusChecker.swift */,
 			);
 			path = swift;
 			sourceTree = "<group>";

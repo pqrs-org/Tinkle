@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var preferencesView: PreferencesView?
     var userSettings: UserSettings!
     var axStatusChecker: AXStatusChecker!
+    var statusBarItem: NSStatusItem?
 
     func applicationDidFinishLaunching(_: Notification) {
         NSApplication.shared.disableRelaunchOnLogin()
@@ -21,6 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         userSettings = UserSettings()
         axStatusChecker = AXStatusChecker()
+        showMenu()
 
         if !UIElement.isProcessTrusted(withPrompt: true) {
             print("user approval is required")
@@ -67,11 +69,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationShouldHandleReopen(_: NSApplication,
                                        hasVisibleWindows _: Bool) -> Bool {
-        showPreferences()
+        showPreferences(sender: self)
         return true
     }
 
-    func showPreferences() {
+    func showMenu() {
+        statusBarItem = NSStatusBar.system.statusItem(
+            withLength: NSStatusItem.squareLength
+        )
+        statusBarItem?.button?.image = NSImage(named: "menu")
+
+        let menu = NSMenu(title: "Tinkle")
+
+        menu.addItem(
+            withTitle: "Preferences...",
+            action: #selector(showPreferences),
+            keyEquivalent: ""
+        )
+
+        menu.addItem(NSMenuItem.separator())
+
+        menu.addItem(
+            withTitle: "Quit Tinkle",
+            action: #selector(NSApplication.shared.terminate),
+            keyEquivalent: ""
+        )
+
+        statusBarItem?.menu = menu
+    }
+
+    @objc func showPreferences(sender _: AnyObject?) {
         if let preferencesView = preferencesView, preferencesView.preferencesWindowDelegate.windowIsOpen {
             preferencesView.window.makeKeyAndOrderFront(self)
         } else {
