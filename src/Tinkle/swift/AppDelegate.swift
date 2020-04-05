@@ -101,6 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func showPreferences(sender _: AnyObject?) {
         if let preferencesView = preferencesView, preferencesView.preferencesWindowDelegate.windowIsOpen {
             preferencesView.window.makeKeyAndOrderFront(self)
+            NSApp.activate(ignoringOtherApps: true)
         } else {
             preferencesView = PreferencesView()
         }
