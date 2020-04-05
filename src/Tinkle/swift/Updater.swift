@@ -25,8 +25,8 @@ struct Updater {
 
     private static func feedURL(_ includingBetaVersions: Bool) -> URL {
         if includingBetaVersions {
-            return URL(string: "https://tinkle.pqrs.org/files/appcast-devel.xml")!
+            return URL(string: "https://appcast.pqrs.org/tinkle-appcast-devel.xml")!
         }
-        return URL(string: "https://tinkle.pqrs.org/files/appcast.xml")!
+        return URL(string: "https://appcast.pqrs.org/tinkle-appcast.xml")!
     }
 }

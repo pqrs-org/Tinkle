@@ -39,6 +39,6 @@
     <key>SUEnableAutomaticChecks</key>
     <true/>
     <key>SUFeedURL</key>
-    <string>https://tinkle.pqrs.org/files/appcast.xml</string>
+    <string>https://appcast.pqrs.org/tinkle-appcast.xml</string>
   </dict>
 </plist>
