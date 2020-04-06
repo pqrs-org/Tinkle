@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 @propertyWrapper
 struct UserDefault<T> {
@@ -14,8 +15,19 @@ struct UserDefault<T> {
         get {
             return UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
         }
-        set {
+        nonmutating set {
             UserDefaults.standard.set(newValue, forKey: key)
         }
+    }
+
+    var projectedValue: Binding<T> {
+        Binding<T>(
+            get: {
+                self.wrappedValue
+            },
+            set: {
+                newValue in self.wrappedValue = newValue
+            }
+        )
     }
 }
