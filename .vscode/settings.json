@@ -1,6 +1,7 @@
 {
     "files.exclude": {
-        "**/vendor/": true,
+        "**/build/": true,
+        "**/Vendor/": true,
         "src/Tinkle/Info.plist": true
     },
     "files.watcherExclude": {

@@ -1,4 +1,5 @@
 all:
+	xcodegen generate --use-cache
 	xcodebuild -configuration Release SYMROOT="$(CURDIR)/build"
 
 clean:

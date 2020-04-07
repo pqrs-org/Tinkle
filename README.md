@@ -33,6 +33,7 @@ System requirements to build Tinkle:
 -   macOS 10.15+
 -   Xcode 11+
 -   Command Line Tools for Xcode
+-   [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 -   [create-dmg](https://github.com/sindresorhus/create-dmg)
 
 #### Step 1: Getting source code

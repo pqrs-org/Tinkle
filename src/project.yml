@@ -1,0 +1,20 @@
+name: Tinkle
+options:
+  bundleIdPrefix: org.pqrs
+packages:
+  AXSwift:
+    url: https://github.com/tmandry/AXSwift
+    branch: master
+
+targets:
+  Tinkle:
+    type: application
+    platform: macOS
+    deploymentTarget: '10.15'
+    sources: [Tinkle]
+    settings:
+      base:
+        SWIFT_OBJC_BRIDGING_HEADER: 'Tinkle/objc/Tinkle-Bridging-Header.h'
+    dependencies:
+      - framework: Vendor/Sparkle/Sparkle.framework
+      - package: AXSwift
