@@ -150,6 +150,13 @@ struct PreferencesView: View {
                             OpenAtLoginToggle()
                             Spacer()
                         }
+                        HStack {
+                            Toggle(isOn: self.$userSettings.showMenu) {
+                                Text("Show icon in menu bar")
+                            }
+
+                            Spacer()
+                        }
                     }.padding(GUISize.groupBoxPadding)
                 }
 
