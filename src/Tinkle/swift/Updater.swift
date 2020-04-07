@@ -1,26 +1,35 @@
 import Foundation
-import Sparkle
+
+#if USE_SPARKLE
+    import Sparkle
+#endif
 
 struct Updater {
     static func checkForUpdatesInBackground() {
-        let url = feedURL(false)
-        print("checkForUpdates \(url)")
-        SUUpdater.shared().feedURL = url
-        SUUpdater.shared()?.checkForUpdatesInBackground()
+        #if USE_SPARKLE
+            let url = feedURL(false)
+            print("checkForUpdates \(url)")
+            SUUpdater.shared().feedURL = url
+            SUUpdater.shared()?.checkForUpdatesInBackground()
+        #endif
     }
 
     static func checkForUpdatesStableOnly() {
-        let url = feedURL(false)
-        print("checkForUpdates \(url)")
-        SUUpdater.shared().feedURL = url
-        SUUpdater.shared()?.checkForUpdates(self)
+        #if USE_SPARKLE
+            let url = feedURL(false)
+            print("checkForUpdates \(url)")
+            SUUpdater.shared().feedURL = url
+            SUUpdater.shared()?.checkForUpdates(self)
+        #endif
     }
 
     static func checkForUpdatesWithBetaVersion() {
-        let url = feedURL(true)
-        print("checkForUpdates \(url)")
-        SUUpdater.shared().feedURL = url
-        SUUpdater.shared()?.checkForUpdates(self)
+        #if USE_SPARKLE
+            let url = feedURL(true)
+            print("checkForUpdates \(url)")
+            SUUpdater.shared().feedURL = url
+            SUUpdater.shared()?.checkForUpdates(self)
+        #endif
     }
 
     private static func feedURL(_ includingBetaVersions: Bool) -> URL {

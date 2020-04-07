@@ -3,12 +3,11 @@ include:
 
 targets:
   Tinkle:
-    sources:
-      - path: Tinkle
-        compilerFlags:
-          - '-DUSE_SPARKLE'
-        excludes:
-          - 'objc/*'
-          - 'Info.plist.in'
+    settings:
+      configs:
+        debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: 'USE_SPARKLE DEBUG'
+        release:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: 'USE_SPARKLE'
     dependencies:
       - framework: Vendor/Sparkle/Sparkle.framework
