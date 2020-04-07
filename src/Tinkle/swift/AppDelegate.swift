@@ -22,7 +22,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         userSettings = UserSettings()
         axStatusChecker = AXStatusChecker()
+
+        //
+        // Setup menu
+        //
+
         showMenu()
+        NotificationCenter.default.addObserver(
+            forName: UserSettings.showMenuSettingChanged,
+            object: nil,
+            queue: OperationQueue.main
+        ) { _ in
+            self.showMenu()
+        }
+
+        //
+        // Check AX
+        //
 
         if !UIElement.isProcessTrusted(withPrompt: true) {
             print("user approval is required")
@@ -74,28 +90,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func showMenu() {
-        statusBarItem = NSStatusBar.system.statusItem(
-            withLength: NSStatusItem.squareLength
-        )
-        statusBarItem?.button?.image = NSImage(named: "menu")
+        if statusBarItem == nil, userSettings!.showMenu {
+            statusBarItem = NSStatusBar.system.statusItem(
+                withLength: NSStatusItem.squareLength
+            )
+            statusBarItem?.button?.image = NSImage(named: "menu")
 
-        let menu = NSMenu(title: "Tinkle")
+            let menu = NSMenu(title: "Tinkle")
 
-        menu.addItem(
-            withTitle: "Preferences...",
-            action: #selector(showPreferences),
-            keyEquivalent: ""
-        )
+            menu.addItem(
+                withTitle: "Preferences...",
+                action: #selector(showPreferences),
+                keyEquivalent: ""
+            )
 
-        menu.addItem(NSMenuItem.separator())
+            menu.addItem(NSMenuItem.separator())
 
-        menu.addItem(
-            withTitle: "Quit Tinkle",
-            action: #selector(NSApplication.shared.terminate),
-            keyEquivalent: ""
-        )
+            menu.addItem(
+                withTitle: "Quit Tinkle",
+                action: #selector(NSApplication.shared.terminate),
+                keyEquivalent: ""
+            )
 
-        statusBarItem?.menu = menu
+            statusBarItem?.menu = menu
+        }
+
+        //
+        // Set visibility
+        //
+
+        statusBarItem?.isVisible = userSettings!.showMenu
     }
 
     @objc func showPreferences(sender _: AnyObject?) {
