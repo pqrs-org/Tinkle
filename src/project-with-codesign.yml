@@ -1,0 +1,7 @@
+include:
+  - project-base.yml
+
+targets:
+  Tinkle:
+    dependencies:
+      - framework: Vendor/Sparkle/Sparkle.framework

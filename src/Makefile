@@ -1,8 +1,9 @@
 all:
-	xcodegen generate --use-cache
+	xcodegen generate --use-cache --spec project-with-codesign.yml
 	xcodebuild -configuration Release SYMROOT="$(CURDIR)/build"
 
 clean:
+	rm -rf Tinkle.xcodeproj
 	rm -rf build
 
 xcode:

@@ -16,5 +16,4 @@ targets:
       base:
         SWIFT_OBJC_BRIDGING_HEADER: 'Tinkle/objc/Tinkle-Bridging-Header.h'
     dependencies:
-      - framework: Vendor/Sparkle/Sparkle.framework
       - package: AXSwift
