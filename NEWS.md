@@ -1,5 +1,10 @@
 # Changelog
 
+## Beta
+
+-   ✨ New Features
+    -   Added an icon to menu bar.
+
 ## Tinkle 1.0.0
 
 -   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v1.0.0/Tinkle-1.0.0.dmg)
