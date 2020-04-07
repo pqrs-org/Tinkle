@@ -11,7 +11,16 @@ targets:
     type: application
     platform: macOS
     deploymentTarget: '10.15'
-    sources: [Tinkle]
+    sources:
+      - path: Tinkle
+        compilerFlags:
+          - '-Werror'
+        excludes:
+          - 'objc/*'
+      - path: Tinkle/objc
+        compilerFlags:
+          - '-Werror'
+          - '-Wno-deprecated-declarations'
     settings:
       base:
         SWIFT_OBJC_BRIDGING_HEADER: 'Tinkle/objc/Tinkle-Bridging-Header.h'
