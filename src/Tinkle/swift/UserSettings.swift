@@ -2,7 +2,7 @@ import Combine
 import Foundation
 
 final class UserSettings: ObservableObject {
-    let objectWillChange = PassthroughSubject<Void, Never>()
+    static let showMenuSettingChanged = Notification.Name("ShowMenuSettingChanged")
 
     @UserDefault("effect", defaultValue: Effect.shockwaveBlue.rawValue)
     var effect: String
@@ -14,7 +14,7 @@ final class UserSettings: ObservableObject {
         }
         didSet {
             NotificationCenter.default.post(
-                name: Notification.Name("ShowMenuSettingChanged"),
+                name: UserSettings.showMenuSettingChanged,
                 object: nil
             )
         }
