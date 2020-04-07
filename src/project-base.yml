@@ -17,6 +17,7 @@ targets:
           - '-Werror'
         excludes:
           - 'objc/*'
+          - 'Info.plist.in'
       - path: Tinkle/objc
         compilerFlags:
           - '-Werror'

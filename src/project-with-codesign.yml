@@ -3,5 +3,12 @@ include:
 
 targets:
   Tinkle:
+    sources:
+      - path: Tinkle
+        compilerFlags:
+          - '-DUSE_SPARKLE'
+        excludes:
+          - 'objc/*'
+          - 'Info.plist.in'
     dependencies:
       - framework: Vendor/Sparkle/Sparkle.framework
