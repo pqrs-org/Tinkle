@@ -7,6 +7,12 @@ final class UserSettings: ObservableObject {
     @UserDefault("effect", defaultValue: Effect.shockwaveBlue.rawValue)
     var effect: String
 
+    @Published var openAtLogin = OpenAtLogin.enabled {
+        didSet {
+            OpenAtLogin.enabled = openAtLogin
+        }
+    }
+
     @UserDefault("showMenu", defaultValue: true)
     var showMenu: Bool {
         willSet {

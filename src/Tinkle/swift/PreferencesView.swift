@@ -70,26 +70,6 @@ struct PreferencesView: View {
         }
     }
 
-    struct OpenAtLoginToggle: View {
-        @State private var enabled: Bool = OpenAtLogin.enabled
-
-        var body: some View {
-            let binding = Binding<Bool>(
-                get: {
-                    self.enabled
-                },
-                set: {
-                    self.enabled = $0
-                    OpenAtLogin.enabled = $0
-                }
-            )
-
-            return Toggle(isOn: binding) {
-                Text("Open at login")
-            }
-        }
-    }
-
     let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
 
     var body: some View {
@@ -147,7 +127,9 @@ struct PreferencesView: View {
                             Spacer()
                         }
                         HStack {
-                            OpenAtLoginToggle()
+                            Toggle(isOn: self.$userSettings.openAtLogin) {
+                                Text("Open at login")
+                            }
                             Spacer()
                         }
                         HStack {
