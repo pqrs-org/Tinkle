@@ -36,23 +36,45 @@ System requirements to build Tinkle:
 -   [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 -   [create-dmg](https://github.com/sindresorhus/create-dmg)
 
-#### Step 1: Getting source code
+### Steps
 
-Clone the source from github.
+1.  Get source code by executing a following command in Terminal.app.
 
-```shell
-git clone --depth 1 https://github.com/pqrs-org/Tinkle.git
-```
+    ```shell
+    git clone --depth 1 https://github.com/pqrs-org/Tinkle.git
+    ```
 
-#### Step 2: Building a dmg
+2.  Find your codesign identity if you have one.<br />
+    (Skip this step if you don't have your codesign identity.)
 
-Execute make command on the terminal.
+    ```shell
+    security find-identity -p codesigning -v | grep 'Developer ID Application'
+    ```
 
-```shell
-make package
-```
+    The result is as follows.
 
-`Tinkle-*.dmg` will be generated.
+    ```text
+    1) 8D660191481C98F5C56630847A6C39D95C166F22 "Developer ID Application: Fumihiko Takayama (G43BCU2T37)"
+    ```
+
+    Your codesign identity is `8D660191481C98F5C56630847A6C39D95C166F22` in the above case.
+
+3.  Set environment variable to use your codesign identity.<br />
+    (Skip this step if you don't have your codesign identity.)
+
+    ```shell
+    export PQRS_ORG_CODE_SIGN_IDENTITY=8D660191481C98F5C56630847A6C39D95C166F22
+    ```
+
+4.  Build a package by executing a following command in Terminal.app.
+
+    ```shell
+    make package
+    ```
+
+    `Tinkle-*.dmg` will be generated.
+
+    Note: If you don't have codesign identity, the dmg works only on your machine.
 
 ### Playgrounds
 
