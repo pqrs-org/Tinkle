@@ -160,27 +160,29 @@ struct PreferencesView: View {
                     }.padding(GUISize.groupBoxPadding)
                 }
 
-                GroupBox(label: Text("Updates")) {
-                    HStack {
-                        Button(action: { Updater.checkForUpdatesStableOnly() })
-                        {
-                            Image(decorative: "ic_star_18pt")
-                                .resizable()
-                                .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
-                            Text("Check for updates")
-                        }
+                #if USE_SPARKLE
+                    GroupBox(label: Text("Updates")) {
+                        HStack {
+                            Button(action: { Updater.checkForUpdatesStableOnly() })
+                            {
+                                Image(decorative: "ic_star_18pt")
+                                    .resizable()
+                                    .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
+                                Text("Check for updates")
+                            }
 
-                        Spacer()
+                            Spacer()
 
-                        Button(action: { Updater.checkForUpdatesWithBetaVersion() })
-                        {
-                            Image(decorative: "ic_star_18pt")
-                                .resizable()
-                                .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
-                            Text("Check for beta updates")
-                        }
-                    }.padding(GUISize.groupBoxPadding)
-                }
+                            Button(action: { Updater.checkForUpdatesWithBetaVersion() })
+                            {
+                                Image(decorative: "ic_star_18pt")
+                                    .resizable()
+                                    .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
+                                Text("Check for beta updates")
+                            }
+                        }.padding(GUISize.groupBoxPadding)
+                    }
+                #endif
 
                 GroupBox(label: Text("Web sites")) {
                     HStack(spacing: 20.0) {
