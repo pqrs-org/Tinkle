@@ -2,7 +2,7 @@
 
 spec="project-with-codesign.yml"
 
-if [[ -z "${PQRS_ORG_CODE_SIGN_IDENTITY:-}" ]]; then
+if [[ -z $(bash ../scripts/get-codesign-identity.sh) ]]; then
   spec="project-without-codesign.yml"
 fi
 
