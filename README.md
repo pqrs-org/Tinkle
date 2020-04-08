@@ -36,7 +36,7 @@ System requirements to build Tinkle:
 -   [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 -   [create-dmg](https://github.com/sindresorhus/create-dmg)
 
-### Steps
+#### Steps
 
 1.  Get source code by executing a following command in Terminal.app.
 
