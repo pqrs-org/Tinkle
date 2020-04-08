@@ -1,5 +1,5 @@
 all:
-	xcodegen generate --use-cache --spec project-with-codesign.yml
+	bash run-xcodegen.sh
 	xcodebuild -configuration Release SYMROOT="$(CURDIR)/build"
 
 clean:
