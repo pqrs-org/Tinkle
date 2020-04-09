@@ -1,5 +1,6 @@
 {
     "files.exclude": {
+        "*.dmg": true,
         "**/build/": true,
         "**/Vendor/": true,
         "src/Tinkle/Info.plist": true
