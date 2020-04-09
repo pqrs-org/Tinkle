@@ -2,6 +2,9 @@
 
 ## Tinkle 1.1.0
 
+-   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v1.1.0/Tinkle-1.1.0.dmg)
+-   📅 Release date
+    -   Apr 9, 2020
 -   ✨ New Features
     -   Added an icon to menu bar.
 -   🐛 Bug Fixes
