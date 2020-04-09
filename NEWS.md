@@ -1,6 +1,6 @@
 # Changelog
 
-## Beta
+## Tinkle 1.1.0
 
 -   ✨ New Features
     -   Added an icon to menu bar.
