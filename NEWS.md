@@ -4,6 +4,9 @@
 
 -   ✨ New Features
     -   Added an icon to menu bar.
+-   🐛 Bug Fixes
+    -   For open source user:
+        -   Fixed an issue that the built binary from source code requires code signing even if you want to run the binary only on your machine.
 
 ## Tinkle 1.0.0
 
