@@ -4,11 +4,8 @@ DMG_IDENTITY = 'Developer ID Application: Fumihiko Takayama (G43BCU2T37)'
 all:
 	@echo 'Type `make package`'
 
-update-info-plist:
-	bash scripts/update-info-plist.sh
-
 package:
-	$(MAKE) update-info-plist
+	/usr/bin/python3 scripts/update-version.py
 	$(MAKE) -C src clean all
 
 	rm -f Tinkle-$(VERSION).dmg
