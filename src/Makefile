@@ -1,4 +1,5 @@
 all:
+	/usr/bin/python3 ../scripts/update-version.py
 	bash run-xcodegen.sh
 	xcodebuild -configuration Release SYMROOT="$(CURDIR)/build"
 

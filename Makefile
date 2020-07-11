@@ -5,7 +5,6 @@ all:
 	@echo 'Type `make package`'
 
 package:
-	/usr/bin/python3 scripts/update-version.py
 	$(MAKE) -C src clean all
 
 	rm -f Tinkle-$(VERSION).dmg
