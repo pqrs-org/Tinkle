@@ -42,7 +42,8 @@ System requirements to build Tinkle:
 
     ```shell
     git clone --depth 1 https://github.com/pqrs-org/Tinkle.git
-    git submodule update --init --recursive
+    cd Tinkle
+    git submodule update --init --recursive --depth 1
     ```
 
 2.  Find your codesign identity if you have one.<br />
