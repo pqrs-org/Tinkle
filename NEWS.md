@@ -1,7 +1,10 @@
 # Changelog
 
-## Beta
+## Tinkle 1.2.0
 
+-   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v1.2.0/Tinkle-1.2.0.dmg)
+-   📅 Release date
+    -   Jul 18, 2020
 -   ✨ New Features
     -   Supported both Intel-based Macs and Apple Silicon Macs.
 -   ⚡️ Improvements
