@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd "$(dirname $0)"
+cd "$(pwd -P)"
 
 #
 # Sparkle
