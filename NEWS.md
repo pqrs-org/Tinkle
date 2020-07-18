@@ -1,5 +1,10 @@
 # Changelog
 
+## Beta
+
+-   ✨ New Features
+    -   Support both Intel-based Macs and Apple Silicon Macs.
+
 ## Tinkle 1.1.0
 
 -   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v1.1.0/Tinkle-1.1.0.dmg)
