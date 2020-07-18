@@ -2,4 +2,4 @@ all:
 	bash build-sparkle.sh
 
 clean:
-	rm -rf Sparkle/build
+	cd Sparkle && git clean -d -f -x
