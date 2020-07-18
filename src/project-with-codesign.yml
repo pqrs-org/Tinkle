@@ -10,4 +10,4 @@ targets:
         release:
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: 'USE_SPARKLE'
     dependencies:
-      - framework: Vendor/Sparkle/Sparkle.framework
+      - framework: Vendor/Sparkle/build/Build/Products/Release/Sparkle.framework
