@@ -3,7 +3,9 @@
 ## Beta
 
 -   ✨ New Features
-    -   Support both Intel-based Macs and Apple Silicon Macs.
+    -   Supported both Intel-based Macs and Apple Silicon Macs.
+-   ⚡️ Improvements
+    -   Updated the app icon.
 
 ## Tinkle 1.1.0
 
