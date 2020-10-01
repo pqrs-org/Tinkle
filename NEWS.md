@@ -1,5 +1,10 @@
 # Changelog
 
+## Beta
+
+-   ⚡️ Improvements
+    -   Updated the app icon.
+
 ## Tinkle 1.2.0
 
 -   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v1.2.0/Tinkle-1.2.0.dmg)
