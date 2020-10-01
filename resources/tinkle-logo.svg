@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="tinkle-logo.svg"
-   inkscape:version="1.0 (4035a4f, 2020-05-01)"
+   inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
    inkscape:export-ydpi="96"
    inkscape:export-xdpi="96"
    inkscape:export-filename="tinkle-logo.png"
@@ -88,14 +88,14 @@
   </defs>
   <sodipodi:namedview
      units="px"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:window-y="23"
-     inkscape:window-x="81"
-     inkscape:window-height="943"
-     inkscape:window-width="1516"
+     inkscape:window-x="75"
+     inkscape:window-height="1235"
+     inkscape:window-width="1973"
      showgrid="true"
      inkscape:document-rotation="0"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="g1078"
      inkscape:document-units="px"
      inkscape:cy="503.66197"
      inkscape:cx="610"
@@ -138,33 +138,34 @@
     </rdf:RDF>
   </metadata>
   <g
-     sodipodi:insensitive="true"
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="bg"
-     style="display:inline">
+     style="display:inline;opacity:0.995"
+     sodipodi:insensitive="true">
     <rect
-       sodipodi:insensitive="true"
        inkscape:export-ydpi="96"
        inkscape:export-xdpi="96"
        inkscape:export-filename="./bg.png"
-       ry="52.916668"
-       y="23.8125"
-       x="23.8125"
-       height="223.30833"
-       width="223.30833"
+       ry="59.266666"
+       y="28.399197"
+       x="28.399197"
+       height="209.55652"
+       width="209.55652"
        id="bg"
-       style="display:inline;opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#49493a;stroke-width:4.23333;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       inkscape:label="#bg" />
+       style="display:inline;opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#49493a;stroke-width:8.46015;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="#bg"
+       rx="59.266666"
+       sodipodi:insensitive="true" />
   </g>
   <g
-     sodipodi:insensitive="true"
      inkscape:groupmode="layer"
      id="g1078"
-     inkscape:label="shape blur">
+     inkscape:label="shape blur"
+     sodipodi:insensitive="true">
     <g
        id="g1076"
-       transform="translate(0,9.7745115)"
+       transform="translate(-2.5308838e-6,9.7745115)"
        style="filter:url(#filter862)"
        sodipodi:insensitive="true">
       <path
@@ -214,15 +215,15 @@
     </g>
   </g>
   <g
-     sodipodi:insensitive="true"
      inkscape:label="shape"
      id="layer3"
      inkscape:groupmode="layer"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <g
-       sodipodi:insensitive="true"
-       transform="translate(0,9.7745115)"
-       id="g1050">
+       transform="translate(4.9999994e-7,9.7745115)"
+       id="g1050"
+       sodipodi:insensitive="true">
       <path
          sodipodi:insensitive="true"
          style="mix-blend-mode:normal;fill:none;fill-opacity:1;stroke:#e5ae48;stroke-width:10.5833;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
