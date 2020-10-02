@@ -2,6 +2,7 @@ import Combine
 import Foundation
 
 final class UserSettings: ObservableObject {
+    static let shared = UserSettings()
     static let showMenuSettingChanged = Notification.Name("ShowMenuSettingChanged")
 
     @UserDefault("effect", defaultValue: Effect.shockwaveBlue.rawValue)

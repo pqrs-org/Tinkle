@@ -11,7 +11,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var observers: [pid_t: Observer] = [:]
     var focusedWindowObserver: FocusedWindowObserver?
     var preferencesView: PreferencesView?
-    var userSettings: UserSettings!
     var axStatusChecker: AXStatusChecker!
     var statusBarItem: NSStatusItem?
 
@@ -20,7 +19,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         Updater.checkForUpdatesInBackground()
 
-        userSettings = UserSettings()
         axStatusChecker = AXStatusChecker()
 
         //
@@ -73,9 +71,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if frame.width > 0 {
                 self.window?.setFrame(frame, display: true)
                 self.window?.makeKeyAndOrderFront(self)
-                if self.userSettings != nil {
-                    self.renderer?.setEffect(Effect(rawValue: self.userSettings!.effect))
-                }
+                self.renderer?.setEffect(Effect(rawValue: UserSettings.shared.effect))
                 self.renderer?.restart()
             } else {
                 self.hide()
@@ -84,13 +80,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationShouldHandleReopen(_: NSApplication,
-                                       hasVisibleWindows _: Bool) -> Bool {
+                                       hasVisibleWindows _: Bool) -> Bool
+    {
         showPreferences(sender: self)
         return true
     }
 
     func showMenu() {
-        if statusBarItem == nil, userSettings!.showMenu {
+        if statusBarItem == nil, UserSettings.shared.showMenu {
             statusBarItem = NSStatusBar.system.statusItem(
                 withLength: NSStatusItem.squareLength
             )
@@ -128,7 +125,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Set visibility
         //
 
-        statusBarItem?.isVisible = userSettings!.showMenu
+        statusBarItem?.isVisible = UserSettings.shared.showMenu
     }
 
     @objc func showPreferences(sender _: AnyObject?) {
