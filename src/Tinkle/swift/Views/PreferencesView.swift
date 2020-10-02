@@ -167,13 +167,7 @@ struct PreferencesView: View {
             )
             accessibilityAlertWindow!.title = "Accessibilit Alert"
             accessibilityAlertWindow!.contentView = NSHostingView(rootView: AccessibilityAlertView())
-
-            accessibilityAlertWindow!.setFrame(NSMakeRect(
-                window.frame.origin.x + (window.frame.size.width / 2) - (accessibilityAlertWindow!.frame.size.width / 2),
-                window.frame.origin.y + (window.frame.size.height / 2) - (accessibilityAlertWindow!.frame.size.height / 2),
-                accessibilityAlertWindow!.frame.size.width,
-                accessibilityAlertWindow!.frame.size.height
-            ), display: false)
+            accessibilityAlertWindow!.centerToOtherWindow(window)
 
             window.addChildWindow(accessibilityAlertWindow!, ordered: .above)
             accessibilityAlertWindow!.makeKeyAndOrderFront(nil)
