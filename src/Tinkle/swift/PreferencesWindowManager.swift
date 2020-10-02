@@ -24,6 +24,7 @@ class PreferencesWindowManager: NSObject {
             defer: false
         )
 
+        preferencesWindow!.isReleasedWhenClosed = false
         preferencesWindow!.title = "Tinkle Preferences"
         preferencesWindow!.contentView = NSHostingView(rootView: PreferencesView())
         preferencesWindow!.delegate = self
