@@ -1,3 +1,5 @@
+import AppKit
+
 extension NSWindow {
     public func centerToOtherWindow(_ other: NSWindow) {
         setFrame(

@@ -1,5 +1,4 @@
 import AXSwift
-import Cocoa
 import MetalKit
 import SwiftUI
 
@@ -10,7 +9,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var renderer: MetalViewRenderer?
     var observers: [pid_t: Observer] = [:]
     var focusedWindowObserver: FocusedWindowObserver?
-    var preferencesView: PreferencesView?
+    var preferencesWindowManager: PreferencesWindowManager?
     var axStatusChecker: AXStatusChecker!
     var statusBarItem: NSStatusItem?
 
@@ -129,11 +128,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func showPreferences(sender _: AnyObject?) {
-        if let preferencesView = preferencesView, preferencesView.preferencesWindowDelegate.windowIsOpen {
-            preferencesView.window.makeKeyAndOrderFront(self)
-        } else {
-            preferencesView = PreferencesView()
+        if preferencesWindowManager == nil || preferencesWindowManager!.closed {
+            preferencesWindowManager = PreferencesWindowManager()
         }
+        preferencesWindowManager!.show()
 
         NSApp.activate(ignoringOtherApps: true)
     }

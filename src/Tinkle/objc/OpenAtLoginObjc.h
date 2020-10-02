@@ -1,6 +1,6 @@
 // -*- mode: objective-c -*-
 
-@import Cocoa;
+@import AppKit;
 
 @interface OpenAtLoginObjc : NSObject
 

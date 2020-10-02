@@ -12,9 +12,14 @@ struct OpenAtLogin {
 
             // Skip if the current app is not the distributed file.
 
-            if bundlePath.hasSuffix("/Build/Products/Debug/Tinkle.app") || /* from Xcode */
-                bundlePath.hasSuffix("/Build/Products/Release/Tinkle.app") || /* from Xcode */
-                bundlePath.hasSuffix("/build/Release/Tinkle.app") { /* from command line */
+            if
+                // from Xcode
+                bundlePath.hasSuffix("/Build/Products/Debug/Tinkle.app") ||
+                // from Xcode
+                bundlePath.hasSuffix("/Build/Products/Release/Tinkle.app") ||
+                // from command line
+                bundlePath.hasSuffix("/build/Release/Tinkle.app")
+            {
                 print("Skip setting LaunchAtLogin.enabled for dev")
                 return
             }

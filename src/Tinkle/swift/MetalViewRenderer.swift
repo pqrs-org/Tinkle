@@ -17,9 +17,9 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     private let nopCps: MTLComputePipelineState!
     private let shockwaveCps: MTLComputePipelineState!
     private let neonCps: MTLComputePipelineState!
-    private var startDate: Date = Date()
+    private var startDate = Date()
     private var shader: Shader = .nop
-    private var color: vector_float3 = vector_float3(0.0, 0.0, 0.0)
+    private var color = vector_float3(0.0, 0.0, 0.0)
 
     public init?(mtkView: MTKView, callback: @escaping Callback) {
         view = mtkView
@@ -72,7 +72,8 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
 
         if let drawable = view.currentDrawable,
             let commandBuffer = commandQueue.makeCommandBuffer(),
-            let commandEncoder = commandBuffer.makeComputeCommandEncoder() {
+            let commandEncoder = commandBuffer.makeComputeCommandEncoder()
+        {
             commandEncoder.setComputePipelineState(cps)
             commandEncoder.setTexture(drawable.texture, index: 0)
 

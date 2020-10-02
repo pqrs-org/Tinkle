@@ -3,9 +3,6 @@ import AXSwift
 import SwiftUI
 
 struct PreferencesView: View {
-    var window: NSWindow!
-    private var accessibilityAlertWindow: NSWindow?
-    @State var preferencesWindowDelegate = PreferencesWindowDelegate()
     @ObservedObject var userSettings = UserSettings.shared
 
     struct EffectPicker: View {
@@ -129,63 +126,6 @@ struct PreferencesView: View {
         }
         .padding()
         .frame(width: 600.0)
-    }
-
-    init() {
-        window = NSWindow(
-            contentRect: .zero,
-            styleMask: [
-                .titled,
-                .closable,
-                .miniaturizable,
-                .fullSizeContentView,
-            ],
-            backing: .buffered,
-            defer: false
-        )
-
-        preferencesWindowDelegate.window = window
-
-        window.title = "Tinkle Preferences"
-        window.contentView = NSHostingView(rootView: self)
-        window.delegate = preferencesWindowDelegate
-        window.center()
-
-        preferencesWindowDelegate.windowIsOpen = true
-        window.makeKeyAndOrderFront(nil)
-
-        if !UIElement.isProcessTrusted() {
-            accessibilityAlertWindow = NSPanel(
-                contentRect: .zero,
-                styleMask: [
-                    .titled,
-                    .closable,
-                    .fullSizeContentView,
-                ],
-                backing: .buffered,
-                defer: false
-            )
-            accessibilityAlertWindow!.title = "Accessibilit Alert"
-            accessibilityAlertWindow!.contentView = NSHostingView(rootView: AccessibilityAlertView())
-            accessibilityAlertWindow!.centerToOtherWindow(window)
-
-            window.addChildWindow(accessibilityAlertWindow!, ordered: .above)
-            accessibilityAlertWindow!.makeKeyAndOrderFront(nil)
-        }
-    }
-
-    class PreferencesWindowDelegate: NSObject, NSWindowDelegate {
-        var window: NSWindow?
-        var windowIsOpen = false
-
-        func windowWillClose(_: Notification) {
-            windowIsOpen = false
-
-            window?.childWindows?.forEach {
-                window?.removeChildWindow($0)
-                $0.close()
-            }
-        }
     }
 }
 
