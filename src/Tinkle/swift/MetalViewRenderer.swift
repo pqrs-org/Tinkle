@@ -109,11 +109,15 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
             switch e! {
             case .shockwaveRed,
                  .shockwaveGreen,
-                 .shockwaveBlue:
+                 .shockwaveBlue,
+                 .shockwaveLight,
+                 .shockwaveDark:
                 shader = .shockwave
             case .neonRed,
                  .neonGreen,
-                 .neonBlue:
+                 .neonBlue,
+                 .neonLight,
+                 .neonDark:
                 shader = .neon
             }
 
@@ -127,6 +131,12 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
             case .shockwaveBlue,
                  .neonBlue:
                 color = vector_float3(0.3, 0.2, 1.0)
+            case .shockwaveLight,
+                 .neonLight:
+                color = vector_float3(0.5, 0.5, 0.5)
+            case .shockwaveDark,
+                 .neonDark:
+                color = vector_float3(0.0, 0.0, 0.0)
             }
         } else {
             shader = .nop

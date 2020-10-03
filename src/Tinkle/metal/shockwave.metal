@@ -2,11 +2,11 @@
 using namespace metal;
 
 namespace {
-    float3 circle(float2 uv, float r, float blur, float3 color)
+    float circle(float2 uv, float r, float blur)
     {
         float d = length(uv);
         float c = smoothstep(r, r - blur, d);
-        return float3(color * c);
+        return c;
     }
 }
 
@@ -27,10 +27,13 @@ kernel void shockwaveEffect(texture2d<float, access::write> o[[texture(0)]],
     float r = time * speed + 0.6;
     float ir = clamp(1.0 - speed * time, 0.9, 1.0);
 
-    float3 c = circle(p, r, 0.4, color);
-    c -= circle(p, r, ir, color);
+    float c1 = circle(p, r, 0.4);
+    float c2 = circle(p, r, ir);
+    float shade = c1 - c2;
+    float3 c = color * shade;
 
-    float alpha = min(max(max(c[0], c[1]), c[2]), 0.5);
+    float alpha = min(shade, 0.5);
+    // float alpha = min(max(max(c[0], c[1]), c[2]), 0.5);
 
     o.write(float4(c, alpha), gid);
 }
