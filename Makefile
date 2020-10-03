@@ -5,7 +5,8 @@ all:
 	@echo 'Type `make package`'
 
 package:
-	$(MAKE) -C src clean all
+	git clean -x -d -f
+	$(MAKE) -C src all
 
 	rm -f Tinkle-$(VERSION).dmg
 	rm -rf tmp
