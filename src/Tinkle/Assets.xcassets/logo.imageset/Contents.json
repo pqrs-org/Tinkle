@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tinkle-logo-1.png",
+      "filename" : "tinkle-logo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "tinkle-logo.png",
+      "filename" : "tinkle-logo-2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "tinkle-logo-2.png",
+      "filename" : "tinkle-logo-1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
