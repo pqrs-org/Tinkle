@@ -2,7 +2,7 @@
 
 ## Tinkle 1.3.0
 
--   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v1.2.0/Tinkle-1.3.0.dmg)
+-   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v1.3.0/Tinkle-1.3.0.dmg)
 -   📅 Release date
     -   Oct 3, 2020
 -   ⚡️ Improvements
