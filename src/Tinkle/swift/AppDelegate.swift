@@ -25,6 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //
 
         showMenu()
+
         NotificationCenter.default.addObserver(
             forName: UserSettings.showMenuSettingChanged,
             object: nil,
@@ -69,13 +70,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
             if frame.width > 0 {
                 self.window?.setFrame(frame, display: true)
-                self.window?.makeKeyAndOrderFront(self)
-                self.renderer?.setEffect(Effect(rawValue: UserSettings.shared.effect))
-                self.renderer?.restart()
+                self.runEffect()
             } else {
                 self.hide()
             }
         })
+
+        NotificationCenter.default.addObserver(
+            forName: UserSettings.effectSettingChanged,
+            object: nil,
+            queue: OperationQueue.main
+        ) { _ in
+            self.runEffect()
+        }
     }
 
     func applicationShouldHandleReopen(_: NSApplication,
@@ -83,6 +90,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     {
         showPreferences(sender: self)
         return true
+    }
+
+    func runEffect() {
+        window?.makeKeyAndOrderFront(self)
+        renderer?.setEffect(Effect(rawValue: UserSettings.shared.effect))
+        renderer?.restart()
     }
 
     func showMenu() {

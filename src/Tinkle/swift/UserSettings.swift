@@ -3,10 +3,21 @@ import Foundation
 
 final class UserSettings: ObservableObject {
     static let shared = UserSettings()
+    static let effectSettingChanged = Notification.Name("EffectSettingChanged")
     static let showMenuSettingChanged = Notification.Name("ShowMenuSettingChanged")
 
     @UserDefault("effect", defaultValue: Effect.shockwaveBlue.rawValue)
-    var effect: String
+    var effect: String {
+        willSet {
+            objectWillChange.send()
+        }
+        didSet {
+            NotificationCenter.default.post(
+                name: UserSettings.effectSettingChanged,
+                object: nil
+            )
+        }
+    }
 
     @Published var openAtLogin = OpenAtLogin.enabled {
         didSet {
