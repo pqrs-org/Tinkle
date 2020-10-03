@@ -9,6 +9,9 @@ struct AccessibilityAlertView: View {
 
                 Text("Open System Preferences > Security & Privacy, then turn on Tinkle.").padding(.top, 20.0)
                 Button(action: { NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy")!) }) {
+                    Image(decorative: "ic_forward_18pt")
+                        .resizable()
+                        .frame(width: GUISize.buttonIconWidth, height: GUISize.buttonIconHeight)
                     Text("Open System Preferences")
                 }
 
