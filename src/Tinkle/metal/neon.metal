@@ -21,7 +21,9 @@ kernel void neonEffect(texture2d<float, access::write> o[[texture(0)]],
 
     float3 c = color * shade;
 
-    float alpha = min(max(max(c[0], c[1]), c[2]), 0.5 - time * 2.0);
+    float alpha = min(shade, 0.5 - time * 2.0);
+    // float alpha = min(max(max(c[0], c[1]), c[2]), 0.5 - time * 2.0);
+
 
     o.write(float4(c, alpha), gid);
 }
