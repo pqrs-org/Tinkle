@@ -1,11 +1,6 @@
 include:
   - project-base.yml
 
-packages:
-  Sparkle:
-    url: https://github.com/sparkle-project/Sparkle
-    from: 1.26.0
-
 targets:
   Tinkle:
     settings:
