@@ -1,6 +1,11 @@
 include:
   - project-base.yml
 
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: 1.26.0
+
 targets:
   Tinkle:
     settings:
@@ -10,4 +15,4 @@ targets:
         release:
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: 'USE_SPARKLE'
     dependencies:
-      - framework: Vendor/Sparkle/build/Build/Products/Release/Sparkle.framework
+      - package: Sparkle

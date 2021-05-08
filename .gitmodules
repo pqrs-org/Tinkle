@@ -1,4 +1,0 @@
-[submodule "src/Vendor/Sparkle"]
-	path = src/Vendor/Sparkle
-	url = https://github.com/sparkle-project/Sparkle
-	ignore = dirty

@@ -2,10 +2,6 @@
     "files.exclude": {
         "*.dmg": true,
         "**/build/": true,
-        "**/Vendor/Sparkle": true,
         "src/Tinkle/Info.plist": true
-    },
-    "files.watcherExclude": {
-        "**/vendor/**": true
     }
 }
