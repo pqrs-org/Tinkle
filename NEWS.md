@@ -1,7 +1,10 @@
 # Changelog
 
-## Beta
+## Tinkle 1.7.0
 
+-   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v1.7.0/Tinkle-1.7.0.dmg)
+-   📅 Release date
+    -   Jul 4, 2021
 -   ⚡️ Improvements
     -   Sparkle Framework has been updated.
 
