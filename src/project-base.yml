@@ -4,7 +4,7 @@ options:
 packages:
   AXSwift:
     url: https://github.com/tmandry/AXSwift
-    branch: master
+    from: 0.3.1
   # We have to declare all packages in project-base.yml instead of separated in project-base.yml and project-with-codesign.yml to avoid `Could not resolve package dependencies` error,
   # when the codesign requirement is changed between builds.
   # (For example, the first build is with codesign, then the second build is without codesign.)
