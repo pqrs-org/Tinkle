@@ -1,5 +1,5 @@
 [![Build Status](https://github.com/pqrs-org/Tinkle/workflows/CI/badge.svg)](https://github.com/pqrs-org/Tinkle/actions)
-[![License](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](https://github.com/pqrs-org/Tinkle/blob/master/LICENSE.md)
+[![License](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](https://github.com/pqrs-org/Tinkle/blob/main/LICENSE.md)
 
 # Tinkle
 
