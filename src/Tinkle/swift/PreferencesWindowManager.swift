@@ -2,12 +2,14 @@ import AXSwift
 import SwiftUI
 
 class PreferencesWindowManager: NSObject {
+    static let shared = PreferencesWindowManager()
+
     private var preferencesWindow: NSWindow?
     private var accessibilityAlertWindow: NSWindow?
-    var closed = false
+    private var closed = false
 
     func show() {
-        if preferencesWindow != nil {
+        if preferencesWindow != nil, !closed {
             preferencesWindow!.makeKeyAndOrderFront(self)
             return
         }

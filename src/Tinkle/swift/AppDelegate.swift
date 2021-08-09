@@ -9,7 +9,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var renderer: MetalViewRenderer?
     var observers: [pid_t: Observer] = [:]
     var focusedWindowObserver: FocusedWindowObserver?
-    var preferencesWindowManager: PreferencesWindowManager?
     var axStatusChecker: AXStatusChecker!
     var statusBarItem: NSStatusItem?
 
@@ -141,10 +140,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func showPreferences(sender _: AnyObject?) {
-        if preferencesWindowManager == nil || preferencesWindowManager!.closed {
-            preferencesWindowManager = PreferencesWindowManager()
-        }
-        preferencesWindowManager!.show()
+        PreferencesWindowManager.shared.show()
 
         NSApp.activate(ignoringOtherApps: true)
     }
