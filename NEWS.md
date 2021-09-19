@@ -4,6 +4,7 @@
 
 -   ⚡️ Improvements
     -   Minor source code improvement.
+    -   Sparkle Framework has been updated.
 
 ## Tinkle 1.7.0
 
