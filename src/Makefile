@@ -17,3 +17,7 @@ xcode:
 run:
 	bash ../scripts/codesign.sh build/Release
 	open build/Release/Tinkle.app
+
+install:
+	bash ../scripts/codesign.sh build/Release
+	rsync -a --delete build/Release/Tinkle.app /Applications
