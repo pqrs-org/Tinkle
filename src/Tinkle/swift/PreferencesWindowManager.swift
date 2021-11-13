@@ -4,17 +4,16 @@ import SwiftUI
 class PreferencesWindowManager: NSObject {
     static let shared = PreferencesWindowManager()
 
-    private var preferencesWindow: NSWindow?
-    private var accessibilityAlertWindow: NSWindow?
+    private var window: NSWindow?
     private var closed = false
 
     func show() {
-        if preferencesWindow != nil, !closed {
-            preferencesWindow!.makeKeyAndOrderFront(self)
+        if window != nil, !closed {
+            window!.makeKeyAndOrderFront(self)
             return
         }
 
-        preferencesWindow = NSWindow(
+        window = NSWindow(
             contentRect: .zero,
             styleMask: [
                 .titled,
@@ -26,32 +25,15 @@ class PreferencesWindowManager: NSObject {
             defer: false
         )
 
-        preferencesWindow!.isReleasedWhenClosed = false
-        preferencesWindow!.title = "Tinkle Preferences"
-        preferencesWindow!.contentView = NSHostingView(rootView: PreferencesView())
-        preferencesWindow!.delegate = self
-        preferencesWindow!.center()
-
-        preferencesWindow!.makeKeyAndOrderFront(nil)
-
+        window!.isReleasedWhenClosed = false
+        window!.title = "Tinkle Preferences"
         if !UIElement.isProcessTrusted() {
-            accessibilityAlertWindow = NSPanel(
-                contentRect: .zero,
-                styleMask: [
-                    .titled,
-                    .closable,
-                    .fullSizeContentView,
-                ],
-                backing: .buffered,
-                defer: false
-            )
-            accessibilityAlertWindow!.title = "Accessibilit Alert"
-            accessibilityAlertWindow!.contentView = NSHostingView(rootView: AccessibilityAlertView())
-            accessibilityAlertWindow!.centerToOtherWindow(preferencesWindow!)
-
-            preferencesWindow!.addChildWindow(accessibilityAlertWindow!, ordered: .above)
-            accessibilityAlertWindow!.makeKeyAndOrderFront(nil)
+            window!.contentView = NSHostingView(rootView: AccessibilityAlertView())
+        } else {
+            window!.contentView = NSHostingView(rootView: PreferencesView())
         }
+        window!.delegate = self
+        window!.center()
     }
 }
 
