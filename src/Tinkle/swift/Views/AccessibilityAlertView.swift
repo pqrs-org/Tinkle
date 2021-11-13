@@ -14,6 +14,13 @@ struct AccessibilityAlertView: View {
 
                 Text("Restart Tinkle after you approve the feature.").padding(.top, 20.0)
                 RestartButton()
+
+                Spacer()
+                    .frame(height: 50.0)
+
+                Divider()
+
+                QuitButton()
             }.frame(minWidth: 400.0)
 
             Image("accessibility")

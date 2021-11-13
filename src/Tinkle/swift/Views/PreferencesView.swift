@@ -73,9 +73,7 @@ struct PreferencesView: View {
                 Spacer()
 
                 VStack(alignment: .trailing) {
-                    Button(action: { NSApplication.shared.terminate(self) }) {
-                        Label("Quit Tinkle", systemImage: "xmark.circle.fill")
-                    }
+                    QuitButton()
                     RestartButton()
                 }
             }
