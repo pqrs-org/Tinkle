@@ -141,8 +141,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc func showPreferences(sender _: AnyObject?) {
         PreferencesWindowManager.shared.show()
-
-        NSApp.activate(ignoringOtherApps: true)
     }
 
     func hide() {

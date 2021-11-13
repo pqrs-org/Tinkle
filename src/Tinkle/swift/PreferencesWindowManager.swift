@@ -4,16 +4,19 @@ import SwiftUI
 class PreferencesWindowManager: NSObject {
     static let shared = PreferencesWindowManager()
 
-    private var window: NSWindow?
+    private var preferencesWindow: NSWindow?
     private var closed = false
 
     func show() {
-        if window != nil, !closed {
-            window!.makeKeyAndOrderFront(self)
+        if preferencesWindow != nil, !closed {
+            preferencesWindow!.makeKeyAndOrderFront(self)
+            NSApp.activate(ignoringOtherApps: true)
             return
         }
 
-        window = NSWindow(
+        closed = false
+
+        preferencesWindow = NSWindow(
             contentRect: .zero,
             styleMask: [
                 .titled,
@@ -25,15 +28,18 @@ class PreferencesWindowManager: NSObject {
             defer: false
         )
 
-        window!.isReleasedWhenClosed = false
-        window!.title = "Tinkle Preferences"
+        preferencesWindow!.isReleasedWhenClosed = false
+        preferencesWindow!.title = "Tinkle Preferences"
         if !UIElement.isProcessTrusted() {
-            window!.contentView = NSHostingView(rootView: AccessibilityAlertView())
+            preferencesWindow!.contentView = NSHostingView(rootView: AccessibilityAlertView())
         } else {
-            window!.contentView = NSHostingView(rootView: PreferencesView())
+            preferencesWindow!.contentView = NSHostingView(rootView: PreferencesView())
         }
-        window!.delegate = self
-        window!.center()
+        preferencesWindow!.delegate = self
+        preferencesWindow!.center()
+
+        preferencesWindow!.makeKeyAndOrderFront(self)
+        NSApp.activate(ignoringOtherApps: true)
     }
 }
 
