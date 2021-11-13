@@ -71,8 +71,8 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         }
 
         if let drawable = view.currentDrawable,
-            let commandBuffer = commandQueue.makeCommandBuffer(),
-            let commandEncoder = commandBuffer.makeComputeCommandEncoder()
+           let commandBuffer = commandQueue.makeCommandBuffer(),
+           let commandEncoder = commandBuffer.makeComputeCommandEncoder()
         {
             commandEncoder.setComputePipelineState(cps)
             commandEncoder.setTexture(drawable.texture, index: 0)

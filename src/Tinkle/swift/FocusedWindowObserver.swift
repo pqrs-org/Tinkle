@@ -112,11 +112,11 @@ private final class ObservedApplication {
                                                   _: UIElement,
                                                   event: AXNotification,
                                                   _: [String: AnyObject]?) in
-            if event == .focusedWindowChanged {
-                DispatchQueue.main.async {
-                    self.emit()
+                if event == .focusedWindowChanged {
+                    DispatchQueue.main.async {
+                        self.emit()
+                    }
                 }
-            }
         }
 
         try observer?.addNotification(.focusedWindowChanged, forElement: application!)

@@ -9,8 +9,7 @@ class AXStatusChecker {
         relaunchRequired = false
 
         timer = Timer.scheduledTimer(withTimeInterval: 3.0,
-                                     repeats: true)
-        { (_: Timer) in
+                                     repeats: true) { (_: Timer) in
             if !UIElement.isProcessTrusted() {
                 self.relaunchRequired = true
             } else {
