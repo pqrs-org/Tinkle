@@ -14,7 +14,7 @@ You can download from <https://tinkle.pqrs.org/>.
 
 ## Supported systems
 
-macOS Catalina (10.15) or later.
+macOS 11 Big Sur or later.
 
 ### Required privilege
 
