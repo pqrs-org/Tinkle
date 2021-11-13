@@ -30,8 +30,8 @@ Tinkle requires accessibility features in order to detect the focused window cha
 
 System requirements to build Tinkle:
 
--   macOS 10.15+
--   Xcode 11+
+-   macOS 11.0+
+-   Xcode 13+
 -   Command Line Tools for Xcode
 -   [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 -   [create-dmg](https://github.com/sindresorhus/create-dmg)

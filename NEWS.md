@@ -2,6 +2,8 @@
 
 ## Beta
 
+-   💥 Breaking changes
+    -   macOS 10.15 support has been dropped.
 -   ⚡️ Improvements
     -   Update application icons. (Thanks to Kouji TAMURA)
     -   Minor source code improvement.
