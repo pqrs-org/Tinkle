@@ -22,12 +22,12 @@ clean:
 	$(MAKE) -C src clean
 
 notarize:
-	xcrun altool --notarize-app \
-		-t osx \
-		-f Tinkle-$(VERSION).dmg \
-		--primary-bundle-id 'org.pqrs.Tinkle' \
-		-u 'tekezo@pqrs.org' \
-		-p '@keychain:pqrs.org-notarize-app'
+	xcrun notarytool \
+		submit Tinkle-$(VERSION).dmg \
+		--keychain-profile "pqrs.org notarization" \
+		--wait
+	$(MAKE) staple
+	say "notarization completed"
 
 staple:
 	xcrun stapler staple Tinkle-$(VERSION).dmg
