@@ -31,3 +31,6 @@ notarize:
 
 staple:
 	xcrun stapler staple Tinkle-$(VERSION).dmg
+
+swift-format:
+	find . -name '*.swift' -print0 | xargs -0 swift-format -i

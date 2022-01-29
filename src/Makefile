@@ -18,9 +18,6 @@ run:
 	bash ../scripts/codesign.sh build/Release
 	open build/Release/Tinkle.app
 
-swiftformat:
-	find . -name '*.swift' -print0 | xargs -0 swiftformat
-
 install:
 	bash ../scripts/codesign.sh build/Release
 	rsync -a --delete build/Release/Tinkle.app /Applications
