@@ -1,5 +1,10 @@
 # Changelog
 
+## Beta
+
+-   ⚡️ Improvements
+    -   Sparkle Framework has been updated.
+
 ## Tinkle 2.0.0
 
 -   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v2.0.0/Tinkle-2.0.0.dmg)
