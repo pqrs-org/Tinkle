@@ -12,7 +12,7 @@ struct OpenAtLogin {
 
       // Skip if the current app is not the distributed file.
 
-      if // from Xcode
+      if  // from Xcode
       bundlePath.hasSuffix("/Build/Products/Debug/Tinkle.app")
         // from Xcode
         || bundlePath.hasSuffix("/Build/Products/Release/Tinkle.app")
