@@ -4,6 +4,7 @@ import SwiftUI
 
 struct PreferencesView: View {
   @ObservedObject var userSettings = UserSettings.shared
+  @ObservedObject var updater = Updater.shared
 
   struct EffectPicker: View {
     @Binding var selectedEffectRawValue: String
@@ -96,15 +97,17 @@ struct PreferencesView: View {
       #if USE_SPARKLE
         GroupBox(label: Text("Updates")) {
           HStack {
-            Button(action: { Updater.checkForUpdatesStableOnly() }) {
+            Button(action: { updater.checkForUpdatesStableOnly() }) {
               Label("Check for updates", systemImage: "star")
             }
+            .disabled(!updater.canCheckForUpdates)
 
             Spacer()
 
-            Button(action: { Updater.checkForUpdatesWithBetaVersion() }) {
+            Button(action: { updater.checkForUpdatesWithBetaVersion() }) {
               Label("Check for beta updates", systemImage: "star.circle")
             }
+            .disabled(!updater.canCheckForUpdates)
           }.padding()
         }
       #endif

@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_: Notification) {
     NSApplication.shared.disableRelaunchOnLogin()
 
-    Updater.checkForUpdatesInBackground()
+    Updater.shared.checkForUpdatesInBackground()
 
     axStatusChecker = AXStatusChecker()
 
