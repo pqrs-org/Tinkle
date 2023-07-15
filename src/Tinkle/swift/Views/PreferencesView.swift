@@ -3,8 +3,9 @@ import AppKit
 import SwiftUI
 
 struct PreferencesView: View {
-  @ObservedObject var userSettings = UserSettings.shared
-  @ObservedObject var updater = Updater.shared
+  @ObservedObject private var userSettings = UserSettings.shared
+  @ObservedObject private var openAtLogin = OpenAtLogin.shared
+  @ObservedObject private var updater = Updater.shared
 
   struct EffectPicker: View {
     @Binding var selectedEffectRawValue: String
@@ -82,9 +83,32 @@ struct PreferencesView: View {
         HStack {
           VStack(alignment: .leading, spacing: 10.0) {
             EffectPicker(selectedEffectRawValue: self.$userSettings.effect)
-            Toggle(isOn: self.$userSettings.openAtLogin) {
-              Text("Open at login")
+
+            HStack {
+              Toggle(isOn: $openAtLogin.registered) {
+                Text("Open at login")
+              }
+              .switchToggleStyle()
+              .disabled(openAtLogin.developmentBinary)
+              .onChange(of: openAtLogin.registered) { value in
+                OpenAtLogin.shared.update(register: value)
+              }
+
+              Spacer()
             }
+
+            if openAtLogin.error.count > 0 {
+              VStack {
+                Label(
+                  openAtLogin.error,
+                  systemImage: "exclamationmark.circle.fill"
+                )
+                .padding()
+              }
+              .foregroundColor(Color.errorForeground)
+              .background(Color.errorBackground)
+            }
+
             Toggle(isOn: self.$userSettings.showMenu) {
               Text("Show icon in menu bar")
             }

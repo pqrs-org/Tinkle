@@ -1,6 +1,13 @@
-#import "OpenAtLoginObjc.h"
+#import "DeprecatedOpenAtLoginObjc.h"
 
-@implementation OpenAtLoginObjc
+// Note:
+// There is a bug in the swift binding of kLSSharedFileListItemLast that causes EXC_BAD_ACCESS on macOS 12 and above with the following code
+//
+// `kLSSharedFileListItemLast.takeUnretainedValue()`
+//
+// Therefore, we have to implement in Objective-C.
+
+@implementation DeprecatedOpenAtLoginObjc
 
 + (LSSharedFileListItemRef)copyLSSharedFileListItemRef:(LSSharedFileListRef)loginItems appURL:(NSURL*)appURL {
   if (!loginItems) return NULL;
@@ -38,7 +45,7 @@
   return LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
 }
 
-+ (BOOL)enabled:(NSURL*)appURL {
++ (BOOL)registered:(NSURL*)appURL {
   BOOL result = NO;
 
   LSSharedFileListRef loginItems = [self createLoginItems];
@@ -56,8 +63,8 @@
   return result;
 }
 
-+ (void)enable:(NSURL*)appURL {
-  if ([self enabled:appURL]) {
++ (void)register:(NSURL*)appURL {
+  if ([self registered:appURL]) {
     return;
   }
 
@@ -72,7 +79,7 @@
   }
 }
 
-+ (void)disable:(NSURL*)appURL {
++ (void)unregister:(NSURL*)appURL {
   LSSharedFileListRef loginItems = [self createLoginItems];
   if (loginItems) {
     LSSharedFileListItemRef item = [self copyLSSharedFileListItemRef:loginItems appURL:appURL];

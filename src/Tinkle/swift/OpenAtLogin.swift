@@ -1,34 +1,69 @@
 import Foundation
+import ServiceManagement
 
-struct OpenAtLogin {
-  public static var enabled: Bool {
-    get {
-      let bundlePath = Bundle.main.bundlePath
-      let url = URL(fileURLWithPath: bundlePath)
-      return OpenAtLoginObjc.enabled(url)
-    }
-    set {
-      let bundlePath = Bundle.main.bundlePath
+final class OpenAtLogin: ObservableObject {
+  static let shared = OpenAtLogin()
 
-      // Skip if the current app is not the distributed file.
+  @Published var registered = false
 
-      if  // from Xcode
-      bundlePath.hasSuffix("/Build/Products/Debug/Tinkle.app")
-        // from Xcode
-        || bundlePath.hasSuffix("/Build/Products/Release/Tinkle.app")
-        // from command line
-        || bundlePath.hasSuffix("/build/Release/Tinkle.app")
-      {
-        print("Skip setting LaunchAtLogin.enabled for dev")
-        return
+  var error = ""
+
+  init() {
+    if #available(macOS 13.0, *) {
+      registered = SMAppService.mainApp.status == .enabled
+    } else {
+      Task {
+        await DeprecatedOpenAtLogin.shared.updateRegistered()
       }
+    }
+  }
 
-      let url = URL(fileURLWithPath: bundlePath)
+  var developmentBinary: Bool {
+    let bundlePath = Bundle.main.bundlePath
 
-      if newValue {
-        OpenAtLoginObjc.enable(url)
-      } else {
-        OpenAtLoginObjc.disable(url)
+    // Xcode builds
+    // - /Build/Products/Debug/*.app
+    // - /Build/Products/Release/*.app
+    if bundlePath.contains("/Build/") {
+      return true
+    }
+
+    // Command line builds
+    // - /build/Release/*.app
+    if bundlePath.contains("/build/") {
+      return true
+    }
+
+    return false
+  }
+
+  @MainActor
+  func update(register: Bool) {
+    error = ""
+
+    if #available(macOS 13.0, *) {
+      do {
+        if register {
+          try SMAppService.mainApp.register()
+        } else {
+          // `unregister` throws `Operation not permitted` error in the following cases.
+          //
+          // 1. `unregister` is called.
+          // 2. macOS is restarted to clean up login items entries.
+          // 3. `unregister` is called again.
+          //
+          // So, we ignore the error of `unregister`.
+
+          try? SMAppService.mainApp.unregister()
+        }
+
+        registered = register
+      } catch {
+        self.error = error.localizedDescription
+      }
+    } else {
+      Task {
+        await DeprecatedOpenAtLogin.shared.update(register: register)
       }
     }
   }

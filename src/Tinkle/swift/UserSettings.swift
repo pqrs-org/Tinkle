@@ -6,6 +6,17 @@ final class UserSettings: ObservableObject {
   static let effectSettingChanged = Notification.Name("EffectSettingChanged")
   static let showMenuSettingChanged = Notification.Name("ShowMenuSettingChanged")
 
+  //
+  // Initial Open At Login
+  //
+
+  @UserDefault("initialOpenAtLoginRegistered", defaultValue: false)
+  var initialOpenAtLoginRegistered: Bool {
+    willSet {
+      objectWillChange.send()
+    }
+  }
+
   @UserDefault("effect", defaultValue: Effect.shockwaveBlue.rawValue)
   var effect: String {
     willSet {
@@ -16,12 +27,6 @@ final class UserSettings: ObservableObject {
         name: UserSettings.effectSettingChanged,
         object: nil
       )
-    }
-  }
-
-  @Published var openAtLogin = OpenAtLogin.enabled {
-    didSet {
-      OpenAtLogin.enabled = openAtLogin
     }
   }
 

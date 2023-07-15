@@ -15,6 +15,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_: Notification) {
     NSApplication.shared.disableRelaunchOnLogin()
 
+    if !OpenAtLogin.shared.developmentBinary {
+      if !UserSettings.shared.initialOpenAtLoginRegistered {
+        OpenAtLogin.shared.update(register: true)
+        UserSettings.shared.initialOpenAtLoginRegistered = true
+      }
+    }
+
     Updater.shared.checkForUpdatesInBackground()
 
     axStatusChecker = AXStatusChecker()

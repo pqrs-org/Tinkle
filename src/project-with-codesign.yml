@@ -4,6 +4,8 @@ include:
 targets:
   Tinkle:
     settings:
+      base:
+        CODE_SIGN_ENTITLEMENTS: 'Tinkle/Tinkle.entitlements'
       configs:
         debug:
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: 'USE_SPARKLE DEBUG'
