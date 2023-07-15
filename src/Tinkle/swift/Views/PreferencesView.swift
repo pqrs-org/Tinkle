@@ -11,7 +11,8 @@ struct PreferencesView: View {
     @Binding var selectedEffectRawValue: String
     @State private var selectedIndex: Int = -1
 
-    struct EffectEntry {
+    struct EffectEntry: Identifiable {
+      var id = UUID()
       let name: String
       let value: Effect
       let color: Color
@@ -54,10 +55,10 @@ struct PreferencesView: View {
       )
 
       return Picker(selection: binding, label: Text("Effect")) {
-        ForEach(0..<effects.count) {
+        ForEach(effects) { effect in
           Text("■ ")
-            .foregroundColor(self.effects[$0].color)
-            + Text(self.effects[$0].name)
+            .foregroundColor(effect.color)
+            + Text(effect.name)
         }
       }.frame(width: 300.0)
     }
