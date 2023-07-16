@@ -150,7 +150,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   @objc func showSettings(sender _: AnyObject?) {
-    PreferencesWindowManager.shared.show()
+    SettingsWindowManager.shared.show()
   }
 
   func hide() {
