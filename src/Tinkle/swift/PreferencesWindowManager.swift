@@ -29,7 +29,7 @@ class PreferencesWindowManager: NSObject {
     )
 
     preferencesWindow!.isReleasedWhenClosed = false
-    preferencesWindow!.title = "Tinkle Preferences"
+    preferencesWindow!.title = "Tinkle Settings"
     if !UIElement.isProcessTrusted() {
       preferencesWindow!.contentView = NSHostingView(rootView: AccessibilityAlertView())
     } else {

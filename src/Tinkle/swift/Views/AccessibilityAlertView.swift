@@ -7,14 +7,15 @@ struct AccessibilityAlertView: View {
         Text("User approval for using accessibility features is required.")
         Text("Tinkle uses the feature to detect the focused window changes.")
 
-        Text("Open System Preferences > Security & Privacy, then turn on Tinkle.").padding(
-          .top, 20.0)
+        Text("Open System Settings > Privacy & Security > Accessibility, then turn on Tinkle.")
+          .padding(
+            .top, 20.0)
         Button(action: {
           NSWorkspace.shared.open(
-            URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy")!)
+            URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
         }) {
           Label(
-            "Open Security & Privacy System Preferences...",
+            "Open System Settings > Privacy & Security > Accessibility...",
             systemImage: "arrow.forward.circle.fill")
         }
 

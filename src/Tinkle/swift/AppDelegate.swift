@@ -97,7 +97,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     _: NSApplication,
     hasVisibleWindows _: Bool
   ) -> Bool {
-    showPreferences(sender: self)
+    showSettings(sender: self)
     return true
   }
 
@@ -126,8 +126,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       menu.addItem(NSMenuItem.separator())
 
       menu.addItem(
-        withTitle: "Preferences...",
-        action: #selector(showPreferences),
+        withTitle: "Settings...",
+        action: #selector(showSettings),
         keyEquivalent: ""
       )
 
@@ -149,7 +149,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     statusBarItem?.isVisible = UserSettings.shared.showMenu
   }
 
-  @objc func showPreferences(sender _: AnyObject?) {
+  @objc func showSettings(sender _: AnyObject?) {
     PreferencesWindowManager.shared.show()
   }
 
