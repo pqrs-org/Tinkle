@@ -1,5 +1,11 @@
 # Changelog
 
+## Beta
+
+-   ⚡️ Improvements
+    -   Became sandboxed app.
+    -   Sparkle Framework has been updated.
+
 ## Tinkle 2.1.0
 
 -   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v2.1.0/Tinkle-2.1.0.dmg)
