@@ -34,8 +34,9 @@ struct AccessibilityAlertView: View {
 
       Image("accessibility")
         .resizable()
-        .frame(width: 334.0, height: 286.0)
-        .border(Color.gray, width: /*@START_MENU_TOKEN@*/ 1 /*@END_MENU_TOKEN@*/)
+        .aspectRatio(contentMode: .fit)
+        .frame(width: 400.0)
+        .border(.gray, width: 1)
     }.padding()
   }
 }
