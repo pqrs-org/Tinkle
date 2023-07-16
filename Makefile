@@ -1,25 +1,23 @@
 VERSION = `head -n 1 version`
-DMG_IDENTITY = 'Developer ID Application: Fumihiko Takayama (G43BCU2T37)'
 
 all:
-	@echo 'Type `make package`'
+	$(MAKE) gitclean
+	$(MAKE) clean
+	./make-package.sh
+	$(MAKE) clean-launch-services-database
 
-package:
-	git clean -x -d -f
-	$(MAKE) -C src all
-
-	rm -f Tinkle-$(VERSION).dmg
-	rm -rf tmp
-	mkdir -p tmp
-	rsync -a src/build/Release/Tinkle.app tmp
-	-bash scripts/codesign.sh tmp
-	create-dmg --overwrite --identity=$(DMG_IDENTITY) tmp/Tinkle.app
-	rm -rf tmp
-	mv "Tinkle $(VERSION).dmg" Tinkle-$(VERSION).dmg
+build:
+	$(MAKE) -C src
 
 clean:
-	rm -f *.dmg
 	$(MAKE) -C src clean
+	rm -f *.dmg
+
+clean-launch-services-database:
+	bash scripts/clean-launch-services-database.sh
+
+gitclean:
+	git clean -f -x -d
 
 notarize:
 	xcrun notarytool \
@@ -32,5 +30,8 @@ notarize:
 staple:
 	xcrun stapler staple Tinkle-$(VERSION).dmg
 
+check-staple:
+	@xcrun stapler validate Tinkle-$(VERSION).dmg
+
 swift-format:
-	find . -name '*.swift' -print0 | xargs -0 swift-format -i
+	$(MAKE) -C src swift-format
