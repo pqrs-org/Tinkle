@@ -26,8 +26,6 @@ struct EffectPicker: View {
   ]
 
   var body: some View {
-    Text("value \(value)")
-
     Picker("Effect", selection: $value) {
       ForEach(effects) { effect in
         (Text("■ ")

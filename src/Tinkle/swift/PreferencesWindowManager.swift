@@ -33,7 +33,7 @@ class PreferencesWindowManager: NSObject {
     if !UIElement.isProcessTrusted() {
       preferencesWindow!.contentView = NSHostingView(rootView: AccessibilityAlertView())
     } else {
-      preferencesWindow!.contentView = NSHostingView(rootView: PreferencesView())
+      preferencesWindow!.contentView = NSHostingView(rootView: SettingsView())
     }
     preferencesWindow!.delegate = self
     preferencesWindow!.center()

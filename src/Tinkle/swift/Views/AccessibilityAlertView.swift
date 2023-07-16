@@ -12,7 +12,9 @@ struct AccessibilityAlertView: View {
             .top, 20.0)
         Button(action: {
           NSWorkspace.shared.open(
-            URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
+            URL(
+              string:
+                "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
         }) {
           Label(
             "Open System Settings > Privacy & Security > Accessibility...",
