@@ -1,7 +1,10 @@
 # Changelog
 
-## Beta
+## Tinkle 2.2.0
 
+-   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v2.2.0/Tinkle-2.2.0.dmg)
+-   📅 Release date
+    -   Jul 16, 2023
 -   ⚡️ Improvements
     -   Became sandboxed app.
     -   Sparkle Framework has been updated.
