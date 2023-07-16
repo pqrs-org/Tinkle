@@ -10,6 +10,14 @@
     <array>
       <string>org.pqrs.Tinkle-spks</string>
       <string>org.pqrs.Tinkle-spki</string>
+      <!-- For UIElement.isProcessTrusted(withPrompt:) -->
+      <string>com.apple.universalaccessAuthWarn</string>
+    </array>
+
+    <key>com.apple.security.temporary-exception.mach-lookup.local-name</key>
+    <array>
+      <!-- For getting .focusedWindowChanged notification -->
+      <string>com.apple.axserver</string>
     </array>
   </dict>
 </plist>
