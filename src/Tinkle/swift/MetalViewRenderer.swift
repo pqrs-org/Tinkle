@@ -6,8 +6,8 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
 
   public enum Shader {
     case nop
-    case shockwave
     case neon
+    case shockwave
   }
 
   private weak var view: MTKView!
@@ -64,10 +64,10 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     switch shader {
     case .nop:
       cps = nopCps
-    case .shockwave:
-      cps = shockwaveCps
     case .neon:
       cps = neonCps
+    case .shockwave:
+      cps = shockwaveCps
     }
 
     if let drawable = view.currentDrawable,
@@ -109,40 +109,26 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
   func setEffect(_ e: Effect?) {
     if e != nil {
       switch e! {
-      case .shockwaveRed,
-        .shockwaveGreen,
-        .shockwaveBlue,
-        .shockwaveLight,
-        .shockwaveGray,
-        .shockwaveDark:
-        shader = .shockwave
-      case .neonRed,
-        .neonGreen,
-        .neonBlue,
-        .neonLight,
-        .neonGray,
-        .neonDark:
+      case .neonGray, .neonLight, .neonDark,
+        .neonRed, .neonGreen, .neonBlue:
         shader = .neon
+      case .shockwaveGray, .shockwaveLight, .shockwaveDark,
+        .shockwaveRed, .shockwaveGreen, .shockwaveBlue:
+        shader = .shockwave
       }
 
       switch e! {
-      case .shockwaveRed,
-        .neonRed:
+      case .shockwaveRed, .neonRed:
         color = vector_float3(1.0, 0.3, 0.2)
-      case .shockwaveGreen,
-        .neonGreen:
+      case .shockwaveGreen, .neonGreen:
         color = vector_float3(0.2, 1.0, 0.2)
-      case .shockwaveBlue,
-        .neonBlue:
+      case .shockwaveBlue, .neonBlue:
         color = vector_float3(0.3, 0.2, 1.0)
-      case .shockwaveLight,
-        .neonLight:
+      case .shockwaveLight, .neonLight:
         color = vector_float3(1.0, 1.0, 1.0)
-      case .shockwaveGray,
-        .neonGray:
+      case .shockwaveGray, .neonGray:
         color = vector_float3(0.3, 0.3, 0.3)
-      case .shockwaveDark,
-        .neonDark:
+      case .shockwaveDark, .neonDark:
         color = vector_float3(0.0, 0.0, 0.0)
       }
     } else {

@@ -17,7 +17,7 @@ final class UserSettings: ObservableObject {
     }
   }
 
-  @UserDefault("effect", defaultValue: Effect.shockwaveBlue.rawValue)
+  @UserDefault("effect", defaultValue: Effect.neonGray.rawValue)
   var effect: String {
     willSet {
       objectWillChange.send()
