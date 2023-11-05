@@ -51,6 +51,7 @@ public class MetalViewRenderer: NSObject, MTKViewDelegate {
   let commandQueue: MTLCommandQueue!
   let device: MTLDevice!
   var cps: MTLComputePipelineState?
+  var texture: MTLTexture?
   private var startDate: Date = Date()
   private var color: vector_float3 = vector_float3(0.3, 0.2, 1.0)  // rgb
   public init?(mtkView: MTKView) {
@@ -66,6 +67,7 @@ public class MetalViewRenderer: NSObject, MTKViewDelegate {
     super.init()
     view.delegate = self
     view.device = device
+    view.colorPixelFormat = .bgra8Unorm
   }
 
   public func mtkView(_: MTKView, drawableSizeWillChange _: CGSize) {}
@@ -77,13 +79,26 @@ public class MetalViewRenderer: NSObject, MTKViewDelegate {
       startDate = Date()
     }
 
+    // Resize texture
+    if let drawable = view.currentDrawable {
+      if drawable.texture.width != texture?.width || drawable.texture.height != texture?.height {
+        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+          pixelFormat: .rgba32Float, width: drawable.texture.width, height: drawable.texture.height,
+          mipmapped: false)
+        textureDescriptor.usage = [.shaderWrite, .shaderRead]
+        texture = device!.makeTexture(descriptor: textureDescriptor)
+      }
+    }
+
+    // Draw
+
     if let cps = cps,
-      let drawable = view.currentDrawable,
+      let texture = texture,
       let commandBuffer = commandQueue.makeCommandBuffer(),
       let commandEncoder = commandBuffer.makeComputeCommandEncoder()
     {
       commandEncoder.setComputePipelineState(cps)
-      commandEncoder.setTexture(drawable.texture, index: 0)
+      commandEncoder.setTexture(texture, index: 0)
 
       commandEncoder.setBytes(&time, length: MemoryLayout<Float>.size, index: 0)
       commandEncoder.setBytes(&color, length: MemoryLayout<SIMD3<Float>>.size, index: 1)
@@ -92,13 +107,31 @@ public class MetalViewRenderer: NSObject, MTKViewDelegate {
       let h = cps.maxTotalThreadsPerThreadgroup / w
       let threadsPerThreadgroup = MTLSize(width: w, height: h, depth: 1)
       let threadsPerGrid = MTLSize(
-        width: drawable.texture.width,
-        height: drawable.texture.height,
+        width: texture.width,
+        height: texture.height,
         depth: 1)
       commandEncoder.dispatchThreads(
         threadsPerGrid,
         threadsPerThreadgroup: threadsPerThreadgroup)
       commandEncoder.endEncoding()
+
+      commandBuffer.commit()
+      commandBuffer.waitUntilCompleted()
+    }
+
+    // Blit
+
+    if let texture = texture,
+      let drawable = view.currentDrawable,
+      let commandBuffer = commandQueue.makeCommandBuffer()
+    {
+      let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
+      blitEncoder.copy(
+        from: texture, sourceSlice: 0, sourceLevel: 0, sourceOrigin: MTLOrigin(x: 0, y: 0, z: 0),
+        sourceSize: MTLSize(width: texture.width, height: texture.height, depth: 1),
+        to: drawable.texture, destinationSlice: 0, destinationLevel: 0,
+        destinationOrigin: MTLOrigin(x: 0, y: 0, z: 0))
+      blitEncoder.endEncoding()
       commandBuffer.present(drawable)
       commandBuffer.commit()
     }
