@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22155"/>
+    </dependencies>
+    <scenes>
+        <!--Application-->
+        <scene sceneID="JPo-4y-FX3">
+            <objects>
+                <application id="hnw-xV-0zn" sceneMemberID="viewController">
+                    <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
+                        <items>
+                            <menuItem title="ShaderViewer" id="1Xt-HY-uBw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="ShaderViewer" id="D9K-b0-asS">
+                                    <items>
+                                        <menuItem title="Hide Application" keyEquivalent="h" id="RBv-zO-5W0" userLabel="Hide ShaderViewer">
+                                            <connections>
+                                                <action selector="hide:" target="Ady-hI-5gd" id="2nq-xm-yVT"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Hide Others" keyEquivalent="h" id="nFI-ka-Te7">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="hideOtherApplications:" target="Ady-hI-5gd" id="0SN-OI-Fbk"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Show All" id="eVk-DF-4FK">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="unhideAllApplications:" target="Ady-hI-5gd" id="IOq-w0-MAd"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="dMY-mI-2eR"/>
+                                        <menuItem title="Quit Application" keyEquivalent="q" id="RKW-tU-Ibb" userLabel="Quit ShaderViewer">
+                                            <connections>
+                                                <action selector="terminate:" target="Ady-hI-5gd" id="hVj-Jw-BEh"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="File" id="sqp-7n-Bo9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="File" id="5yU-EK-1dy">
+                                    <items>
+                                        <menuItem title="Close" keyEquivalent="w" id="Njl-Zk-tJ4">
+                                            <connections>
+                                                <action selector="performClose:" target="Ady-hI-5gd" id="ziO-zg-qXn"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Window" id="eIU-3x-4Ew">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Window" systemMenu="window" id="3ti-MB-RCR">
+                                    <items>
+                                        <menuItem title="Minimize" keyEquivalent="m" id="I5g-wP-BeQ">
+                                            <connections>
+                                                <action selector="performMiniaturize:" target="Ady-hI-5gd" id="CAN-7r-JeV"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zoom" id="n6K-YV-Dun">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="performZoom:" target="Ady-hI-5gd" id="Jwp-ct-fa9"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="azU-Jt-CXo"/>
+                                        <menuItem title="Bring All to Front" id="0M6-XD-tAy">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="arrangeInFront:" target="Ady-hI-5gd" id="sZm-zZ-g8Z"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
+                    </connections>
+                </application>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Tinkle_ShaderViewer" customModuleProvider="target"/>
+                <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+                <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="75" y="0.0"/>
+        </scene>
+    </scenes>
+</document>
