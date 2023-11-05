@@ -45,20 +45,23 @@ let source = """
   }
   """
 
+@available(macOS 11.0, *)
 public class MetalViewRenderer: NSObject, MTKViewDelegate {
   weak var view: MTKView!
   let commandQueue: MTLCommandQueue!
   let device: MTLDevice!
-  let cps: MTLComputePipelineState!
+  var cps: MTLComputePipelineState?
   private var startDate: Date = Date()
   private var color: vector_float3 = vector_float3(0.3, 0.2, 1.0)  // rgb
   public init?(mtkView: MTKView) {
     view = mtkView
     device = MTLCreateSystemDefaultDevice()!
     commandQueue = device.makeCommandQueue()
-    let library = try! device.makeLibrary(source: source, options: nil)
-    let function = library.makeFunction(name: "effect")!
-    cps = try! device.makeComputePipelineState(function: function)
+    if let library = try? device.makeLibrary(source: source, options: nil) {
+      if let function = library.makeFunction(name: "effect") {
+        cps = try? device.makeComputePipelineState(function: function)
+      }
+    }
 
     super.init()
     view.delegate = self
@@ -74,7 +77,8 @@ public class MetalViewRenderer: NSObject, MTKViewDelegate {
       startDate = Date()
     }
 
-    if let drawable = view.currentDrawable,
+    if let cps = cps,
+      let drawable = view.currentDrawable,
       let commandBuffer = commandQueue.makeCommandBuffer(),
       let commandEncoder = commandBuffer.makeComputeCommandEncoder()
     {
@@ -136,31 +140,41 @@ struct ContentView: View {
       VStack {
         Text("Choose effect color")
         HStack {
-          Button(action: {
-            delegate?.setColor(vector_float3(1.0, 0.3, 0.2))
-          }) {
-            Text("Red")
-          }
-          Button(action: {
-            delegate?.setColor(vector_float3(0.2, 1.0, 0.3))
-          }) {
-            Text("Green")
-          }
-          Button(action: {
-            delegate?.setColor(vector_float3(0.3, 0.2, 1.0))
-          }) {
-            Text("Blue")
-          }
-          Button(action: {
-            delegate?.setColor(vector_float3(1.0, 1.0, 1.0))
-          }) {
-            Text("Light")
-          }
-          Button(action: {
-            delegate?.setColor(vector_float3(0.0, 0.0, 0.0))
-          }) {
-            Text("Dark")
-          }
+          Button(
+            action: {
+              delegate?.setColor(vector_float3(1.0, 0.3, 0.2))
+            },
+            label: {
+              Text("Red")
+            })
+          Button(
+            action: {
+              delegate?.setColor(vector_float3(0.2, 1.0, 0.3))
+            },
+            label: {
+              Text("Green")
+            })
+          Button(
+            action: {
+              delegate?.setColor(vector_float3(0.3, 0.2, 1.0))
+            },
+            label: {
+              Text("Blue")
+            })
+          Button(
+            action: {
+              delegate?.setColor(vector_float3(1.0, 1.0, 1.0))
+            },
+            label: {
+              Text("Light")
+            })
+          Button(
+            action: {
+              delegate?.setColor(vector_float3(0.0, 0.0, 0.0))
+            },
+            label: {
+              Text("Dark")
+            })
         }
       }
     }
