@@ -78,8 +78,8 @@ System requirements to build Tinkle:
 
     Note: If you don't have codesign identity, the dmg works only on your machine.
 
-### Playgrounds
+### Update/Add effects
 
-Tinkle uses Metal shader to make effects.
-
-`playground/Metal.playground` helps you if you want to add your own effect.
+The project uses Metal's compute shaders to create effects, which are stored in `src/Share/metal`.
+To preview these effects, the project includes a tool called ShaderViewer.
+This tool allows you to conveniently review and modify the shaders.
