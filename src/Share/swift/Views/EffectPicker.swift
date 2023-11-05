@@ -23,6 +23,9 @@ struct EffectPicker: View {
     EffectEntry(name: "Shock wave (red)", value: .shockwaveRed, color: Color.red),
     EffectEntry(name: "Shock wave (green)", value: .shockwaveGreen, color: Color.green),
     EffectEntry(name: "Shock wave (blue)", value: .shockwaveBlue, color: Color.blue),
+    EffectEntry(name: "Line (red)", value: .lineRed, color: Color.red),
+    EffectEntry(name: "Line (green)", value: .lineGreen, color: Color.green),
+    EffectEntry(name: "Line (blue)", value: .lineBlue, color: Color.blue),
   ]
 
   var body: some View {

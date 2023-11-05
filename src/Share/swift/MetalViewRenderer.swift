@@ -8,6 +8,7 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     case nop
     case neon
     case shockwave
+    case line
   }
 
   private weak var view: MTKView!
@@ -17,6 +18,7 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
   private let nopCps: MTLComputePipelineState?
   private let shockwaveCps: MTLComputePipelineState?
   private let neonCps: MTLComputePipelineState?
+  private let lineCps: MTLComputePipelineState?
   private var startDate = Date()
   private var shader: Shader = .nop
   private var color = vector_float3(0.0, 0.0, 0.0)
@@ -36,6 +38,9 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
 
     let neonFunction = library.makeFunction(name: "neonEffect")!
     neonCps = try? device.makeComputePipelineState(function: neonFunction)
+
+    let lineFunction = library.makeFunction(name: "lineEffect")!
+    lineCps = try? device.makeComputePipelineState(function: lineFunction)
 
     super.init()
     view.delegate = self
@@ -68,6 +73,8 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
       cps = neonCps
     case .shockwave:
       cps = shockwaveCps
+    case .line:
+      cps = lineCps
     }
 
     if let cps = cps,
@@ -110,20 +117,32 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
   func setEffect(_ e: Effect?) {
     if e != nil {
       switch e! {
-      case .neonGray, .neonLight, .neonDark,
-        .neonRed, .neonGreen, .neonBlue:
+      case .neonGray,
+        .neonLight,
+        .neonDark,
+        .neonRed,
+        .neonGreen,
+        .neonBlue:
         shader = .neon
-      case .shockwaveGray, .shockwaveLight, .shockwaveDark,
-        .shockwaveRed, .shockwaveGreen, .shockwaveBlue:
+      case .shockwaveGray,
+        .shockwaveLight,
+        .shockwaveDark,
+        .shockwaveRed,
+        .shockwaveGreen,
+        .shockwaveBlue:
         shader = .shockwave
+      case .lineRed,
+        .lineGreen,
+        .lineBlue:
+        shader = .line
       }
 
       switch e! {
-      case .shockwaveRed, .neonRed:
+      case .shockwaveRed, .neonRed, .lineRed:
         color = vector_float3(1.0, 0.3, 0.2)
-      case .shockwaveGreen, .neonGreen:
+      case .shockwaveGreen, .neonGreen, .lineGreen:
         color = vector_float3(0.2, 1.0, 0.2)
-      case .shockwaveBlue, .neonBlue:
+      case .shockwaveBlue, .neonBlue, .lineBlue:
         color = vector_float3(0.3, 0.2, 1.0)
       case .shockwaveLight, .neonLight:
         color = vector_float3(1.0, 1.0, 1.0)
