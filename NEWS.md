@@ -1,5 +1,11 @@
 # Changelog
 
+## Beta
+
+-   ⚡️ Improvements
+    -   Add effects: Line (Red), Line (Green), Line (Blue)
+    -   Sparkle Framework has been updated.
+
 ## Tinkle 2.3.0
 
 -   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v2.3.0/Tinkle-2.3.0.dmg)
