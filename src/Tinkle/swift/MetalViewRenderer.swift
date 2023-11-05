@@ -14,9 +14,9 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
   private let callback: Callback
   private let commandQueue: MTLCommandQueue!
   private let device: MTLDevice!
-  private let nopCps: MTLComputePipelineState!
-  private let shockwaveCps: MTLComputePipelineState!
-  private let neonCps: MTLComputePipelineState!
+  private let nopCps: MTLComputePipelineState?
+  private let shockwaveCps: MTLComputePipelineState?
+  private let neonCps: MTLComputePipelineState?
   private var startDate = Date()
   private var shader: Shader = .nop
   private var color = vector_float3(0.0, 0.0, 0.0)
@@ -29,13 +29,13 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
     let library = device.makeDefaultLibrary()!
 
     let nopFunction = library.makeFunction(name: "nopEffect")!
-    nopCps = try! device.makeComputePipelineState(function: nopFunction)
+    nopCps = try? device.makeComputePipelineState(function: nopFunction)
 
     let shockwaveFunction = library.makeFunction(name: "shockwaveEffect")!
-    shockwaveCps = try! device.makeComputePipelineState(function: shockwaveFunction)
+    shockwaveCps = try? device.makeComputePipelineState(function: shockwaveFunction)
 
     let neonFunction = library.makeFunction(name: "neonEffect")!
-    neonCps = try! device.makeComputePipelineState(function: neonFunction)
+    neonCps = try? device.makeComputePipelineState(function: neonFunction)
 
     super.init()
     view.delegate = self
@@ -60,7 +60,7 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
       }
     }
 
-    var cps: MTLComputePipelineState = nopCps
+    var cps: MTLComputePipelineState? = nopCps
     switch shader {
     case .nop:
       cps = nopCps
@@ -70,7 +70,8 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
       cps = shockwaveCps
     }
 
-    if let drawable = view.currentDrawable,
+    if let cps = cps,
+      let drawable = view.currentDrawable,
       let commandBuffer = commandQueue.makeCommandBuffer(),
       let commandEncoder = commandBuffer.makeComputeCommandEncoder()
     {

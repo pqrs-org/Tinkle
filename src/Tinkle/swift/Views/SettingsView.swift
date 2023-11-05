@@ -14,18 +14,24 @@ struct SettingsView: View {
       HStack {
         VStack(alignment: .leading, spacing: 0) {
           Group {
-            Button(action: {
-              selection = .basic
-            }) {
-              SidebarLabelView(text: "Basic", systemImage: "gearshape")
-            }
+            Button(
+              action: {
+                selection = .basic
+              },
+              label: {
+                SidebarLabelView(text: "Basic", systemImage: "gearshape")
+              }
+            )
             .sidebarButtonStyle(selected: selection == .basic)
 
-            Button(action: {
-              selection = .update
-            }) {
-              SidebarLabelView(text: "Update", systemImage: "network")
-            }
+            Button(
+              action: {
+                selection = .update
+              },
+              label: {
+                SidebarLabelView(text: "Update", systemImage: "network")
+              }
+            )
             .sidebarButtonStyle(selected: selection == .update)
           }
 
@@ -33,11 +39,14 @@ struct SettingsView: View {
             .padding(.vertical, 10.0)
 
           Group {
-            Button(action: {
-              selection = .action
-            }) {
-              SidebarLabelView(text: "Quit, Restart", systemImage: "bolt.circle")
-            }
+            Button(
+              action: {
+                selection = .action
+              },
+              label: {
+                SidebarLabelView(text: "Quit, Restart", systemImage: "bolt.circle")
+              }
+            )
             .sidebarButtonStyle(selected: selection == .action)
           }
 

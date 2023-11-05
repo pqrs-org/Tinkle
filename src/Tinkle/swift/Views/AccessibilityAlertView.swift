@@ -10,26 +10,37 @@ struct AccessibilityAlertView: View {
         Text("Open System Settings > Privacy & Security > Accessibility, then turn on Tinkle.")
           .padding(
             .top, 20.0)
-        Button(action: {
-          NSWorkspace.shared.open(
-            URL(
-              string:
-                "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
-        }) {
-          Label(
-            "Open System Settings > Privacy & Security > Accessibility...",
-            systemImage: "arrow.forward.circle.fill")
-        }
+        Button(
+          action: {
+            NSWorkspace.shared.open(
+              URL(
+                string:
+                  "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
+          },
+          label: {
+            Label(
+              "Open System Settings > Privacy & Security > Accessibility...",
+              systemImage: "arrow.forward.circle.fill")
+          })
 
         Text("Restart Tinkle after you approve the feature.").padding(.top, 20.0)
-        RestartButton()
+
+        Button(
+          action: { Relauncher.relaunch() },
+          label: {
+            Label("Restart Tinkle", systemImage: "arrow.clockwise")
+          })
 
         Spacer()
           .frame(height: 50.0)
 
         Divider()
 
-        QuitButton()
+        Button(
+          action: { NSApplication.shared.terminate(self) },
+          label: {
+            Label("Quit Tinkle", systemImage: "xmark.circle.fill")
+          })
       }.frame(minWidth: 400.0)
 
       Image("accessibility")

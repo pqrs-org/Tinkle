@@ -26,9 +26,12 @@ public final class FocusedWindowObserver {
         print("Missing notification info on NSWorkspace.didActivateApplicationNotification")
         return
       }
-      let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey] as! NSRunningApplication
 
-      self.addObservedApplication(runningApplication)
+      if let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey]
+        as? NSRunningApplication
+      {
+        self.addObservedApplication(runningApplication)
+      }
     }
 
     //
@@ -50,9 +53,12 @@ public final class FocusedWindowObserver {
         print("Missing notification info on NSWorkspace.didLaunchApplicationNotification")
         return
       }
-      let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey] as! NSRunningApplication
 
-      self.addObservedApplication(runningApplication)
+      if let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey]
+        as? NSRunningApplication
+      {
+        self.addObservedApplication(runningApplication)
+      }
     }
 
     //
@@ -68,13 +74,16 @@ public final class FocusedWindowObserver {
         print("Missing notification info on NSWorkspace.didTerminateApplicationNotification")
         return
       }
-      let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey] as! NSRunningApplication
 
       //
       // Update observedApplications
       //
 
-      self.observedApplications.removeValue(forKey: runningApplication.processIdentifier)
+      if let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey]
+        as? NSRunningApplication
+      {
+        self.observedApplications.removeValue(forKey: runningApplication.processIdentifier)
+      }
     }
   }
 
@@ -111,13 +120,7 @@ private final class ObservedApplication {
     self.callback = callback
 
     application = Application(runningApplication)
-    observer = application?.createObserver {
-      (
-        _: Observer,
-        _: UIElement,
-        event: AXNotification,
-        _: [String: AnyObject]?
-      ) in
+    observer = application?.createObserver { (_, _, event: AXNotification, _) in
       if event == .focusedWindowChanged {
         DispatchQueue.main.async {
           self.emit()

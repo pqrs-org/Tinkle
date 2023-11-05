@@ -116,7 +116,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
       let menu = NSMenu(title: "Tinkle")
 
-      let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+      let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? ""
       menu.addItem(
         withTitle: "Tinkle " + version,
         action: nil,
