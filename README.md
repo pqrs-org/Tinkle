@@ -80,6 +80,6 @@ System requirements to build Tinkle:
 
 ### Playgrounds
 
-Tinkle users Metal shader to make effects.
+Tinkle uses Metal shader to make effects.
 
 `playground/Metal.playground` helps you if you want to add your own effect.
