@@ -9,7 +9,7 @@ struct ContentView: View {
     VStack {
       MetalView()
         .background(settings.backgroundColor)
-        .frame(width: 400, height: 200)
+        .frame(minWidth: 400, minHeight: 200)
         .border(Color.white)
         .padding()
 
