@@ -5,23 +5,30 @@ kernel void neonEffect(texture2d<float, access::write> o [[texture(0)]],
                        constant float &time [[buffer(0)]],
                        constant float3 &color [[buffer(1)]],
                        ushort2 gid [[thread_position_in_grid]]) {
+  const float PI = 3.14159265359;
+  const float EFFECT_WIDTH = 80; // The width of the neon effect (pixel)
+
   float width = o.get_width();
   float height = o.get_height();
+  float edgeWidth = width > 0 ? EFFECT_WIDTH / width : 0;
 
+  // Convert gid to normalized texture coordinates
   float2 uv = float2(gid) / float2(width, height);
-  uv -= 0.5;
 
-  float box = 1.0;
-  box = min(box, smoothstep(1.0, 0.0, abs(uv[0]) * 2));
-  box = min(box, smoothstep(1.0, 0.0, abs(uv[1]) * 2));
+  // Calculate distance to the nearest edge
+  float distToEdge = min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y));
 
-  float shade = 0.005 * max(0.0, 1.0 - time * 5.0) / max(0.0005, box - 0.001);
-  //    float shade = box;
+  // The intensity of the neon effect
+  float intensity = smoothstep(edgeWidth, 0.0, distToEdge);
 
-  float3 c = color * shade;
+  // Modulate the intensity with time for a pulsing effect
+  intensity *= sin(time * 4.0 * PI) * 0.5 + 0.5;
 
-  float alpha = min(shade, 0.5 - time * 2.0);
-  // float alpha = min(max(max(c[0], c[1]), c[2]), 0.5 - time * 2.0);
+  // Calculate the final color
+  float3 finalColor = mix(float3(0.0, 0.0, 0.0), color, intensity);
+  // Transparent after 300ms.
+  float alpha = time < 0.3 ? intensity : 0.0;
 
-  o.write(float4(c, alpha), gid);
+  // Write the color to the output texture
+  o.write(float4(finalColor, alpha), gid);
 }
