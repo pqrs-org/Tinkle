@@ -11,6 +11,8 @@ final class Renderer: ObservableObject {
     didSet {
       renderer = MetalViewRenderer(mtkView: mtkView) {
         Task { @MainActor in
+          try await Task.sleep(nanoseconds: 500 * NSEC_PER_MSEC)
+
           self.renderer?.setEffect(Effect(rawValue: self.effect))
           self.renderer?.restart()
         }
