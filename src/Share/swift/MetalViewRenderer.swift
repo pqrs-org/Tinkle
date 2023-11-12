@@ -131,7 +131,10 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         .shockwaveGreen,
         .shockwaveBlue:
         shader = .shockwave
-      case .lineRed,
+      case .lineGray,
+        .lineLight,
+        .lineDark,
+        .lineRed,
         .lineGreen,
         .lineBlue:
         shader = .line
@@ -144,11 +147,11 @@ public final class MetalViewRenderer: NSObject, MTKViewDelegate {
         color = vector_float3(0.2, 1.0, 0.2)
       case .shockwaveBlue, .neonBlue, .lineBlue:
         color = vector_float3(0.3, 0.2, 1.0)
-      case .shockwaveLight, .neonLight:
+      case .shockwaveLight, .neonLight, .lineLight:
         color = vector_float3(1.0, 1.0, 1.0)
-      case .shockwaveGray, .neonGray:
+      case .shockwaveGray, .neonGray, .lineGray:
         color = vector_float3(0.3, 0.3, 0.3)
-      case .shockwaveDark, .neonDark:
+      case .shockwaveDark, .neonDark, .lineDark:
         color = vector_float3(0.0, 0.0, 0.0)
       }
     } else {

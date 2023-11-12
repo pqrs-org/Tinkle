@@ -4,7 +4,7 @@
 
 -   ⚡️ Improvements
     -   Neon effects have been improved for better visibility.
-    -   Add effects: Line (Red), Line (Green), Line (Blue)
+    -   Added `Line` into the effect choices.
     -   Sparkle Framework has been updated.
 
 ## Tinkle 2.3.0

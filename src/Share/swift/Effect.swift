@@ -11,6 +11,9 @@ enum Effect: String, CaseIterable {
   case shockwaveRed
   case shockwaveGreen
   case shockwaveBlue
+  case lineGray
+  case lineLight
+  case lineDark
   case lineRed
   case lineGreen
   case lineBlue
