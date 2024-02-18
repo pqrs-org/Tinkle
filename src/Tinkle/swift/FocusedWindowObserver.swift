@@ -122,7 +122,7 @@ private final class ObservedApplication {
     application = Application(runningApplication)
     observer = application?.createObserver { (_, _, event: AXNotification, _) in
       if event == .focusedWindowChanged {
-        DispatchQueue.main.async {
+        Task { @MainActor in
           self.emit()
         }
       }
