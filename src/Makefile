@@ -3,7 +3,7 @@ all:
 	bash run-xcodegen.sh
 	xcodebuild -configuration Release SYMROOT="$(CURDIR)/build"
 # Copy embedded.provisionprofile
-	cp Tinkle/embedded.provisionprofile build/Release/Tinkle.app/Contents
+	cp Tinkle/Tinkle.provisionprofile build/Release/Tinkle.app/Contents/embedded.provisionprofile
 	$(MAKE) codesign
 	$(MAKE) -C .. clean-launch-services-database
 
