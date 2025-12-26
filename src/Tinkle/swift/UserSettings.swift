@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import SwiftUI
 
 final class UserSettings: ObservableObject {
   static let shared = UserSettings()
@@ -10,18 +11,9 @@ final class UserSettings: ObservableObject {
   // Initial Open At Login
   //
 
-  @UserDefault("initialOpenAtLoginRegistered", defaultValue: false)
-  var initialOpenAtLoginRegistered: Bool {
-    willSet {
-      objectWillChange.send()
-    }
-  }
+  @AppStorage("initialOpenAtLoginRegistered") var initialOpenAtLoginRegistered = false
 
-  @UserDefault("effect", defaultValue: Effect.neonGray.rawValue)
-  var effect: String {
-    willSet {
-      objectWillChange.send()
-    }
+  @AppStorage("effect") var effect = Effect.neonGray.rawValue {
     didSet {
       NotificationCenter.default.post(
         name: UserSettings.effectSettingChanged,
@@ -30,11 +22,7 @@ final class UserSettings: ObservableObject {
     }
   }
 
-  @UserDefault("showMenu", defaultValue: true)
-  var showMenu: Bool {
-    willSet {
-      objectWillChange.send()
-    }
+  @AppStorage("showMenu") var showMenu = true {
     didSet {
       NotificationCenter.default.post(
         name: UserSettings.showMenuSettingChanged,
