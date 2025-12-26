@@ -16,7 +16,7 @@ targets:
   Tinkle:
     type: application
     platform: macOS
-    deploymentTarget: '11.0'
+    deploymentTarget: '13.0'
     sources:
       - path: Tinkle
         excludes:
@@ -37,7 +37,7 @@ targets:
   Tinkle Helper:
     type: xpc-service
     platform: macOS
-    deploymentTarget: '11.0'
+    deploymentTarget: '13.0'
     sources:
       - path: Helper
         excludes:
@@ -60,7 +60,7 @@ targets:
   Tinkle ShaderViewer:
     type: application
     platform: macOS
-    deploymentTarget: '11.0'
+    deploymentTarget: '13.0'
     sources:
       - path: ShaderViewer
         excludes:
