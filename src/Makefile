@@ -18,8 +18,6 @@ codesign:
 	bash ../scripts/codesign.sh build/Release/Tinkle.app/Contents/Frameworks/Sparkle.framework/Versions/B/Autoupdate
 	bash ../scripts/codesign.sh build/Release/Tinkle.app/Contents/Frameworks/Sparkle.framework/Versions/B/Updater.app
 	bash ../scripts/codesign.sh build/Release/Tinkle.app/Contents/Frameworks/Sparkle.framework
-# libswift_Concurrency.dylib
-	bash ../scripts/codesign.sh build/Release/Tinkle.app/Contents/Frameworks/libswift_Concurrency.dylib
 # Tinkle
 	bash ../scripts/codesign.sh build/Release/Tinkle.app $(CURDIR)/Tinkle/Tinkle.entitlements
 
