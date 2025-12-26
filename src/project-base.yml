@@ -24,38 +24,12 @@ targets:
           - 'embedded.provisionprofile'
       - path: Share/metal
       - path: Share/swift
-      - path: Helper/HelperProtocol.swift
-      - path: Helper/DeprecatedOpenAtLogin/DeprecatedOpenAtLoginHelperProtocol.swift
     settings:
       base:
         ASSETCATALOG_COMPILER_APPICON_NAME: ''
         OTHER_SWIFT_FLAGS: '-warnings-as-errors'
     dependencies:
-      - target: Tinkle Helper
       - package: AXSwift
-
-  Tinkle Helper:
-    type: xpc-service
-    platform: macOS
-    deploymentTarget: '13.0'
-    sources:
-      - path: Helper
-        excludes:
-          - DeprecatedOpenAtLogin/objc/*
-      - path: Helper/DeprecatedOpenAtLogin/objc
-        compilerFlags:
-          - '-Wall'
-          - '-Werror'
-          - '-Wno-deprecated-declarations'
-          - '-Wno-deprecated-implementations'
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: org.pqrs.Tinkle.Helper
-        LD_RUNPATH_SEARCH_PATHS:
-          - '$(inherited)'
-          - '@loader_path/../../../../Frameworks'
-        OTHER_SWIFT_FLAGS: '-warnings-as-errors'
-        SWIFT_OBJC_BRIDGING_HEADER: Helper/DeprecatedOpenAtLogin/objc/DeprecatedOpenAtLogin-Bridging-Header.h
 
   Tinkle ShaderViewer:
     type: application
