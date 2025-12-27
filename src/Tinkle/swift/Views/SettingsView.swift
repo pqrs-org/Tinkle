@@ -7,11 +7,13 @@ enum TabTag: String {
 }
 
 struct SettingsView: View {
+  @Binding var showMenuBarExtra: Bool
+
   @State private var selection = TabTag.basic
 
   var body: some View {
     TabView(selection: $selection) {
-      SettingsBasicView()
+      SettingsBasicView(showMenuBarExtra: $showMenuBarExtra)
         .tabItem {
           Label("Main", systemImage: "gearshape")
         }

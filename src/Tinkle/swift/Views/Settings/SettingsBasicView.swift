@@ -2,6 +2,8 @@ import AXSwift
 import SwiftUI
 
 struct SettingsBasicView: View {
+  @Binding var showMenuBarExtra: Bool
+
   @ObservedObject private var userSettings = UserSettings.shared
   @ObservedObject private var openAtLogin = OpenAtLogin.shared
 
@@ -34,16 +36,13 @@ struct SettingsBasicView: View {
             .background(Color.errorBackground)
           }
 
-          HStack {
-            Toggle(isOn: $userSettings.showMenu) {
-              Text("Show icon in menu bar")
-            }
-            .switchToggleStyle()
-
-            Spacer()
+          Toggle(isOn: $showMenuBarExtra) {
+            Text("Show icon in menu bar")
           }
+          .switchToggleStyle()
         }
         .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
       }
 
       GroupBox(label: Text("Effect")) {
