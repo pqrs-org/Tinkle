@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 final class Settings: ObservableObject {
   static let shared = Settings()
 

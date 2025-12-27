@@ -1,6 +1,7 @@
 import Combine
 import MetalKit
 
+@MainActor
 final class Renderer: ObservableObject {
   static let shared = Renderer()
 

@@ -45,3 +45,5 @@ targets:
       base:
         ASSETCATALOG_COMPILER_APPICON_NAME: ''
         OTHER_SWIFT_FLAGS: '-warnings-as-errors'
+        DEAD_CODE_STRIPPING: 'YES'
+        SWIFT_VERSION: '6.0'

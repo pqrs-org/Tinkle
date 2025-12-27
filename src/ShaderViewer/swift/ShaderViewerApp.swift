@@ -7,7 +7,7 @@ struct ShaderViewerApp: App {
 
   var body: some Scene {
     Window(
-      "Tinkle-ShaderViewerApp",
+      "Tinkle-ShaderViewer",
       id: "main",
       content: {
         ContentView()

@@ -1,6 +1,7 @@
 import Foundation
 import MetalKit
 
+@MainActor
 public final class MetalViewRenderer: NSObject, MTKViewDelegate {
   public typealias Callback = () -> Void
 
