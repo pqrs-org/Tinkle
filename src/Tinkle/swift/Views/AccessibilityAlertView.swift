@@ -51,10 +51,3 @@ struct AccessibilityAlertView: View {
     }.padding()
   }
 }
-
-struct AccessibilityAlertView_Previews: PreviewProvider {
-  static var previews: some View {
-    AccessibilityAlertView()
-      .previewLayout(.sizeThatFits)
-  }
-}

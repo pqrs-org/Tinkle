@@ -57,10 +57,3 @@ struct SettingsBasicView: View {
     }.padding()
   }
 }
-
-struct SettingsBasicView_Previews: PreviewProvider {
-  static var previews: some View {
-    SettingsBasicView()
-      .previewLayout(.sizeThatFits)
-  }
-}
