@@ -201,7 +201,7 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
       if frame.width > 0 {
         self.window?.setFrame(frame, display: true)
         self.window?.orderFront(self)
-        MetalEffectCoordinator.shared.restartEffect()
+        MetalEffectCoordinator.shared.startEffect(Effect(rawValue: userSettings.effect))
       } else {
         self.window?.orderOut(self)
       }

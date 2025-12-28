@@ -5,6 +5,7 @@ struct ShaderViewerContentView: View {
   @ObservedObject private var coordinator = MetalEffectCoordinator.shared
   @ObservedObject private var settings = Settings.shared
   @State private var color = Color.gray
+  @State private var effect = Effect.neonGray.rawValue
 
   var body: some View {
     VStack {
@@ -16,7 +17,7 @@ struct ShaderViewerContentView: View {
 
       Divider()
 
-      EffectPicker(value: $coordinator.effect)
+      EffectPicker(value: $effect)
 
       HStack {
         Text("Background color:")
@@ -31,12 +32,12 @@ struct ShaderViewerContentView: View {
     }
     .padding()
     .onAppear {
-      coordinator.effect = Effect.shockwaveBlue.rawValue
+      coordinator.startEffect(Effect(rawValue: effect))
     }
     .onReceive(coordinator.effectDidFinish) { _ in
       Task { @MainActor in
         try await Task.sleep(nanoseconds: 500 * NSEC_PER_MSEC)
-        coordinator.restartEffect()
+        coordinator.startEffect(Effect(rawValue: effect))
       }
     }
   }

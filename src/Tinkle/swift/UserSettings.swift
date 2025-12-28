@@ -8,14 +8,5 @@ final class UserSettings: ObservableObject {
 
   @AppStorage("initialOpenAtLoginRegistered") var initialOpenAtLoginRegistered = false
   @AppStorage("showAdditionalMenuItems") var showAdditionalMenuItems: Bool = false
-
-  @AppStorage("effect") var effect = Effect.neonGray.rawValue {
-    didSet {
-      MetalEffectCoordinator.shared.effect = effect
-    }
-  }
-
-  init() {
-    MetalEffectCoordinator.shared.effect = effect
-  }
+  @AppStorage("effect") var effect = Effect.neonGray.rawValue
 }

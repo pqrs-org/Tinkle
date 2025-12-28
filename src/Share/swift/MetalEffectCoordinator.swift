@@ -13,12 +13,6 @@ final class MetalEffectCoordinator: ObservableObject {
     effectDidFinishSubject.eraseToAnyPublisher()
   }
 
-  @Published var effect = Effect.neonGray.rawValue {
-    didSet {
-      renderer.setEffect(Effect(rawValue: effect))
-    }
-  }
-
   init() {
     mtkView = MTKView()
     mtkView.framebufferOnly = false
@@ -28,8 +22,8 @@ final class MetalEffectCoordinator: ObservableObject {
     mtkView.delegate = renderer
   }
 
-  func restartEffect() {
-    renderer.setEffect(Effect(rawValue: effect))
+  func startEffect(_ effect: Effect?) {
+    renderer.setEffect(effect ?? .neonGray)
     renderer.restart()
   }
 }
