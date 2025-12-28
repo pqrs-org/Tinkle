@@ -102,7 +102,7 @@ struct TinkleApp: App {
             NSApp.terminate(nil)
           },
           label: {
-            Label("Quit ShowyEdge", systemImage: "xmark.rectangle")
+            Label("Quit Tinkle", systemImage: "xmark.rectangle")
               .labelStyle(.titleAndIcon)
           }
         )
