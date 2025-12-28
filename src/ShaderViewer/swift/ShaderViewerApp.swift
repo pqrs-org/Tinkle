@@ -10,7 +10,7 @@ struct ShaderViewerApp: App {
       "Tinkle-ShaderViewer",
       id: "main",
       content: {
-        ContentView()
+        ShaderViewerContentView()
       }
     )
   }

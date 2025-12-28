@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct ContentView: View {
+struct ShaderViewerContentView: View {
   @ObservedObject private var coordinator = MetalEffectCoordinator.shared
   @ObservedObject private var settings = Settings.shared
   @State private var color = Color.gray
@@ -17,8 +17,6 @@ struct ContentView: View {
       Divider()
 
       EffectPicker(value: $coordinator.effect)
-
-      Divider()
 
       HStack {
         Text("Background color:")
