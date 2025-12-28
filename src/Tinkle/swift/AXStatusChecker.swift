@@ -1,6 +1,7 @@
 import AXSwift
 import Foundation
 
+@MainActor
 class AXStatusChecker {
   private var relaunchRequired: Bool
   private var timer: Timer?
@@ -13,10 +14,14 @@ class AXStatusChecker {
       repeats: true
     ) { (_: Timer) in
       if !UIElement.isProcessTrusted() {
-        self.relaunchRequired = true
+        Task { @MainActor in
+          self.relaunchRequired = true
+        }
       } else {
-        if self.relaunchRequired {
-          Relauncher.relaunch()
+        Task { @MainActor in
+          if self.relaunchRequired {
+            Relauncher.relaunch()
+          }
         }
       }
     }

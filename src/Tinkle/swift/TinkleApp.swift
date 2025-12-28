@@ -1,4 +1,5 @@
 import AXSwift
+import Combine
 import MetalKit
 import SettingsAccess
 import SwiftUI
@@ -14,13 +15,7 @@ struct TinkleApp: App {
 
   private let version =
     Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
-
-  var window: NSWindow?
-  var mtkView: MTKView?
-  var renderer: MetalViewRenderer?
-  var observers: [pid_t: Observer] = [:]
-  var focusedWindowObserver: FocusedWindowObserver?
-  var axStatusChecker: AXStatusChecker!
+  private let axStatusChecker = AXStatusChecker()
 
   init() {
     //
@@ -30,6 +25,8 @@ struct TinkleApp: App {
     let userSettings = UserSettings()
 
     _userSettings = StateObject(wrappedValue: userSettings)
+
+    appDelegate.userSettings = userSettings
 
     //
     // Register OpenAtLogin
@@ -50,8 +47,6 @@ struct TinkleApp: App {
 
     Updater.shared.checkForUpdatesInBackground()
 
-    axStatusChecker = AXStatusChecker()
-
     //
     // Check AX
     //
@@ -60,52 +55,11 @@ struct TinkleApp: App {
       print("user approval is required")
       return
     }
-
-    //     mtkView = MTKView()
-    //     mtkView!.framebufferOnly = false
-    //     mtkView!.layer?.isOpaque = false
-    //
-    //     renderer = MetalViewRenderer(mtkView: mtkView!) {
-    //       self.hide()
-    //     }
-    //     mtkView!.delegate = renderer!
-    //
-    //     window = NSWindow(
-    //       contentRect: NSRect(x: 0, y: 0, width: 200, height: 100),
-    //       styleMask: [
-    //         .borderless,
-    //         .fullSizeContentView,
-    //       ],
-    //       backing: .buffered,
-    //       defer: false
-    //     )
-    //     window!.backgroundColor = NSColor.clear
-    //     window!.hasShadow = false
-    //     window!.ignoresMouseEvents = true
-    //     window!.collectionBehavior = [.transient, .ignoresCycle]
-    //     window!.isOpaque = false
-    //     window!.level = .statusBar
-    //     window!.contentView = mtkView
-    //
-    //     focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
-    //       if frame.width > 0 {
-    //         self.window?.setFrame(frame, display: true)
-    //         self.runEffect()
-    //       } else {
-    //         self.hide()
-    //       }
-    //     })
-    //
-    //     NotificationCenter.default.addObserver(
-    //       forName: UserSettings.effectSettingChanged,
-    //       object: nil,
-    //       queue: OperationQueue.main
-    //     ) { _ in
-    //       self.runEffect()
-    //     }
   }
 
   var body: some Scene {
+    // The main window is manually managed by MainWindowController.
+
     MenuBarExtra(
       isInserted: $showMenuBarExtra,
       content: {
@@ -174,24 +128,17 @@ struct TinkleApp: App {
         .environmentObject(userSettings)
     }
   }
-
-  func runEffect() {
-    //    window?.makeKeyAndOrderFront(self)
-    //    renderer?.setEffect(Effect(rawValue: UserSettings.shared.effect))
-    //    renderer?.restart()
-  }
-
-  func hide() {
-    //    if window != nil {
-    //      window!.orderOut(window!)
-    //    }
-  }
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+  var mainWindowController: MainWindowController?
   var userSettings: UserSettings?
 
   func applicationDidFinishLaunching(_ notification: Notification) {
+    guard let userSettings = userSettings else { return }
+
+    mainWindowController = MainWindowController(userSettings: userSettings)
+    mainWindowController?.showWindow(nil)
   }
 
   func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
@@ -201,5 +148,73 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       object: nil,
       userInfo: nil)
     return true
+  }
+}
+
+class MainWindowController: NSWindowController, NSWindowDelegate {
+  private var focusedWindowObserver: FocusedWindowObserver?
+  private var cancellables: Set<AnyCancellable> = []
+
+  init(userSettings: UserSettings) {
+    // Note:
+    // On macOS 13, the only way to remove the title bar is to manually create an NSWindow like this.
+    //
+    // The following methods do not work properly:
+    // - .windowStyle(.hiddenTitleBar) does not remove the window frame.
+    // - NSApp.windows.first.styleMask = [.borderless] causes the app to crash.
+
+    let w = NSWindow(
+      contentRect: .zero,
+      styleMask: [
+        .borderless,
+        .fullSizeContentView,
+      ],
+      backing: .buffered,
+      defer: false
+    )
+
+    // Note: Do not set alpha value for window.
+    // Window with alpha value causes glitch at switching a space (Mission Control).
+
+    w.backgroundColor = .clear
+    // w.backgroundColor = .blue
+    w.isOpaque = false
+    w.hasShadow = false
+    w.ignoresMouseEvents = true
+    w.level = .statusBar
+    w.collectionBehavior.insert(.transient)
+    w.collectionBehavior.insert(.ignoresCycle)
+    w.contentView = NSHostingView(
+      rootView: ContentView()
+        .openSettingsAccess()
+    )
+
+    super.init(window: w)
+
+    w.delegate = self
+
+    //
+    // Setup FocusedWindowObserver
+    //
+
+    focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
+      if frame.width > 0 {
+        self.window?.setFrame(frame, display: true)
+        self.window?.orderFront(self)
+        MetalEffectCoordinator.shared.restartEffect()
+      } else {
+        self.window?.orderOut(self)
+      }
+    })
+
+    MetalEffectCoordinator.shared.effectDidFinish
+      .sink { [weak self] in
+        self?.window?.orderOut(nil)
+      }
+      .store(in: &cancellables)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 }

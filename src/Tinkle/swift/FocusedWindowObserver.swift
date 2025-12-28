@@ -116,6 +116,7 @@ public final class FocusedWindowObserver {
   }
 }
 
+@MainActor
 private final class ObservedApplication {
   private let application: Application?
   private var observer: Observer?
