@@ -165,7 +165,8 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     // - NSApp.windows.first.styleMask = [.borderless] causes the app to crash.
 
     let w = NSWindow(
-      contentRect: .zero,
+      // MetalEffectView must be initialized with a non-zero size, so we set an arbitrary initial size.
+      contentRect: .init(x: 0, y: 0, width: 200, height: 100),
       styleMask: [
         .borderless,
         .fullSizeContentView,
