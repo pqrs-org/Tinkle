@@ -15,7 +15,6 @@ struct TinkleApp: App {
 
   private let version =
     Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
-  private let axStatusChecker = AXStatusChecker()
 
   init() {
     //
@@ -51,10 +50,7 @@ struct TinkleApp: App {
     // Check AX
     //
 
-    if !UIElement.isProcessTrusted(withPrompt: true) {
-      print("user approval is required")
-      return
-    }
+    UIElement.isProcessTrusted(withPrompt: true)
   }
 
   var body: some Scene {
@@ -124,8 +120,12 @@ struct TinkleApp: App {
     )
 
     Settings {
-      SettingsView(showMenuBarExtra: $showMenuBarExtra)
-        .environmentObject(userSettings)
+      if !UIElement.isProcessTrusted() {
+        AccessibilityAlertView()
+      } else {
+        SettingsView(showMenuBarExtra: $showMenuBarExtra)
+          .environmentObject(userSettings)
+      }
     }
   }
 }
