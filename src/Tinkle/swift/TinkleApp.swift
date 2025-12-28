@@ -50,7 +50,7 @@ struct TinkleApp: App {
     // Check AX
     //
 
-    UIElement.isProcessTrusted(withPrompt: true)
+    _ = UIElement.isProcessTrusted(withPrompt: true)
   }
 
   var body: some Scene {
