@@ -2,15 +2,15 @@ import Combine
 import MetalKit
 
 @MainActor
-final class Renderer: ObservableObject {
-  static let shared = Renderer()
+final class MetalEffectViewModel: ObservableObject {
+  static let shared = MetalEffectViewModel()
 
   let mtkView: MTKView
-  private var renderer: MetalViewRenderer?
+  private var renderer: MetalEffectRenderer?
 
   @Published var effect = Effect.neonGray.rawValue {
     didSet {
-      renderer = MetalViewRenderer(mtkView: mtkView) {
+      renderer = MetalEffectRenderer(mtkView: mtkView) {
         Task { @MainActor in
           try await Task.sleep(nanoseconds: 500 * NSEC_PER_MSEC)
 
@@ -22,7 +22,7 @@ final class Renderer: ObservableObject {
       renderer?.setEffect(Effect(rawValue: effect))
       renderer?.restart()
 
-      mtkView.delegate = Renderer.shared.renderer
+      mtkView.delegate = MetalEffectViewModel.shared.renderer
     }
   }
 
