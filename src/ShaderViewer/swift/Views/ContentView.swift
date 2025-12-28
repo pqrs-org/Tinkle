@@ -1,7 +1,8 @@
+import Foundation
 import SwiftUI
 
 struct ContentView: View {
-  @ObservedObject private var renderer = MetalEffectViewModel.shared
+  @ObservedObject private var coordinator = MetalEffectCoordinator.shared
   @ObservedObject private var settings = Settings.shared
   @State private var color = Color.gray
 
@@ -15,7 +16,7 @@ struct ContentView: View {
 
       Divider()
 
-      EffectPicker(value: $renderer.effect)
+      EffectPicker(value: $coordinator.effect)
 
       Divider()
 
@@ -32,7 +33,13 @@ struct ContentView: View {
     }
     .padding()
     .onAppear {
-      renderer.effect = Effect.shockwaveGray.rawValue
+      coordinator.effect = Effect.shockwaveBlue.rawValue
+    }
+    .onReceive(coordinator.effectDidFinish) { _ in
+      Task { @MainActor in
+        try await Task.sleep(nanoseconds: 500 * NSEC_PER_MSEC)
+        coordinator.restartEffect()
+      }
     }
   }
 }

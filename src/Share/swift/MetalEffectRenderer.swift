@@ -1,9 +1,10 @@
+import Combine
 import Foundation
 import MetalKit
 
 @MainActor
 public final class MetalEffectRenderer: NSObject, MTKViewDelegate {
-  public typealias Callback = () -> Void
+  public typealias EffectDidFinishSubject = PassthroughSubject<Void, Never>
 
   public enum Shader {
     case nop
@@ -13,7 +14,7 @@ public final class MetalEffectRenderer: NSObject, MTKViewDelegate {
   }
 
   private weak var view: MTKView!
-  private let callback: Callback
+  private let effectDidFinish: EffectDidFinishSubject
   private let commandQueue: MTLCommandQueue!
   private let device: MTLDevice!
   private let nopCps: MTLComputePipelineState?
@@ -24,9 +25,9 @@ public final class MetalEffectRenderer: NSObject, MTKViewDelegate {
   private var shader: Shader = .nop
   private var color = vector_float3(0.0, 0.0, 0.0)
 
-  public init?(mtkView: MTKView, callback: @escaping Callback) {
+  public init?(mtkView: MTKView, effectDidFinish: EffectDidFinishSubject) {
     view = mtkView
-    self.callback = callback
+    self.effectDidFinish = effectDidFinish
     device = MTLCreateSystemDefaultDevice()!
     commandQueue = device.makeCommandQueue()
     let library = device.makeDefaultLibrary()!
@@ -57,7 +58,7 @@ public final class MetalEffectRenderer: NSObject, MTKViewDelegate {
       if shader == .nop {
         view.isPaused = true
       } else {
-        callback()
+        effectDidFinish.send(())
 
         shader = .nop
         restart()
