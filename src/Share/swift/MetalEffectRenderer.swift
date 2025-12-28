@@ -2,7 +2,7 @@ import Foundation
 import MetalKit
 
 @MainActor
-public final class MetalViewRenderer: NSObject, MTKViewDelegate {
+public final class MetalEffectRenderer: NSObject, MTKViewDelegate {
   public typealias Callback = () -> Void
 
   public enum Shader {
