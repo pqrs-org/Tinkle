@@ -215,7 +215,7 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
       }
       .store(in: &cancellables)
 
-    NotificationCenter.default.publisher(for: .effectDidChange)
+    NotificationCenter.default.publisher(for: effectDidChange)
       .sink { [weak self] notification in
         guard let self else { return }
         guard let effect = notification.object as? String else { return }
