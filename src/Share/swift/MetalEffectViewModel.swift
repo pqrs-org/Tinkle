@@ -22,7 +22,7 @@ final class MetalEffectViewModel: ObservableObject {
       renderer?.setEffect(Effect(rawValue: effect))
       renderer?.restart()
 
-      mtkView.delegate = MetalEffectViewModel.shared.renderer
+      mtkView.delegate = renderer
     }
   }
 
