@@ -192,22 +192,43 @@ private final class ObservedApplication {
       return CGRect.zero
     }
 
-    for screen in screens {
+    let globalMaxY = screens.map { $0.frame.maxY }.max() ?? 0.0
+
+    func axRectForScreen(_ screen: NSScreen) -> CGRect {
       let screenAXPosition = CGPoint(
         x: screen.frame.minX,
-        y: screens[0].frame.height - screen.frame.maxY)
-      let screenAXRect = CGRect(origin: screenAXPosition, size: screen.frame.size)
-      // print("screenAXRect \(screenAXRect) \(screen.frame)")
-
-      if screenAXRect.contains(axRect.origin) {
-        return CGRect(
-          x: axRect.origin.x,
-          y: screen.frame.maxY - axRect.height - (axRect.minY - screenAXPosition.y),
-          width: axRect.width,
-          height: axRect.height)
-      }
+        y: globalMaxY - screen.frame.maxY)
+      return CGRect(origin: screenAXPosition, size: screen.frame.size)
     }
 
-    return axRect
+    func intersectionArea(_ rect: CGRect, _ other: CGRect) -> CGFloat {
+      let intersection = rect.intersection(other)
+      guard !intersection.isNull else { return 0.0 }
+      return intersection.width * intersection.height
+    }
+
+    let matchedScreen =
+      screens
+      .map { (screen: $0, axRect: axRectForScreen($0)) }
+      .max(by: { lhs, rhs in
+        let lhsArea = intersectionArea(lhs.axRect, axRect)
+        let rhsArea = intersectionArea(rhs.axRect, axRect)
+        return lhsArea < rhsArea
+      })?
+      .screen
+
+    guard let screen = matchedScreen else {
+      return axRect
+    }
+
+    let screenAXPosition = CGPoint(
+      x: screen.frame.minX,
+      y: globalMaxY - screen.frame.maxY)
+
+    return CGRect(
+      x: axRect.origin.x,
+      y: screen.frame.maxY - axRect.height - (axRect.minY - screenAXPosition.y),
+      width: axRect.width,
+      height: axRect.height)
   }
 }
