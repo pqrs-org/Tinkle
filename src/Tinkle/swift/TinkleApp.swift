@@ -154,6 +154,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 class MainWindowController: NSWindowController, NSWindowDelegate {
   private var focusedWindowObserver: FocusedWindowObserver?
   private var cancellables: Set<AnyCancellable> = []
+  private let effectCoordinator = MetalEffectCoordinator()
 
   init(userSettings: UserSettings) {
     // Note:
@@ -185,7 +186,7 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     w.collectionBehavior.insert(.transient)
     w.collectionBehavior.insert(.ignoresCycle)
     w.contentView = NSHostingView(
-      rootView: ContentView()
+      rootView: ContentView(coordinator: effectCoordinator)
         .openSettingsAccess()
     )
 
@@ -201,13 +202,13 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
       if frame.width > 0 {
         self.window?.setFrame(frame, display: true)
         self.window?.orderFront(self)
-        MetalEffectCoordinator.shared.startEffect(Effect(rawValue: userSettings.effect))
+        self.effectCoordinator.startEffect(Effect(rawValue: userSettings.effect))
       } else {
         self.window?.orderOut(self)
       }
     })
 
-    MetalEffectCoordinator.shared.effectDidFinish
+    effectCoordinator.effectDidFinish
       .sink { [weak self] in
         self?.window?.orderOut(nil)
       }

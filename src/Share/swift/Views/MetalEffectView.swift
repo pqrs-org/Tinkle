@@ -2,8 +2,10 @@ import MetalKit
 import SwiftUI
 
 struct MetalEffectView: NSViewRepresentable {
+  let effectCoordinator: MetalEffectCoordinator
+
   func makeNSView(context _: Context) -> MTKView {
-    return MetalEffectCoordinator.shared.mtkView
+    return effectCoordinator.mtkView
   }
 
   func updateNSView(_: MTKView, context _: Context) {}

@@ -2,9 +2,10 @@ import AXSwift
 import SwiftUI
 
 struct SettingsBasicView: View {
+  @EnvironmentObject private var userSettings: UserSettings
+
   @Binding var showMenuBarExtra: Bool
 
-  @ObservedObject private var userSettings = UserSettings.shared
   @ObservedObject private var openAtLogin = OpenAtLogin.shared
 
   var body: some View {

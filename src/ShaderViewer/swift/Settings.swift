@@ -1,8 +1,0 @@
-import SwiftUI
-
-@MainActor
-final class Settings: ObservableObject {
-  static let shared = Settings()
-
-  @Published var backgroundColor = Color.gray
-}

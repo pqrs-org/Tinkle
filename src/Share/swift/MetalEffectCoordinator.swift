@@ -3,8 +3,6 @@ import MetalKit
 
 @MainActor
 final class MetalEffectCoordinator: ObservableObject {
-  static let shared = MetalEffectCoordinator()
-
   let mtkView: MTKView
   private let renderer: MetalEffectRenderer
   private let effectDidFinishSubject = MetalEffectRenderer.EffectDidFinishSubject()

@@ -2,15 +2,15 @@ import Foundation
 import SwiftUI
 
 struct ShaderViewerContentView: View {
-  @ObservedObject private var coordinator = MetalEffectCoordinator.shared
-  @ObservedObject private var settings = Settings.shared
+  @StateObject private var coordinator = MetalEffectCoordinator()
   @State private var color = Color.gray
-  @State private var effect = Effect.neonGray.rawValue
+  @State private var effect = Effect.shockwaveGreen.rawValue
+  @State private var backgroundColor = Color.gray
 
   var body: some View {
     VStack {
-      MetalEffectView()
-        .background(settings.backgroundColor)
+      MetalEffectView(effectCoordinator: coordinator)
+        .background(backgroundColor)
         .frame(minWidth: 400, minHeight: 200)
         .border(Color.white)
         .padding()
@@ -22,12 +22,12 @@ struct ShaderViewerContentView: View {
       HStack {
         Text("Background color:")
 
-        Button(action: { settings.backgroundColor = Color.white }, label: { Text("White") })
-        Button(action: { settings.backgroundColor = Color.black }, label: { Text("Black") })
-        Button(action: { settings.backgroundColor = Color.gray }, label: { Text("Gray") })
-        Button(action: { settings.backgroundColor = Color.red }, label: { Text("Red") })
-        Button(action: { settings.backgroundColor = Color.green }, label: { Text("Green") })
-        Button(action: { settings.backgroundColor = Color.blue }, label: { Text("Blue") })
+        Button(action: { backgroundColor = Color.white }, label: { Text("White") })
+        Button(action: { backgroundColor = Color.black }, label: { Text("Black") })
+        Button(action: { backgroundColor = Color.gray }, label: { Text("Gray") })
+        Button(action: { backgroundColor = Color.red }, label: { Text("Red") })
+        Button(action: { backgroundColor = Color.green }, label: { Text("Green") })
+        Button(action: { backgroundColor = Color.blue }, label: { Text("Blue") })
       }
     }
     .padding()
