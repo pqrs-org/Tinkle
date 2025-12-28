@@ -4,6 +4,7 @@ import SwiftUI
 
 struct ContentView: View {
   @Environment(\.openSettingsLegacy) var openSettingsLegacy
+
   let coordinator: MetalEffectCoordinator
 
   var body: some View {

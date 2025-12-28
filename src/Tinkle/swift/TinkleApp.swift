@@ -214,6 +214,15 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         self?.window?.orderOut(nil)
       }
       .store(in: &cancellables)
+
+    NotificationCenter.default.publisher(for: .effectDidChange)
+      .sink { [weak self] notification in
+        guard let self else { return }
+        guard let effect = notification.object as? String else { return }
+        self.window?.orderFront(self)
+        self.effectCoordinator.startEffect(Effect(rawValue: effect))
+      }
+      .store(in: &cancellables)
   }
 
   required init?(coder: NSCoder) {
