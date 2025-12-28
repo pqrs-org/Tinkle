@@ -1,9 +1,9 @@
 import MetalKit
 import SwiftUI
 
-struct MetalView: NSViewRepresentable {
+struct MetalEffectView: NSViewRepresentable {
   func makeNSView(context _: Context) -> MTKView {
-    return Renderer.shared.mtkView
+    return MetalEffectViewModel.shared.mtkView
   }
 
   func updateNSView(_: MTKView, context _: Context) {}
