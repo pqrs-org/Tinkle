@@ -25,7 +25,7 @@ public final class MetalEffectRenderer: NSObject, MTKViewDelegate {
   private var shader: Shader = .nop
   private var color = vector_float3(0.0, 0.0, 0.0)
 
-  public init?(mtkView: MTKView, effectDidFinish: EffectDidFinishSubject) {
+  public init(mtkView: MTKView, effectDidFinish: EffectDidFinishSubject) {
     view = mtkView
     self.effectDidFinish = effectDidFinish
     device = MTLCreateSystemDefaultDevice()!
