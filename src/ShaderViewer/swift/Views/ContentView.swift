@@ -1,13 +1,13 @@
 import SwiftUI
 
 struct ContentView: View {
-  @ObservedObject private var renderer = Renderer.shared
+  @ObservedObject private var renderer = MetalEffectViewModel.shared
   @ObservedObject private var settings = Settings.shared
   @State private var color = Color.gray
 
   var body: some View {
     VStack {
-      MetalView()
+      MetalEffectView()
         .background(settings.backgroundColor)
         .frame(minWidth: 400, minHeight: 200)
         .border(Color.white)
