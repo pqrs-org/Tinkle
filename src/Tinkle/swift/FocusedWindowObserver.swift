@@ -1,6 +1,7 @@
 import AXSwift
 import AppKit
 
+@MainActor
 public final class FocusedWindowObserver {
   public typealias Callback = (_ frame: CGRect) -> Void
 
@@ -30,7 +31,9 @@ public final class FocusedWindowObserver {
       if let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey]
         as? NSRunningApplication
       {
-        self.addObservedApplication(runningApplication)
+        Task { @MainActor in
+          self.addObservedApplication(runningApplication)
+        }
       }
     }
 
@@ -57,7 +60,9 @@ public final class FocusedWindowObserver {
       if let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey]
         as? NSRunningApplication
       {
-        self.addObservedApplication(runningApplication)
+        Task { @MainActor in
+          self.addObservedApplication(runningApplication)
+        }
       }
     }
 
@@ -82,7 +87,9 @@ public final class FocusedWindowObserver {
       if let runningApplication = userInfo[NSWorkspace.applicationUserInfoKey]
         as? NSRunningApplication
       {
-        self.observedApplications.removeValue(forKey: runningApplication.processIdentifier)
+        Task { @MainActor in
+          self.observedApplications.removeValue(forKey: runningApplication.processIdentifier)
+        }
       }
     }
   }
