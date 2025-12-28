@@ -39,7 +39,7 @@ struct AccessibilityAlertView: View {
         Button(
           action: { NSApplication.shared.terminate(self) },
           label: {
-            Label("Quit Tinkle", systemImage: "xmark.circle.fill")
+            Label("Quit Tinkle", systemImage: "xmark.rectangle")
           })
       }.frame(minWidth: 400.0)
 

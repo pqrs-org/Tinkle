@@ -12,17 +12,13 @@ struct SettingsBasicView: View {
     VStack(alignment: .leading, spacing: 25.0) {
       GroupBox(label: Text("Basic")) {
         VStack(alignment: .leading, spacing: 10.0) {
-          HStack {
-            Toggle(isOn: $openAtLogin.registered) {
-              Text("Open at login")
-            }
-            .switchToggleStyle()
-            .disabled(openAtLogin.developmentBinary)
-            .onChange(of: openAtLogin.registered) { value in
-              OpenAtLogin.shared.update(register: value)
-            }
-
-            Spacer()
+          Toggle(isOn: $openAtLogin.registered) {
+            Text("Open at login")
+          }
+          .switchToggleStyle()
+          .disabled(openAtLogin.developmentBinary)
+          .onChange(of: openAtLogin.registered) { value in
+            OpenAtLogin.shared.update(register: value)
           }
 
           if !openAtLogin.error.isEmpty {
@@ -47,9 +43,8 @@ struct SettingsBasicView: View {
           EffectPicker(value: $userSettings.effect)
         }
         .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
       }
-
-      Spacer()
-    }.padding()
+    }
   }
 }
