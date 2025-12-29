@@ -6,6 +6,7 @@
     -   macOS 11 and macOS 12 are no longer supported.
 -   ⚡️ Improvements
     -   Updated the app icon.
+    -   Added support for Liquid Glass.
     -   Migrated to the SwiftUI life cycle.
     -   Migrated to Swift 6.
     -   Sparkle Framework has been updated.
