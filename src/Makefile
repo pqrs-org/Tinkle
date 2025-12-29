@@ -30,9 +30,13 @@ xcode:
 
 run:
 	open build/Release/Tinkle.app
+	make log
 
 swift-format:
 	find . -name '*.swift' -print0 | xargs -0 swift-format -i
 
 install:
 	rsync -a --delete build/Release/Tinkle.app /Applications
+
+log:
+	/usr/bin/log stream --predicate 'subsystem == "org.pqrs.Tinkle"' --info --debug

@@ -1,6 +1,7 @@
 import AXSwift
 import Combine
 import MetalKit
+import OSLog
 import SettingsAccess
 import SwiftUI
 
@@ -152,6 +153,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 class MainWindowController: NSWindowController, NSWindowDelegate {
+  private let logger = Logger(
+    subsystem: Bundle.main.bundleIdentifier ?? "unknown",
+    category: String(describing: MainWindowController.self))
   private var focusedWindowObserver: FocusedWindowObserver?
   private var cancellables: Set<AnyCancellable> = []
   private let effectCoordinator = MetalEffectCoordinator()
@@ -221,6 +225,16 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         guard let effect = notification.object as? String else { return }
         self.window?.orderFront(self)
         self.effectCoordinator.startEffect(Effect(rawValue: effect))
+      }
+      .store(in: &cancellables)
+
+    NotificationCenter.default.publisher(for: effectWindowShouldHide)
+      .sink { [weak self] _ in
+        guard let self else { return }
+
+        self.logger.info("effectWindowShouldHide")
+
+        self.window?.orderOut(self)
       }
       .store(in: &cancellables)
   }

@@ -1,8 +1,14 @@
+import AppKit
 import Foundation
+import OSLog
 
 #if USE_SPARKLE
   import Sparkle
 #endif
+
+private let logger = Logger(
+  subsystem: Bundle.main.bundleIdentifier ?? "unknown",
+  category: String(describing: Updater.self))
 
 @MainActor
 final class Updater: ObservableObject {
@@ -20,7 +26,7 @@ final class Updater: ObservableObject {
       updaterController = SPUStandardUpdaterController(
         startingUpdater: true,
         updaterDelegate: delegate,
-        userDriverDelegate: nil
+        userDriverDelegate: delegate,
       )
 
       updaterController.updater.clearFeedURLFromUserDefaults()
@@ -57,13 +63,20 @@ final class Updater: ObservableObject {
     {
       var includingBetaVersions = false
 
+      func standardUserDriverWillShowModalAlert() {
+        // While a modal alert is shown, the effect processing stops,
+        // so the effect would remain visible in a frozen state.
+        // Therefore, hide the effect before showing the modal alert.
+        NotificationCenter.default.post(name: effectWindowShouldHide, object: nil)
+      }
+
       func feedURLString(for updater: SPUUpdater) -> String? {
         var url = "https://appcast.pqrs.org/tinkle-appcast.xml"
         if includingBetaVersions {
           url = "https://appcast.pqrs.org/tinkle-appcast-devel.xml"
         }
 
-        print("feedURLString \(url)")
+        logger.info("feedURLString \(url)")
 
         return url
       }
