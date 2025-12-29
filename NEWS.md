@@ -3,8 +3,9 @@
 ## Beta
 
 -   ⚡️ Improvements
+    -   Updated the app icon.
+    -   Migrated to Swift 6.
     -   Sparkle Framework has been updated.
-    -   Minor improvements to the source code.
 
 ## Tinkle 2.4.0
 
