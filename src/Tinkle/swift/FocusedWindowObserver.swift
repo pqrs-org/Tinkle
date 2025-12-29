@@ -3,7 +3,10 @@ import AppKit
 
 @MainActor
 public final class FocusedWindowObserver {
-  public typealias Callback = (_ frame: CGRect) -> Void
+  public typealias Callback = (
+    _ frame: CGRect,
+    _ runningApplication: NSRunningApplication
+  ) -> Void
 
   private let callback: Callback
   private var observedApplications: [pid_t: ObservedApplication] = [:]
@@ -120,11 +123,13 @@ public final class FocusedWindowObserver {
 private final class ObservedApplication {
   private let application: Application?
   private var observer: Observer?
+  private let runningApplication: NSRunningApplication
   private let callback: FocusedWindowObserver.Callback
 
   init(runningApplication: NSRunningApplication, callback: @escaping FocusedWindowObserver.Callback)
     throws
   {
+    self.runningApplication = runningApplication
     self.callback = callback
 
     application = Application(runningApplication)
@@ -146,7 +151,10 @@ private final class ObservedApplication {
       let size: CGSize? = try window?.attribute(kAXSizeAttribute)
 
       if position != nil, size != nil {
-        callback(axRectToNativeRect(CGRect(origin: position!, size: size!)))
+        callback(
+          axRectToNativeRect(
+            CGRect(origin: position!, size: size!)),
+          runningApplication)
       }
     } catch {
       print("UIElement.attribute error: \(error)")

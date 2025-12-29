@@ -10,6 +10,7 @@ struct TinkleApp: App {
   @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
   @StateObject private var userSettings: UserSettings
+  @StateObject private var recentApplications: RecentApplicationsStore
 
   // Since passing a property of an ObservableObject to MenuBarExtra.isInserted causes a notification loop, the flag must be an independent variable.
   @AppStorage("showMenu") var showMenuBarExtra = true
@@ -23,10 +24,13 @@ struct TinkleApp: App {
     //
 
     let userSettings = UserSettings()
-
     _userSettings = StateObject(wrappedValue: userSettings)
 
+    let recentApplications = RecentApplicationsStore()
+    _recentApplications = StateObject(wrappedValue: recentApplications)
+
     appDelegate.userSettings = userSettings
+    appDelegate.recentApplications = recentApplications
 
     //
     // Register OpenAtLogin
@@ -98,6 +102,25 @@ struct TinkleApp: App {
 
         Divider()
 
+        Label("Recent apps", systemImage: "waveform.path.ecg")
+
+        ForEach(recentApplications.items, id: \.processIdentifier) { item in
+          Button(
+            action: {
+              _ = item.activate(options: [.activateIgnoringOtherApps])
+            },
+            label: {
+              Text(
+                verbatim:
+                  "\(item.localizedName ?? item.bundleIdentifier ?? "Unknown App")    (pid:\(item.processIdentifier))"
+              )
+            }
+          )
+          .disabled(item.isTerminated)
+        }
+
+        Divider()
+
         Button(
           action: {
             NSApp.terminate(nil)
@@ -134,11 +157,18 @@ struct TinkleApp: App {
 class AppDelegate: NSObject, NSApplicationDelegate {
   var mainWindowController: MainWindowController?
   var userSettings: UserSettings?
+  var recentApplications: RecentApplicationsStore?
 
   func applicationDidFinishLaunching(_ notification: Notification) {
-    guard let userSettings = userSettings else { return }
+    guard let userSettings = userSettings,
+      let recentApplications = recentApplications
+    else {
+      return
+    }
 
-    mainWindowController = MainWindowController(userSettings: userSettings)
+    mainWindowController = MainWindowController(
+      userSettings: userSettings,
+      recentApplications: recentApplications)
     mainWindowController?.showWindow(nil)
   }
 
@@ -159,8 +189,11 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
   private var focusedWindowObserver: FocusedWindowObserver?
   private var cancellables: Set<AnyCancellable> = []
   private let effectCoordinator = MetalEffectCoordinator()
+  private let recentApplications: RecentApplicationsStore
 
-  init(userSettings: UserSettings) {
+  init(userSettings: UserSettings, recentApplications: RecentApplicationsStore) {
+    self.recentApplications = recentApplications
+
     // Note:
     // On macOS 13, the only way to remove the title bar is to manually create an NSWindow like this.
     //
@@ -203,15 +236,18 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     // Setup FocusedWindowObserver
     //
 
-    focusedWindowObserver = FocusedWindowObserver(callback: { (frame: CGRect) in
-      if frame.width > 0 {
-        self.window?.setFrame(frame, display: true)
-        self.window?.orderFront(self)
-        self.effectCoordinator.startEffect(Effect(rawValue: userSettings.effect))
-      } else {
-        self.window?.orderOut(self)
-      }
-    })
+    focusedWindowObserver = FocusedWindowObserver(
+      callback: { (frame: CGRect, runningApplication: NSRunningApplication) in
+        self.recentApplications.insert(runningApplication)
+
+        if frame.width > 0 {
+          self.window?.setFrame(frame, display: true)
+          self.window?.orderFront(self)
+          self.effectCoordinator.startEffect(Effect(rawValue: userSettings.effect))
+        } else {
+          self.window?.orderOut(self)
+        }
+      })
 
     effectCoordinator.effectDidFinish
       .sink { [weak self] in
@@ -241,5 +277,19 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+}
+
+@MainActor
+final class RecentApplicationsStore: ObservableObject {
+  @Published private(set) var items: [NSRunningApplication] = []
+
+  func insert(_ item: NSRunningApplication) {
+    items.removeAll { $0.processIdentifier == item.processIdentifier }
+    items.insert(item, at: 0)
+
+    if items.count > 10 {
+      items.removeLast(items.count - 10)
+    }
   }
 }
