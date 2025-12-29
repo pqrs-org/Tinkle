@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum TabTag: String {
-  case basic
+  case main
   case update
   case action
 }
@@ -9,15 +9,15 @@ enum TabTag: String {
 struct SettingsView: View {
   @Binding var showMenuBarExtra: Bool
 
-  @State private var selection = TabTag.basic
+  @State private var selection = TabTag.main
 
   var body: some View {
     TabView(selection: $selection) {
-      SettingsBasicView(showMenuBarExtra: $showMenuBarExtra)
+      SettingsMainView(showMenuBarExtra: $showMenuBarExtra)
         .tabItem {
           Label("Main", systemImage: "gearshape")
         }
-        .tag(TabTag.basic)
+        .tag(TabTag.main)
 
       SettingsUpdateView()
         .tabItem {

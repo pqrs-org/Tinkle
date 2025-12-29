@@ -1,7 +1,7 @@
 import AXSwift
 import SwiftUI
 
-struct SettingsBasicView: View {
+struct SettingsMainView: View {
   @EnvironmentObject private var userSettings: UserSettings
 
   @Binding var showMenuBarExtra: Bool
@@ -33,6 +33,12 @@ struct SettingsBasicView: View {
             Text("Show icon in menu bar")
           }
           .switchToggleStyle()
+
+          Toggle(isOn: $userSettings.showAdditionalMenuItems) {
+            Text("Show additional menu items")
+          }
+          .switchToggleStyle()
+          .disabled(!showMenuBarExtra)
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
