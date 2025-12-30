@@ -1,9 +1,12 @@
 import AXSwift
+import AppKit
 import Combine
 import MetalKit
 import OSLog
 import SettingsAccess
 import SwiftUI
+
+private let settingsWindowIdentifier = "settings-window"
 
 @main
 struct TinkleApp: App {
@@ -158,6 +161,11 @@ struct TinkleApp: App {
       } else {
         SettingsView(showMenuBarExtra: $showMenuBarExtra)
           .environmentObject(userSettings)
+          .background(
+            WindowIdentifierSetter(
+              identifier: NSUserInterfaceItemIdentifier(settingsWindowIdentifier)
+            )
+          )
       }
     }
   }
@@ -247,7 +255,23 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
 
     focusedWindowObserver = FocusedWindowObserver(
       callback: { (frame: CGRect, runningApplication: NSRunningApplication) in
+        // If we include Tinkle's settings window,
+        // selecting a recent app from Tinkle's menu will prioritize the settings window instead,
+        // so it won't behave as intended. Therefore, Tinkle is excluded.
+
+        if runningApplication.processIdentifier == getpid() {
+          return
+        }
+
+        //
+        // Update recentApplications
+        //
+
         self.recentApplications.insert(runningApplication)
+
+        //
+        // Manage effect
+        //
 
         if frame.width > 0 {
           self.window?.setFrame(frame, display: true)
@@ -267,7 +291,14 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     NotificationCenter.default.publisher(for: effectDidChange)
       .sink { [weak self] notification in
         guard let self else { return }
+
+        self.logger.info("effectDidChange")
+
         guard let effect = notification.object as? String else { return }
+
+        // When effectDidChange is triggered, we preview in the settings window.
+        // So we set the effect window's frame to match the settings window.
+        self.syncFrameWithSettingsWindow()
         self.window?.orderFront(self)
         self.effectCoordinator.startEffect(Effect(rawValue: effect))
       }
@@ -284,8 +315,21 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
       .store(in: &cancellables)
   }
 
+  @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  private func syncFrameWithSettingsWindow() {
+    guard
+      let settingsWindow = NSApp.windows.first(where: { window in
+        window != self.window && window.identifier?.rawValue == settingsWindowIdentifier
+      })
+    else {
+      return
+    }
+
+    self.window?.setFrame(settingsWindow.frame, display: false)
   }
 }
 
@@ -309,5 +353,34 @@ extension String {
       return String(prefix(width))
     }
     return self + String(repeating: " ", count: width - count)
+  }
+}
+
+private struct WindowIdentifierSetter: NSViewRepresentable {
+  let identifier: NSUserInterfaceItemIdentifier
+
+  func makeNSView(context: Context) -> NSView {
+    WindowIdentifierView(identifier: identifier)
+  }
+
+  func updateNSView(_: NSView, context: Context) {}
+}
+
+private final class WindowIdentifierView: NSView {
+  private let identifierValue: NSUserInterfaceItemIdentifier
+
+  init(identifier: NSUserInterfaceItemIdentifier) {
+    identifierValue = identifier
+    super.init(frame: .zero)
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  override func viewDidMoveToWindow() {
+    super.viewDidMoveToWindow()
+    window?.identifier = identifierValue
   }
 }
