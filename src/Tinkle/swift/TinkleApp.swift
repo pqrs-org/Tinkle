@@ -110,13 +110,17 @@ struct TinkleApp: App {
               _ = item.activate(options: [.activateIgnoringOtherApps])
             },
             label: {
-              Text(
-                verbatim:
-                  "\((item.localizedName ?? item.bundleIdentifier ?? "Unknown App").paddedRight(to: 30)) pid:\(item.processIdentifier)"
-              )
-              // Since HStack and similar layouts can't be used in MenuBarExtra,
-              // the only way to align the pid is to use a fixed-width font.
-              .font(.system(.callout, design: .monospaced))
+              Label {
+                Text(
+                  verbatim:
+                    "\((item.localizedName ?? item.bundleIdentifier ?? "Unknown App").paddedRight(to: 30)) pid:\(item.processIdentifier)"
+                )
+                // Since HStack and similar layouts can't be used in MenuBarExtra,
+                // the only way to align the pid is to use a fixed-width font.
+                .font(.system(.callout, design: .monospaced))
+              } icon: {
+                Image("clear")
+              }
             }
           )
           .disabled(item.isTerminated)
