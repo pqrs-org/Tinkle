@@ -1,7 +1,10 @@
 # Changelog
 
-## Beta
+## Tinkle 3.0.0
 
+-   [📦 Download](https://github.com/pqrs-org/Tinkle/releases/download/v3.0.0/Tinkle-3.0.0.dmg)
+-   📅 Release date
+    -   Dec 30, 2025
 -   💥 Breaking changes
     -   macOS 11 and macOS 12 are no longer supported.
 -   ✨ New Features
