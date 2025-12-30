@@ -112,8 +112,11 @@ struct TinkleApp: App {
             label: {
               Text(
                 verbatim:
-                  "\(item.localizedName ?? item.bundleIdentifier ?? "Unknown App")    (pid:\(item.processIdentifier))"
+                  "\((item.localizedName ?? item.bundleIdentifier ?? "Unknown App").paddedRight(to: 30)) pid:\(item.processIdentifier)"
               )
+              // Since HStack and similar layouts can't be used in MenuBarExtra,
+              // the only way to align the pid is to use a fixed-width font.
+              .font(.system(.callout, design: .monospaced))
             }
           )
           .disabled(item.isTerminated)
@@ -291,5 +294,14 @@ final class RecentApplicationsStore: ObservableObject {
     if items.count > 10 {
       items.removeLast(items.count - 10)
     }
+  }
+}
+
+extension String {
+  fileprivate func paddedRight(to width: Int) -> String {
+    if count >= width {
+      return String(prefix(width))
+    }
+    return self + String(repeating: " ", count: width - count)
   }
 }
