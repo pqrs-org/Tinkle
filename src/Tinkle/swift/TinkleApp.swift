@@ -303,16 +303,6 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         self.effectCoordinator.startEffect(Effect(rawValue: effect))
       }
       .store(in: &cancellables)
-
-    NotificationCenter.default.publisher(for: effectWindowShouldHide)
-      .sink { [weak self] _ in
-        guard let self else { return }
-
-        self.logger.info("effectWindowShouldHide")
-
-        self.window?.orderOut(self)
-      }
-      .store(in: &cancellables)
   }
 
   @available(*, unavailable)
