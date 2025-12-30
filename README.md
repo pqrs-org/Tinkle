@@ -6,7 +6,7 @@
 Tinkle is a macOS app which appends a visual effect for the focused window changes.<br/>
 It helps finding the focused window when you switched it by keyboard shortcuts.
 
-![Tinkle](docs/Tinkle.gif)
+<video src="docs/tinkle.mp4" autoplay loop muted playsinline style="width: 600px"></video>
 
 ## Download
 
