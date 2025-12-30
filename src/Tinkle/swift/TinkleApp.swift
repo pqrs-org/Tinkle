@@ -103,6 +103,7 @@ struct TinkleApp: App {
         Divider()
 
         Label("Recent apps", systemImage: "waveform.path.ecg")
+          .labelStyle(.titleAndIcon)
 
         ForEach(recentApplications.items, id: \.processIdentifier) { item in
           Button(
@@ -121,6 +122,7 @@ struct TinkleApp: App {
               } icon: {
                 Image("clear")
               }
+              .labelStyle(.titleAndIcon)
             }
           )
           .disabled(item.isTerminated)
