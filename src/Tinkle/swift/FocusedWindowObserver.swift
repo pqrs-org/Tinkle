@@ -152,8 +152,7 @@ private final class ObservedApplication {
 
       if position != nil, size != nil {
         callback(
-          axRectToNativeRect(
-            CGRect(origin: position!, size: size!)),
+          axRectToNativeRect(CGRect(origin: position!, size: size!)),
           runningApplication)
       }
     } catch {
@@ -163,36 +162,29 @@ private final class ObservedApplication {
 
   func axRectToNativeRect(_ axRect: CGRect) -> CGRect {
     //
-    // AX position
+    // AX position (AP) and Native position (NP)
     //
-    // screen #0   0,0 ---------------------
-    //              |
-    //              |
-    //              |    (500,500)
-    //              |
-    //              |
-    // screen #1   0,1280 ------------------
-    //              |
-    //              |
-    //              |    (500,1780)
-    //              |
-    //              |
-
+    // - AX position:     Relative to the top-left of the main screen.
+    // - Native position: Relative to the bottom-left of the main screen.
     //
-    // Native position
+    // ============================================================
     //
-    //              |
-    //              |
-    //              |    (500,500)
-    //              |
-    //              |
-    // screen #0   0,0 ---------------------
-    //              |
-    //              |
-    //              |    (500,-500)
-    //              |
-    //              |
-    // screen #1   0,-1280 ------------------
+    //                   (AP:500,-800)
+    //                     AP-----500---------+
+    //                     |                  |
+    //                    800   screens[1]    |
+    //                     |                  |
+    //  (AP:0,0)           |                  |
+    //  AP-----500---------NP-----------------+
+    //  |                  |(NP:500,500)
+    // 500   screens[0]    |
+    //  |                  |
+    //  NP-----------------+
+    //  (NP:0,0)
+    //
+    // ============================================================
+    //
+    // For example, AP(600,-200) == NP(600,700).
     //
 
     let screens = NSScreen.screens
@@ -200,42 +192,12 @@ private final class ObservedApplication {
       return CGRect.zero
     }
 
-    let globalMaxY = screens.map { $0.frame.maxY }.max() ?? 0.0
-
-    func axRectForScreen(_ screen: NSScreen) -> CGRect {
-      let screenAXPosition = CGPoint(
-        x: screen.frame.minX,
-        y: globalMaxY - screen.frame.maxY)
-      return CGRect(origin: screenAXPosition, size: screen.frame.size)
-    }
-
-    func intersectionArea(_ rect: CGRect, _ other: CGRect) -> CGFloat {
-      let intersection = rect.intersection(other)
-      guard !intersection.isNull else { return 0.0 }
-      return intersection.width * intersection.height
-    }
-
-    let matchedScreen =
-      screens
-      .map { (screen: $0, axRect: axRectForScreen($0)) }
-      .max(by: { lhs, rhs in
-        let lhsArea = intersectionArea(lhs.axRect, axRect)
-        let rhsArea = intersectionArea(rhs.axRect, axRect)
-        return lhsArea < rhsArea
-      })?
-      .screen
-
-    guard let screen = matchedScreen else {
-      return axRect
-    }
-
-    let screenAXPosition = CGPoint(
-      x: screen.frame.minX,
-      y: globalMaxY - screen.frame.maxY)
+    let primaryScreen = screens[0]
+    let axOriginMaxY = primaryScreen.frame.maxY
 
     return CGRect(
       x: axRect.origin.x,
-      y: screen.frame.maxY - axRect.height - (axRect.minY - screenAXPosition.y),
+      y: axOriginMaxY - axRect.maxY,
       width: axRect.width,
       height: axRect.height)
   }
